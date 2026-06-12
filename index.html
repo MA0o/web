@@ -317,8 +317,12 @@
       requestAnimationFrame(animate);
     }
 
-    // Launch every 60s, first one after 60s
-    setInterval(launchDot, 60000);
+    // Launch every 30-33s, mobile only
+    function scheduleDot() {
+      const delay = 30000 + Math.random() * 3000;
+      setTimeout(() => { launchDot(); scheduleDot(); }, delay);
+    }
+    if (isMobile()) scheduleDot();
   </script>
 </body>
 </html>
