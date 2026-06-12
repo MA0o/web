@@ -12,14 +12,12 @@
     }
 
     :root {
-      --bg: #000000;
-      --text: #ffffff;
-      --caption: #ffffff;
+      --bg: #ffffff;
+      --text: #000000;
       --font-mono: 'Courier New', Courier, monospace;
       --nav-size: 0.85rem;
       --caption-size: 0.72rem;
       --gutter: 0.3rem;
-      --columns: 5;
     }
 
     html, body {
@@ -38,11 +36,12 @@
       z-index: 100;
       line-height: 1.7;
       font-size: var(--nav-size);
+      mix-blend-mode: difference;
     }
 
     nav a {
       display: block;
-      color: var(--text);
+      color: #ffffff;
       text-decoration: none;
     }
 
@@ -50,77 +49,84 @@
       text-decoration: underline;
     }
 
-    /* GRID WRAPPER */
+    /* MAIN */
     main {
-      padding-top: 8.5rem;
-      padding-left: calc(1.8rem + 9ch); /* offset for nav column */
+      padding-top: 8rem;
+      padding-left: 12%;
       padding-right: 1.8rem;
       padding-bottom: 4rem;
     }
 
-    /* MASONRY GRID — CSS columns */
+    /* MASONRY GRID */
     .grid {
-      columns: var(--columns);
+      columns: 5;
       column-gap: var(--gutter);
     }
 
     /* PROJECT ITEM */
-    .project {
+    figure.project {
       break-inside: avoid;
       margin-bottom: var(--gutter);
-      position: relative;
       display: block;
-      cursor: pointer;
     }
 
-    .project img {
+    figure.project a {
+      display: block;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    figure.project img {
       display: block;
       width: 100%;
       height: auto;
       transition: filter 0.5s ease;
     }
 
-    .project:hover img {
+    figure.project a:hover img {
       filter: invert(1) brightness(1.5) hue-rotate(180deg);
       mix-blend-mode: difference;
     }
 
-    /* Items without link (decorative/zoomable) */
-    .project.no-link {
-      cursor: default;
-    }
-
     figcaption {
-      font-family: var(--font-mono);
       font-size: var(--caption-size);
-      color: var(--caption);
       padding: 0.3rem 0 0 0;
       letter-spacing: 0.02em;
+      color: #000000;
     }
 
-    /* PLACEHOLDER for missing images */
-    .placeholder {
-      background-color: #111;
+    /* PLACEHOLDER — imagen aún no subida */
+    .img-placeholder {
       width: 100%;
       aspect-ratio: 3/4;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.6rem;
-      color: #444;
+      background-color: #e0e0e0;
+      display: block;
+      transition: filter 0.5s ease;
+    }
+
+    figure.project a:hover .img-placeholder {
+      filter: invert(1) brightness(1.5) hue-rotate(180deg);
+    }
+
+    /* PLACEHOLDER decorativo (sin proyecto) */
+    .deco-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background-color: #f0f0f0;
     }
 
     /* RESPONSIVE */
-    @media (max-width: 900px) {
-      :root { --columns: 3; }
-      main {
-        padding-left: 1.8rem;
-        padding-top: 10rem;
-      }
+    @media (max-width: 1100px) {
+      .grid { columns: 4; }
     }
 
-    @media (max-width: 560px) {
-      :root { --columns: 1; }
+    @media (max-width: 800px) {
+      .grid { columns: 3; }
+      main { padding-left: 1.8rem; padding-top: 10rem; }
+    }
+
+    @media (max-width: 500px) {
+      .grid { columns: 1; }
     }
   </style>
 </head>
@@ -136,129 +142,112 @@
   <main>
     <div class="grid">
 
-      <!-- USM Haller-T -->
       <figure class="project">
         <a href="proyectos/haller-t.html">
-          <img src="img/haller-t.jpg" alt="USM Haller-T">
+          <div class="img-placeholder"></div>
           <figcaption>USM Haller-T</figcaption>
         </a>
       </figure>
 
-      <!-- TRABA -->
       <figure class="project">
         <a href="proyectos/traba.html">
-          <img src="img/traba.jpg" alt="TRABA">
+          <div class="img-placeholder"></div>
           <figcaption>TRABA</figcaption>
         </a>
       </figure>
 
-      <!-- NAPBUF -->
       <figure class="project">
         <a href="proyectos/napbuf.html">
-          <img src="img/napbuf.jpg" alt="NAPBUF">
+          <div class="img-placeholder"></div>
           <figcaption>NAPBUF</figcaption>
         </a>
       </figure>
 
-      <!-- DIARIO DE CONQUISTA -->
       <figure class="project">
         <a href="proyectos/conquista.html">
-          <img src="img/conquista.jpg" alt="DIARIO DE CONQUISTA">
+          <div class="img-placeholder"></div>
           <figcaption>DIARIO DE CONQUISTA</figcaption>
         </a>
       </figure>
 
-      <!-- Sin título 1 (decorativo) -->
-      <figure class="project no-link">
-        <div class="placeholder">—</div>
+      <figure class="project">
+        <div class="deco-placeholder"></div>
       </figure>
 
-      <!-- innotable -->
       <figure class="project">
         <a href="proyectos/innotable.html">
-          <img src="img/innotable.jpg" alt="innotable">
+          <div class="img-placeholder"></div>
           <figcaption>innotable</figcaption>
         </a>
       </figure>
 
-      <!-- 1x1 -->
       <figure class="project">
         <a href="proyectos/1x1.html">
-          <img src="img/1x1.jpg" alt="1x1">
+          <div class="img-placeholder"></div>
           <figcaption>1x1</figcaption>
         </a>
       </figure>
 
-      <!-- MMMM -->
       <figure class="project">
         <a href="proyectos/mmmm.html">
-          <img src="img/mmmm.jpg" alt="MMMM">
+          <div class="img-placeholder"></div>
           <figcaption>MMMM</figcaption>
         </a>
       </figure>
 
-      <!-- STINA -->
       <figure class="project">
         <a href="proyectos/stina.html">
-          <img src="img/stina.jpg" alt="STINA">
+          <div class="img-placeholder"></div>
           <figcaption>STINA</figcaption>
         </a>
       </figure>
 
-      <!-- LA PLANÈTE SAUVAGE -->
       <figure class="project">
         <a href="proyectos/sauvage.html">
-          <img src="img/sauvage.jpg" alt="LA PLANÈTE SAUVAGE">
+          <div class="img-placeholder"></div>
           <figcaption>LA PLANÈTE SAUVAGE</figcaption>
         </a>
       </figure>
 
-      <!-- f/00 -->
       <figure class="project">
         <a href="proyectos/f00-low.html">
-          <img src="img/f00.jpg" alt="f/00">
+          <div class="img-placeholder"></div>
           <figcaption>f/00</figcaption>
         </a>
       </figure>
 
-      <!-- FLAIX -->
       <figure class="project">
         <a href="proyectos/flaix.html">
-          <img src="img/flaix.jpg" alt="FLAIX">
+          <div class="img-placeholder"></div>
           <figcaption>FLAIX</figcaption>
         </a>
       </figure>
 
-      <!-- Sin título 2 (decorativo) -->
-      <figure class="project no-link">
-        <div class="placeholder">—</div>
+      <figure class="project">
+        <div class="deco-placeholder"></div>
       </figure>
 
-      <!-- POLLO AL LIMÓN -->
       <figure class="project">
         <a href="proyectos/pollo.html">
-          <img src="img/pollo.jpg" alt="POLLO AL LIMÓN">
+          <div class="img-placeholder"></div>
           <figcaption>POLLO AL LIMÓN</figcaption>
         </a>
       </figure>
 
-      <!-- caramelo -->
       <figure class="project">
         <a href="proyectos/caramelo.html">
-          <img src="img/caramelo.jpg" alt="caramelo">
+          <div class="img-placeholder"></div>
           <figcaption>caramelo</figcaption>
         </a>
       </figure>
 
-      <!-- Sin título 3 (decorativo) -->
-      <figure class="project no-link">
-        <div class="placeholder">—</div>
+      <figure class="project">
+        <div class="deco-placeholder"></div>
       </figure>
 
-      <!-- ASE D'OR -->
       <figure class="project">
         <a href="proyectos/ase-dor.html">
-          <img src="img/ase-dor.jpg" alt="ASE D'OR">
+          <div class="img-placeholder"></div>
           <figcaption>ASE D'OR</figcaption>
         </a>
       </figure>
