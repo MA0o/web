@@ -97,8 +97,8 @@
       position: fixed;
       pointer-events: none;
       z-index: 9999;
-      width: 8px;
-      height: 8px;
+      width: 24px;
+      height: 24px;
       background: red;
       border-radius: 50%;
       transform: translate(-50%, -50%);
@@ -109,14 +109,13 @@
       pointer-events: none;
       z-index: 9999;
       font-family: var(--font-mono);
-      font-weight: bold;
-      font-size: 0.85rem;
-      color: #000000;
+      font-size: 1.2rem;
+      color: #ffffff;
+      mix-blend-mode: difference;
       white-space: nowrap;
       transform: translateY(-50%);
       opacity: 0;
       transition: opacity 0.15s ease;
-      mix-blend-mode: difference;
     }
 
     #cursor-label.active { opacity: 1; }
