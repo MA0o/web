@@ -133,6 +133,30 @@
     @media (max-width: 500px) {
       .grid { columns: 1; }
     }
+
+    /* CUSTOM CURSOR */
+    * { cursor: none; }
+
+    #cursor {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      font-family: var(--font-mono);
+      font-weight: bold;
+      font-size: 0.85rem;
+      color: #ffffff;
+      white-space: nowrap;
+      -webkit-text-fill-color: #ffffff;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      mix-blend-mode: difference;
+    }
+
+    #cursor.active {
+      opacity: 1;
+    }
+
   </style>
 </head>
 <body>
@@ -149,29 +173,25 @@
 
       <figure class="project">
         <a href="proyectos/haller-t.html">
-          <div class="thumb" style="height:500px;background:#d4d4d4;"></div>
-          <figcaption>USM Haller-T</figcaption>
+          <div class="thumb" style="height:500px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Crect width='10' height='10' fill='%23e63946'/%3E%3Crect y='4' width='10' height='2' fill='%23c1121f'/%3E%3C/svg%3E");background-repeat:repeat;"></div>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/traba.html">
-          <div class="thumb" style="height:300px;background:#c8c8c8;"></div>
-          <figcaption>TRABA</figcaption>
+          <div class="thumb" style="height:300px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Crect width='12' height='12' fill='%23457b9d'/%3E%3Ccircle cx='6' cy='6' r='2' fill='%231d3557'/%3E%3C/svg%3E");background-repeat:repeat;"></div>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/napbuf.html">
-          <div class="thumb" style="height:420px;background:#e0e0e0;"></div>
-          <figcaption>NAPBUF</figcaption>
+          <div class="thumb" style="height:420px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Crect width='10' height='10' fill='%232a9d8f'/%3E%3Cpath d='M0 0h10M0 5h10M0 10h10M0 0v10M5 0v10' stroke='%23264653' stroke-width='0.5'/%3E%3C/svg%3E");background-repeat:repeat;"></div>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/conquista.html">
-          <div class="thumb" style="height:260px;background:#b8b8b8;"></div>
-          <figcaption>DIARIO DE CONQUISTA</figcaption>
+          <div class="thumb" style="height:260px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%23e9c46a'/%3E%3Cpath d='M0 8L8 0M-2 2L2-2M6 10L10 6' stroke='%23f4a261' stroke-width='2'/%3E%3C/svg%3E");background-repeat:repeat;"></div>
         </a>
       </figure>
 
@@ -181,50 +201,43 @@
 
       <figure class="project">
         <a href="proyectos/innotable.html">
-          <div class="thumb" style="height:480px;background:#cccccc;"></div>
-          <figcaption>innotable</figcaption>
+          <div class="thumb" style="height:480px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Crect width='12' height='12' fill='%23264653'/%3E%3Crect width='6' height='6' fill='%232a9d8f'/%3E%3Crect x='6' y='6' width='6' height='6' fill='%232a9d8f'/%3E%3C/svg%3E");background-repeat:repeat;"></div>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/1x1.html">
-          <div class="thumb" style="height:340px;background:#d8d8d8;"></div>
-          <figcaption>1x1</figcaption>
+          <div class="thumb" style="height:340px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%23f4a261'/%3E%3Crect x='3' width='2' height='8' fill='%23e76f51'/%3E%3C/svg%3E");background-repeat:repeat;"></div>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/mmmm.html">
-          <div class="thumb" style="height:560px;background:#c0c0c0;"></div>
-          <figcaption>MMMM</figcaption>
+          <div class="thumb" style="height:560px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Crect width='14' height='14' fill='%23a8dadc'/%3E%3Crect x='6' width='2' height='14' fill='%23457b9d'/%3E%3Crect y='6' width='14' height='2' fill='%23457b9d'/%3E%3C/svg%3E");background-repeat:repeat;"></div>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/stina.html">
-          <div class="thumb" style="height:290px;background:#e8e8e8;"></div>
-          <figcaption>STINA</figcaption>
+          <div class="thumb" style="height:290px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='16' height='16' fill='%236d6875'/%3E%3Ccircle cx='8' cy='8' r='4' fill='%23b5838d'/%3E%3C/svg%3E");background-repeat:repeat;"></div>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/sauvage.html">
-          <div class="thumb" style="height:450px;background:#c4c4c4;"></div>
-          <figcaption>LA PLANÈTE SAUVAGE</figcaption>
+          <div class="thumb" style="height:450px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Crect width='6' height='6' fill='%23b5e48c'/%3E%3Cpath d='M0 6L6 0' stroke='%2352b788' stroke-width='1'/%3E%3C/svg%3E");background-repeat:repeat;"></div>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/f00-low.html">
-          <div class="thumb" style="height:310px;background:#d0d0d0;"></div>
-          <figcaption>f/00</figcaption>
+          <div class="thumb" style="height:310px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='6'%3E%3Crect width='12' height='6' fill='%23ff6b6b'/%3E%3Cpath d='M0 6L3 0L6 6L9 0L12 6' stroke='%23c9184a' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:repeat;"></div>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/flaix.html">
-          <div class="thumb" style="height:520px;background:#bcbcbc;"></div>
-          <figcaption>FLAIX</figcaption>
+          <div class="thumb" style="height:520px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect width='20' height='20' fill='%234ecdc4'/%3E%3Crect x='1' y='1' width='18' height='18' fill='none' stroke='%231a535c' stroke-width='1'/%3E%3C/svg%3E");background-repeat:repeat;"></div>
         </a>
       </figure>
 
@@ -234,15 +247,13 @@
 
       <figure class="project">
         <a href="proyectos/pollo.html">
-          <div class="thumb" style="height:270px;background:#dcdcdc;"></div>
-          <figcaption>POLLO AL LIMÓN</figcaption>
+          <div class="thumb" style="height:270px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Crect width='6' height='6' fill='%23ffd166'/%3E%3Cpath d='M0 0h6M0 3h6M0 6h6M0 0v6M3 0v6' stroke='%23f77f00' stroke-width='0.4'/%3E%3C/svg%3E");background-repeat:repeat;"></div>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/caramelo.html">
-          <div class="thumb" style="height:400px;background:#c6c6c6;"></div>
-          <figcaption>caramelo</figcaption>
+          <div class="thumb" style="height:400px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Crect width='10' height='10' fill='%2306d6a0'/%3E%3Cpolygon points='5,0 10,10 0,10' fill='%23028a6c'/%3E%3C/svg%3E");background-repeat:repeat;"></div>
         </a>
       </figure>
 
@@ -252,13 +263,36 @@
 
       <figure class="project">
         <a href="proyectos/ase-dor.html">
-          <div class="thumb" style="height:380px;background:#d6d6d6;"></div>
-          <figcaption>ASE D'OR</figcaption>
+          <div class="thumb" style="height:380px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23118ab2'/%3E%3Crect y='2' width='4' height='1' fill='%2306668c'/%3E%3C/svg%3E");background-repeat:repeat;"></div>
         </a>
       </figure>
 
     </div>
   </main>
 
+
+  <div id="cursor"></div>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const projects = document.querySelectorAll('figure.project a');
+
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    projects.forEach(a => {
+      const title = a.querySelector('figcaption') ? a.querySelector('figcaption').textContent : '';
+      a.addEventListener('mouseenter', () => {
+        cursor.textContent = title;
+        cursor.classList.add('active');
+      });
+      a.addEventListener('mouseleave', () => {
+        cursor.classList.remove('active');
+        cursor.textContent = '';
+      });
+    });
+  </script>
 </body>
 </html>
