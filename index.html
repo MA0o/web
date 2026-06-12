@@ -79,14 +79,19 @@
       color: var(--text);
     }
 
-    figure.project img {
+    figure.project img,
+    figure.project .thumb {
       display: block;
       width: 100%;
-      height: auto;
       transition: filter 0.5s ease;
     }
 
-    figure.project a:hover img {
+    figure.project img {
+      height: auto;
+    }
+
+    figure.project a:hover img,
+    figure.project a:hover .thumb {
       filter: invert(1) brightness(1.5) hue-rotate(180deg);
       mix-blend-mode: difference;
     }
@@ -107,9 +112,7 @@
       transition: filter 0.5s ease;
     }
 
-    figure.project a:hover .img-placeholder {
-      filter: invert(1) brightness(1.5) hue-rotate(180deg);
-    }
+    
 
     /* PLACEHOLDER decorativo (sin proyecto) */
     .deco-placeholder {
@@ -147,28 +150,28 @@
 
       <figure class="project">
         <a href="proyectos/haller-t.html">
-          <div style="width:100%;height:500px;background:#d4d4d4;display:block;transition:filter 0.5s ease;"></div>
+          <div class="thumb" style="height:500px;background:#d4d4d4;"></div>
           <figcaption>USM Haller-T</figcaption>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/traba.html">
-          <div style="width:100%;height:300px;background:#c8c8c8;display:block;transition:filter 0.5s ease;"></div>
+          <div class="thumb" style="height:300px;background:#c8c8c8;"></div>
           <figcaption>TRABA</figcaption>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/napbuf.html">
-          <div style="width:100%;height:420px;background:#e0e0e0;display:block;transition:filter 0.5s ease;"></div>
+          <div class="thumb" style="height:420px;background:#e0e0e0;"></div>
           <figcaption>NAPBUF</figcaption>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/conquista.html">
-          <div style="width:100%;height:260px;background:#b8b8b8;display:block;transition:filter 0.5s ease;"></div>
+          <div class="thumb" style="height:260px;background:#b8b8b8;"></div>
           <figcaption>DIARIO DE CONQUISTA</figcaption>
         </a>
       </figure>
@@ -179,49 +182,49 @@
 
       <figure class="project">
         <a href="proyectos/innotable.html">
-          <div style="width:100%;height:480px;background:#cccccc;display:block;transition:filter 0.5s ease;"></div>
+          <div class="thumb" style="height:480px;background:#cccccc;"></div>
           <figcaption>innotable</figcaption>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/1x1.html">
-          <div style="width:100%;height:340px;background:#d8d8d8;display:block;transition:filter 0.5s ease;"></div>
+          <div class="thumb" style="height:340px;background:#d8d8d8;"></div>
           <figcaption>1x1</figcaption>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/mmmm.html">
-          <div style="width:100%;height:560px;background:#c0c0c0;display:block;transition:filter 0.5s ease;"></div>
+          <div class="thumb" style="height:560px;background:#c0c0c0;"></div>
           <figcaption>MMMM</figcaption>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/stina.html">
-          <div style="width:100%;height:290px;background:#e8e8e8;display:block;transition:filter 0.5s ease;"></div>
+          <div class="thumb" style="height:290px;background:#e8e8e8;"></div>
           <figcaption>STINA</figcaption>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/sauvage.html">
-          <div style="width:100%;height:450px;background:#c4c4c4;display:block;transition:filter 0.5s ease;"></div>
+          <div class="thumb" style="height:450px;background:#c4c4c4;"></div>
           <figcaption>LA PLANÈTE SAUVAGE</figcaption>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/f00-low.html">
-          <div style="width:100%;height:310px;background:#d0d0d0;display:block;transition:filter 0.5s ease;"></div>
+          <div class="thumb" style="height:310px;background:#d0d0d0;"></div>
           <figcaption>f/00</figcaption>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/flaix.html">
-          <div style="width:100%;height:520px;background:#bcbcbc;display:block;transition:filter 0.5s ease;"></div>
+          <div class="thumb" style="height:520px;background:#bcbcbc;"></div>
           <figcaption>FLAIX</figcaption>
         </a>
       </figure>
@@ -232,14 +235,14 @@
 
       <figure class="project">
         <a href="proyectos/pollo.html">
-          <div style="width:100%;height:270px;background:#dcdcdc;display:block;transition:filter 0.5s ease;"></div>
+          <div class="thumb" style="height:270px;background:#dcdcdc;"></div>
           <figcaption>POLLO AL LIMÓN</figcaption>
         </a>
       </figure>
 
       <figure class="project">
         <a href="proyectos/caramelo.html">
-          <div style="width:100%;height:400px;background:#c6c6c6;display:block;transition:filter 0.5s ease;"></div>
+          <div class="thumb" style="height:400px;background:#c6c6c6;"></div>
           <figcaption>caramelo</figcaption>
         </a>
       </figure>
@@ -250,7 +253,7 @@
 
       <figure class="project">
         <a href="proyectos/ase-dor.html">
-          <div style="width:100%;height:380px;background:#d6d6d6;display:block;transition:filter 0.5s ease;"></div>
+          <div class="thumb" style="height:380px;background:#d6d6d6;"></div>
           <figcaption>ASE D'OR</figcaption>
         </a>
       </figure>
