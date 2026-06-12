@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mateo — Portfolio</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #000000;
+      --text: #ffffff;
+      --caption: #ffffff;
+      --font-mono: 'Courier New', Courier, monospace;
+      --nav-size: 0.85rem;
+      --caption-size: 0.72rem;
+      --gutter: 0.3rem;
+      --columns: 5;
+    }
+
+    html, body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding: 1.6rem 1.8rem;
+      z-index: 100;
+      line-height: 1.7;
+      font-size: var(--nav-size);
+    }
+
+    nav a {
+      display: block;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* GRID WRAPPER */
+    main {
+      padding-top: 8.5rem;
+      padding-left: calc(1.8rem + 9ch); /* offset for nav column */
+      padding-right: 1.8rem;
+      padding-bottom: 4rem;
+    }
+
+    /* MASONRY GRID — CSS columns */
+    .grid {
+      columns: var(--columns);
+      column-gap: var(--gutter);
+    }
+
+    /* PROJECT ITEM */
+    .project {
+      break-inside: avoid;
+      margin-bottom: var(--gutter);
+      position: relative;
+      display: block;
+      cursor: pointer;
+    }
+
+    .project img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: filter 0.5s ease;
+    }
+
+    .project:hover img {
+      filter: invert(1) brightness(1.5) hue-rotate(180deg);
+      mix-blend-mode: difference;
+    }
+
+    /* Items without link (decorative/zoomable) */
+    .project.no-link {
+      cursor: default;
+    }
+
+    figcaption {
+      font-family: var(--font-mono);
+      font-size: var(--caption-size);
+      color: var(--caption);
+      padding: 0.3rem 0 0 0;
+      letter-spacing: 0.02em;
+    }
+
+    /* PLACEHOLDER for missing images */
+    .placeholder {
+      background-color: #111;
+      width: 100%;
+      aspect-ratio: 3/4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      color: #444;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      :root { --columns: 3; }
+      main {
+        padding-left: 1.8rem;
+        padding-top: 10rem;
+      }
+    }
+
+    @media (max-width: 560px) {
+      :root { --columns: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">1. Proyectos</a>
+    <a href="about.html">2. About</a>
+    <a href="cv.html">3. CV</a>
+    <a href="contact.html">4. Contact</a>
+  </nav>
+
+  <main>
+    <div class="grid">
+
+      <!-- USM Haller-T -->
+      <figure class="project">
+        <a href="proyectos/haller-t.html">
+          <img src="img/haller-t.jpg" alt="USM Haller-T">
+          <figcaption>USM Haller-T</figcaption>
+        </a>
+      </figure>
+
+      <!-- TRABA -->
+      <figure class="project">
+        <a href="proyectos/traba.html">
+          <img src="img/traba.jpg" alt="TRABA">
+          <figcaption>TRABA</figcaption>
+        </a>
+      </figure>
+
+      <!-- NAPBUF -->
+      <figure class="project">
+        <a href="proyectos/napbuf.html">
+          <img src="img/napbuf.jpg" alt="NAPBUF">
+          <figcaption>NAPBUF</figcaption>
+        </a>
+      </figure>
+
+      <!-- DIARIO DE CONQUISTA -->
+      <figure class="project">
+        <a href="proyectos/conquista.html">
+          <img src="img/conquista.jpg" alt="DIARIO DE CONQUISTA">
+          <figcaption>DIARIO DE CONQUISTA</figcaption>
+        </a>
+      </figure>
+
+      <!-- Sin título 1 (decorativo) -->
+      <figure class="project no-link">
+        <div class="placeholder">—</div>
+      </figure>
+
+      <!-- innotable -->
+      <figure class="project">
+        <a href="proyectos/innotable.html">
+          <img src="img/innotable.jpg" alt="innotable">
+          <figcaption>innotable</figcaption>
+        </a>
+      </figure>
+
+      <!-- 1x1 -->
+      <figure class="project">
+        <a href="proyectos/1x1.html">
+          <img src="img/1x1.jpg" alt="1x1">
+          <figcaption>1x1</figcaption>
+        </a>
+      </figure>
+
+      <!-- MMMM -->
+      <figure class="project">
+        <a href="proyectos/mmmm.html">
+          <img src="img/mmmm.jpg" alt="MMMM">
+          <figcaption>MMMM</figcaption>
+        </a>
+      </figure>
+
+      <!-- STINA -->
+      <figure class="project">
+        <a href="proyectos/stina.html">
+          <img src="img/stina.jpg" alt="STINA">
+          <figcaption>STINA</figcaption>
+        </a>
+      </figure>
+
+      <!-- LA PLANÈTE SAUVAGE -->
+      <figure class="project">
+        <a href="proyectos/sauvage.html">
+          <img src="img/sauvage.jpg" alt="LA PLANÈTE SAUVAGE">
+          <figcaption>LA PLANÈTE SAUVAGE</figcaption>
+        </a>
+      </figure>
+
+      <!-- f/00 -->
+      <figure class="project">
+        <a href="proyectos/f00-low.html">
+          <img src="img/f00.jpg" alt="f/00">
+          <figcaption>f/00</figcaption>
+        </a>
+      </figure>
+
+      <!-- FLAIX -->
+      <figure class="project">
+        <a href="proyectos/flaix.html">
+          <img src="img/flaix.jpg" alt="FLAIX">
+          <figcaption>FLAIX</figcaption>
+        </a>
+      </figure>
+
+      <!-- Sin título 2 (decorativo) -->
+      <figure class="project no-link">
+        <div class="placeholder">—</div>
+      </figure>
+
+      <!-- POLLO AL LIMÓN -->
+      <figure class="project">
+        <a href="proyectos/pollo.html">
+          <img src="img/pollo.jpg" alt="POLLO AL LIMÓN">
+          <figcaption>POLLO AL LIMÓN</figcaption>
+        </a>
+      </figure>
+
+      <!-- caramelo -->
+      <figure class="project">
+        <a href="proyectos/caramelo.html">
+          <img src="img/caramelo.jpg" alt="caramelo">
+          <figcaption>caramelo</figcaption>
+        </a>
+      </figure>
+
+      <!-- Sin título 3 (decorativo) -->
+      <figure class="project no-link">
+        <div class="placeholder">—</div>
+      </figure>
+
+      <!-- ASE D'OR -->
+      <figure class="project">
+        <a href="proyectos/ase-dor.html">
+          <img src="img/ase-dor.jpg" alt="ASE D'OR">
+          <figcaption>ASE D'OR</figcaption>
+        </a>
+      </figure>
+
+    </div>
+  </main>
+
+</body>
+</html>
