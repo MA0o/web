@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DIARIO DE CONQUISTA — Mateo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #000000;
+      --text: #ffffff;
+      --font-mono: 'IBM Plex Mono', 'Courier New', Courier, monospace;
+      --nav-size: 1rem;
+    }
+
+    html, body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      padding: 0.25rem 0.6rem;
+      z-index: 100;
+      font-size: var(--nav-size);
+      line-height: 1.1;
+      mix-blend-mode: difference;
+      background: #ffffff;
+      color: #000000;
+    }
+
+    nav a {
+      display: block;
+      width: fit-content;
+      color: #000000;
+      text-decoration: none;
+    }
+
+    @media (max-width: 800px) {
+      nav { font-size: 1.3rem; }
+      .sequence { margin-top: 6.5rem; }
+    }
+
+    /* CURSOR */
+    * { cursor: none; }
+
+    #cursor-dot {
+      position: fixed;
+      pointer-events: none;
+      z-index: 10002;
+      width: 24px;
+      height: 24px;
+      background: red;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: border-radius 0.15s ease;
+    }
+
+    #cursor-dot.square {
+      border-radius: 0;
+    }
+
+    @media (max-width: 900px) {
+      #cursor-dot { display: none; }
+    }
+
+    /* SEQUENCE */
+    .sequence {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3497 / 2472;
+      overflow: hidden;
+    }
+
+    .sequence img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      display: block;
+    }
+
+    .sequence img.active { opacity: 1; }
+
+    /* TEXT */
+    .content {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1rem;
+      padding: 2rem;
+    }
+
+    .project-text {
+      grid-column: 7 / -1;
+      text-align: left;
+      line-height: 1.4;
+      font-size: 0.75rem;
+    }
+
+    .project-text p { margin-bottom: 1em; }
+
+    .quote-block { margin-top: 4em; }
+
+    .quote-mark { font-style: normal; }
+
+    .project-text cite {
+      display: block;
+      margin-top: 0.5em;
+      font-style: normal;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 800px) {
+      .project-text { grid-column: 1 / -1; }
+    }
+
+    /* VIEWER */
+    .viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: #000000;
+      display: none;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+    }
+
+    .viewer.open { display: block; }
+
+    body.viewer-open { overflow: hidden; }
+
+    .viewer-close {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      color: #ffffff;
+      z-index: 10001;
+      display: block;
+      text-decoration: none;
+    }
+
+    .viewer-close svg {
+      width: clamp(2rem, 5vw, 4rem);
+      height: clamp(2rem, 5vw, 4rem);
+      display: block;
+    }
+
+    .viewer-prev, .viewer-next {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ffffff;
+      z-index: 10001;
+      display: block;
+      text-decoration: none;
+    }
+
+    .viewer-prev { left: 1rem; }
+    .viewer-next { right: 1rem; }
+
+    .viewer-prev svg, .viewer-next svg {
+      width: clamp(2rem, 5vw, 4rem);
+      height: clamp(2rem, 5vw, 4rem);
+      display: block;
+    }
+
+    .viewer-images {
+      display: flex;
+      height: 100%;
+    }
+
+    .viewer-images img {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      scroll-snap-align: start;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html">1. Proyectos</a>
+    <a href="../about.html">2. About</a>
+    <a href="../cv.html">3. CV</a>
+    <a href="../contact.html">4. Contact</a>
+  </nav>
+
+  <div class="sequence" id="sequence">
+    <img src="../img/proyectos/conquista/1.png" class="active" alt="">
+    <img src="../img/proyectos/conquista/2.png" alt="">
+    <img src="../img/proyectos/conquista/3.png" alt="">
+    <img src="../img/proyectos/conquista/4.png" alt="">
+    <img src="../img/proyectos/conquista/5.png" alt="">
+    <img src="../img/proyectos/conquista/6.png" alt="">
+    <img src="../img/proyectos/conquista/7.png" alt="">
+    <img src="../img/proyectos/conquista/8.png" alt="">
+    <img src="../img/proyectos/conquista/9.png" alt="">
+    <img src="../img/proyectos/conquista/10.png" alt="">
+    <img src="../img/proyectos/conquista/11.png" alt="">
+    <img src="../img/proyectos/conquista/12.png" alt="">
+  </div>
+
+  <div class="content">
+    <div class="project-text">
+      <p>Este es el diario de Conquista, el primer jinete del apocalipsis. A partir de la película de “El séptimo sello”, imaginé un objeto que podría existir dentro de ese universo y que pertenece a un personaje intruso, que se camufla en la trama.</p>
+
+      <p>A Conquista la introduzco como el contrapunto de Muerte; silencio y ruido, fin y principio, certeza y conflicto, descanso y lucha etc.</p>
+
+      <p>Conquista no es eterna por tanto ha de ser más observadora que la muerte. Conquista observa y cuestiona a Jof, el personaje más inocente y soñador, desafiando su fe y su arte en un mundo marcado por la peste y el silencio de Dios.</p>
+
+      <div class="quote-block">
+        <p class="quote-mark">“</p>
+        <p>Vi cuando el Cordero rompió el primero de los siete sellos y oí a uno de los cuatro seres vivientes que decía con voz de trueno: «¡Ven!». Miré y apareció un caballo blanco. El jinete llevaba un arco; se le dio una corona y salió como vencedor, para seguir venciendo.</p>
+        <p class="quote-mark">”</p>
+        <cite>Apocalipsis 6:1-17</cite>
+      </div>
+    </div>
+  </div>
+
+  <div class="viewer" id="viewer">
+    <a class="viewer-close" href="#" aria-label="Cerrar">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="7.21 7.21 17.59 17.59">
+        <path fill="currentColor" d="M 8.51 7.21 L 7.21 8.51 L 14.72 16.00 L 7.21 23.52 L 8.48 24.80 L 15.99 17.30 L 23.48 24.80 L 24.77 23.50 L 17.27 16.00 L 24.80 8.48 L 23.52 7.21 L 15.99 14.72 L 8.51 7.21 Z"></path>
+      </svg>
+    </a>
+
+    <a class="viewer-prev" href="#" aria-label="Anterior">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="15.99 7.21 8.81 17.59">
+        <path fill="currentColor" d="M 23.48 24.80 L 24.77 23.50 L 17.27 16.00 L 24.80 8.48 L 23.52 7.21 L 15.99 14.72 Z"></path>
+      </svg>
+    </a>
+
+    <a class="viewer-next" href="#" aria-label="Siguiente">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="7.21 7.21 8.78 17.59">
+        <path fill="currentColor" d="M 8.51 7.21 L 7.21 8.51 L 14.72 16.00 L 7.21 23.52 L 8.48 24.80 L 15.99 17.30 Z"></path>
+      </svg>
+    </a>
+    <div class="viewer-images">
+      <img src="../img/proyectos/conquista/1.png" alt="">
+      <img src="../img/proyectos/conquista/2.png" alt="">
+      <img src="../img/proyectos/conquista/3.png" alt="">
+      <img src="../img/proyectos/conquista/4.png" alt="">
+      <img src="../img/proyectos/conquista/5.png" alt="">
+      <img src="../img/proyectos/conquista/6.png" alt="">
+      <img src="../img/proyectos/conquista/7.png" alt="">
+      <img src="../img/proyectos/conquista/8.png" alt="">
+      <img src="../img/proyectos/conquista/9.png" alt="">
+      <img src="../img/proyectos/conquista/10.png" alt="">
+      <img src="../img/proyectos/conquista/11.png" alt="">
+      <img src="../img/proyectos/conquista/12.png" alt="">
+    </div>
+  </div>
+
+  <div id="cursor-dot"></div>
+
+  <script>
+    const dot = document.getElementById('cursor-dot');
+
+    document.addEventListener('mousemove', e => {
+      dot.style.left = e.clientX + 'px';
+      dot.style.top = e.clientY + 'px';
+    });
+
+    document.querySelectorAll('nav a, .viewer-close, .viewer-prev, .viewer-next').forEach(a => {
+      a.addEventListener('mouseenter', () => dot.classList.add('square'));
+      a.addEventListener('mouseleave', () => dot.classList.remove('square'));
+    });
+  </script>
+
+  <script>
+    // Image sequence animation
+    const seqImgs = document.querySelectorAll('#sequence img');
+    let seqIndex = 0;
+    setInterval(() => {
+      seqImgs[seqIndex].classList.remove('active');
+      seqIndex = (seqIndex + 1) % seqImgs.length;
+      seqImgs[seqIndex].classList.add('active');
+    }, 750);
+  </script>
+
+  <script>
+    // Fullscreen viewer
+    const sequence = document.getElementById('sequence');
+    const viewer = document.getElementById('viewer');
+    const viewerClose = document.querySelector('.viewer-close');
+    const viewerPrev = document.querySelector('.viewer-prev');
+    const viewerNext = document.querySelector('.viewer-next');
+    const viewerImgs = document.querySelectorAll('.viewer-images img');
+
+    function openViewer() {
+      viewer.classList.add('open');
+      document.body.classList.add('viewer-open');
+      viewer.scrollLeft = seqIndex * viewerImgs[0].getBoundingClientRect().width;
+    }
+
+    function closeViewer() {
+      viewer.classList.remove('open');
+      document.body.classList.remove('viewer-open');
+    }
+
+    sequence.addEventListener('click', openViewer);
+
+    viewerClose.addEventListener('click', e => {
+      e.preventDefault();
+      closeViewer();
+    });
+
+    viewerPrev.addEventListener('click', e => {
+      e.preventDefault();
+      viewer.scrollBy({ left: -viewerImgs[0].getBoundingClientRect().width, behavior: 'smooth' });
+    });
+
+    viewerNext.addEventListener('click', e => {
+      e.preventDefault();
+      viewer.scrollBy({ left: viewerImgs[0].getBoundingClientRect().width, behavior: 'smooth' });
+    });
+
+    viewer.addEventListener('click', e => {
+      if (e.target === viewer) closeViewer();
+    });
+  </script>
+
+</body>
+</html>
