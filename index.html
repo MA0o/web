@@ -129,6 +129,10 @@
 
     #cursor-label.active { opacity: 1; }
 
+    @media (max-width: 900px) {
+      #cursor-dot, #cursor-label { display: none; }
+    }
+
     /* CV OVERLAY */
     .cv-overlay {
       position: fixed;
@@ -261,9 +265,6 @@
       .col-photo { display: block; }
       .cv-photo { height: auto; object-fit: initial; width: calc(100% + 3rem); margin: 0 -1.5rem; }
       .exp-spacer { display: none; }
-      .cv-title { font-size: 12.8em; }
-      .cv-close svg { width: 10.4em; height: 10.4em; }
-      .cv-top { flex-wrap: wrap; gap: 0.5rem; }
     }
   </style>
 </head>
