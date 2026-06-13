@@ -50,6 +50,11 @@
       text-decoration: none;
     }
 
+    .cv-entry a {
+      color: inherit;
+      text-decoration: none;
+    }
+
     .nav-lang {
       display: flex;
       flex-direction: column;
@@ -72,6 +77,7 @@
     .grid {
       columns: 5;
       column-gap: var(--gutter);
+      margin-right: 1.2rem;
     }
 
     figure.project {
@@ -101,9 +107,10 @@
     /* RESPONSIVE */
     @media (max-width: 1100px) { .grid { columns: 4; } }
     @media (max-width: 800px) {
-      .grid { columns: 3; }
+      .grid { columns: 3; margin-right: 0; }
       main { padding-left: 0; padding-right: 0; padding-top: 10rem; }
       nav { font-size: 1.3rem; }
+      .nav-lang { margin-right: 1.2rem; }
     }
     @media (max-width: 500px) { .grid { columns: 1; } }
 
@@ -113,7 +120,7 @@
     #cursor-dot {
       position: fixed;
       pointer-events: none;
-      z-index: 9999;
+      z-index: 10001;
       width: 24px;
       height: 24px;
       background: red;
@@ -129,7 +136,7 @@
     #cursor-label {
       position: fixed;
       pointer-events: none;
-      z-index: 9999;
+      z-index: 10001;
       font-family: var(--font-mono);
       font-size: 1rem;
       color: #ffffff;
@@ -422,7 +429,7 @@
           <div class="cv-section">
             <h2 class="cv-heading" data-i18n="cv-heading-estudios">Estudios</h2>
             <div class="cv-entry">
-              <b>2022 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span><span data-i18n="word-presente">presente</span><br><span data-i18n="edu1-title">DISEÑO, ELISAVA</span></b><br>
+              <b>2022 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>2026<br><span data-i18n="edu1-title">DISEÑO, ELISAVA</span></b><br>
               <span data-i18n="loc-barcelona">Barcelona, España</span>
             </div>
             <div class="cv-entry">
@@ -434,16 +441,16 @@
           <div class="cv-section">
             <h2 class="cv-heading" data-i18n="cv-heading-experiencia">Experiencia</h2>
             <div class="cv-entry">
-              <b>2025 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span><span data-i18n="word-presente">presente</span><br>Galería200CENT</b><br>
-              <span data-i18n="exp1-role">Miembro de la junta</span>
+              <b>2025 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>2026<br><a href="https://www.luiseslava.com/" target="_blank" rel="noopener">Luis Eslava Studio</a></b><br>
+              <span data-i18n="exp-eslava-desc">Diseño y producción de espacios, iluminación y mobiliario para proyectos de restauración.</span>
             </div>
             <div class="cv-entry">
-              <b>2020 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>2025<br>Santi Moix Studio</b><br>
-              <span data-i18n="exp2-desc">Asistencia en taller, logística, fotografía, diseño y producción de estructuras de exhibición, producción e instalación de obra (Barcelona, Miami, Milán, Nueva York)</span>
+              <b>2020 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>2025<br><a href="https://www.santimoix.com/" target="_blank" rel="noopener">Santi Moix Studio</a></b><br>
+              <span data-i18n="exp2-desc">Diseño y producción de estructuras de exhibición, y transporte, montaje y desmontaje de obra de alto valor (Barcelona, Miami, Milán, Nueva York).</span>
             </div>
             <div class="cv-entry">
-              <b>2019 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>2024<br><span data-i18n="gallery-marlborough">Galería Marlborough</span></b>, Barcelona<br>
-              <span data-i18n="exp3-desc">Instalación, envalaje y manipulación de obra. Diseño y producción de cajas para transporte.</span>
+              <b>2019 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>2024<br><a href="https://www.marlboroughgallery.com/" target="_blank" rel="noopener"><span data-i18n="gallery-marlborough">Galería Marlborough</span></a></b>, Barcelona<br>
+              <span data-i18n="exp3-desc">Diseño y producción de embalajes a medida e instalación de obra de arte de alto valor.</span>
             </div>
           </div>
         </div>
@@ -451,13 +458,12 @@
         <div class="col-exp-b">
           <div class="exp-spacer"></div>
           <div class="cv-entry">
-            <b>2017 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>2024<br>taller de oquis</b><br>
-            <span data-i18n="exp4-desc">diseño y producción (moët, filmin, jura)</span>
+            <b>2017 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span><span data-i18n="word-presente">presente</span><br>taller de oquis</b><br>
+            <span data-i18n="exp4-desc">Diseño y producción de objetos para clientes como Moët, Filmin y Jura.</span>
           </div>
           <div class="cv-entry">
-            <b>2013 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span><span data-i18n="word-presente">presente</span></b><br>
-            Associació Veïns Verdi del Mig, Barcelona<br>
-            <span data-i18n="exp5-desc">Diversas colaboraciones<br>Parte del equipo de diseño y producción del decorado<br>Verdi del Mig - Festa Major de Gràcia</span>
+            <b>2025 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span><span data-i18n="word-presente">presente</span><br><a href="https://200cent.org/" target="_blank" rel="noopener">Galería 200CENT</a></b><br>
+            <span data-i18n="exp1-role">Miembro de la junta</span>
           </div>
         </div>
 
@@ -473,7 +479,7 @@
           <div class="cv-section">
             <h2 class="cv-heading" data-i18n="cv-heading-idiomas">Idiomas</h2>
             <div class="idiomas-list" data-i18n="idiomas-list">
-              Castellano<br>Catalán<br>Inglés
+              Castellano → Nativo<br>Catalán → Nativo<br>Inglés → Profesional
             </div>
           </div>
 
@@ -509,7 +515,7 @@
       });
     });
 
-    document.querySelectorAll('nav a').forEach(a => {
+    document.querySelectorAll('nav a, .cv-entry a').forEach(a => {
       a.addEventListener('mouseenter', () => dot.classList.add('square'));
       a.addEventListener('mouseleave', () => dot.classList.remove('square'));
     });
@@ -531,12 +537,12 @@
         'edu2-title': 'ARQUITECTURA, ETSAB',
         'loc-barcelona': 'Barcelona, España',
         'exp1-role': 'Miembro de la junta',
-        'exp2-desc': 'Asistencia en taller, logística, fotografía, diseño y producción de estructuras de exhibición, producción e instalación de obra (Barcelona, Miami, Milán, Nueva York)',
+        'exp-eslava-desc': 'Diseño y producción de espacios, iluminación y mobiliario para proyectos de restauración.',
+        'exp2-desc': 'Diseño y producción de estructuras de exhibición, y transporte, montaje y desmontaje de obra de alto valor (Barcelona, Miami, Milán, Nueva York).',
         'gallery-marlborough': 'Galería Marlborough',
-        'exp3-desc': 'Instalación, envalaje y manipulación de obra. Diseño y producción de cajas para transporte.',
-        'exp4-desc': 'diseño y producción (moët, filmin, jura)',
-        'exp5-desc': 'Diversas colaboraciones<br>Parte del equipo de diseño y producción del decorado<br>Verdi del Mig - Festa Major de Gràcia',
-        'idiomas-list': 'Castellano<br>Catalán<br>Inglés',
+        'exp3-desc': 'Diseño y producción de embalajes a medida e instalación de obra de arte de alto valor.',
+        'exp4-desc': 'Diseño y producción de objetos para clientes como Moët, Filmin y Jura.',
+        'idiomas-list': 'Castellano → Nativo<br>Catalán → Nativo<br>Inglés → Profesional',
       },
       en: {
         'nav-projects': '1. Projects',
@@ -551,12 +557,12 @@
         'edu2-title': 'ARCHITECTURE, ETSAB',
         'loc-barcelona': 'Barcelona, Spain',
         'exp1-role': 'Board member',
-        'exp2-desc': 'Studio assistance, logistics, photography, design and production of exhibition structures, production and installation of artwork (Barcelona, Miami, Milan, New York)',
+        'exp-eslava-desc': 'Design and production of spaces, lighting and furniture for restoration projects.',
+        'exp2-desc': 'Design and production of exhibition structures, and transport, assembly and dismantling of high-value artwork (Barcelona, Miami, Milan, New York).',
         'gallery-marlborough': 'Marlborough Gallery',
-        'exp3-desc': 'Installation, packing and handling of artwork. Design and production of transport crates.',
-        'exp4-desc': 'design and production (moët, filmin, jura)',
-        'exp5-desc': 'Various collaborations<br>Part of the design and production team for the set<br>Verdi del Mig - Festa Major de Gràcia',
-        'idiomas-list': 'Spanish<br>Catalan<br>English',
+        'exp3-desc': 'Design and production of bespoke packaging and installation of high-value artwork.',
+        'exp4-desc': 'Design and production of pieces for clients such as Moët, Filmin and Jura.',
+        'idiomas-list': 'Spanish → Native<br>Catalan → Native<br>English → Professional',
       },
       ca: {
         'nav-projects': '1. Projectes',
@@ -571,12 +577,12 @@
         'edu2-title': 'ARQUITECTURA, ETSAB',
         'loc-barcelona': 'Barcelona, Espanya',
         'exp1-role': 'Membre de la junta',
-        'exp2-desc': "Assistència de taller, logística, fotografia, disseny i producció d'estructures d'exhibició, producció i instal·lació d'obra (Barcelona, Miami, Milà, Nova York)",
+        'exp-eslava-desc': "Disseny i producció d'espais, il·luminació i mobiliari per a projectes de restauració.",
+        'exp2-desc': "Disseny i producció d'estructures d'exhibició, i transport, muntatge i desmuntatge d'obra d'alt valor (Barcelona, Miami, Milà, Nova York).",
         'gallery-marlborough': 'Galeria Marlborough',
-        'exp3-desc': "Instal·lació, embalatge i manipulació d'obra. Disseny i producció de caixes de transport.",
-        'exp4-desc': 'disseny i producció (moët, filmin, jura)',
-        'exp5-desc': "Diverses col·laboracions<br>Part de l'equip de disseny i producció de la decoració<br>Verdi del Mig - Festa Major de Gràcia",
-        'idiomas-list': 'Castellà<br>Català<br>Anglès',
+        'exp3-desc': "Disseny i producció d'embalatges a mida i instal·lació d'obra d'art d'alt valor.",
+        'exp4-desc': "Disseny i producció d'objectes per a clients com Moët, Filmin i Jura.",
+        'idiomas-list': 'Castellà → Natiu<br>Català → Natiu<br>Anglès → Professional',
       },
     };
 
