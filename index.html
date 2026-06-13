@@ -187,7 +187,7 @@
       font-family: var(--font-mono);
       font-size: 6.4em;
       font-weight: 400;
-      line-height: 0.95;
+      line-height: 1.2;
     }
 
     .cv-close {
@@ -228,7 +228,7 @@
       font-size: 2.2em;
       font-weight: 600;
       text-transform: uppercase;
-      line-height: 1.05;
+      line-height: 1.2;
       margin: 0 0 0.5em;
     }
 
@@ -245,7 +245,7 @@
     .exp-spacer { height: 22em; }
 
     .software-list, .idiomas-list {
-      line-height: 1.5;
+      line-height: 1.2;
     }
 
     .cv-easter {
@@ -259,8 +259,11 @@
       .cv-grid { grid-template-columns: 1fr; gap: 2rem; padding: 1.5rem; font-size: 1rem; height: auto; min-height: 100%; }
       .col-photo, .col-exp-a, .col-exp-b, .col-software { grid-column: 1 / -1; height: auto; }
       .col-photo { display: block; }
-      .cv-photo { height: auto; object-fit: initial; }
+      .cv-photo { height: auto; object-fit: initial; width: calc(100% + 3rem); margin: 0 -1.5rem; }
       .exp-spacer { display: none; }
+      .cv-title { font-size: 12.8em; }
+      .cv-close svg { width: 10.4em; height: 10.4em; }
+      .cv-top { flex-wrap: wrap; gap: 0.5rem; }
     }
   </style>
 </head>
