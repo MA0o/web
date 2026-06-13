@@ -41,11 +41,11 @@
 
     nav a {
       display: block;
+      width: fit-content;
       color: #000000;
       text-decoration: none;
     }
 
-    nav a:hover { text-decoration: underline; }
 
     /* MAIN */
     main {
@@ -106,6 +106,11 @@
       background: red;
       border-radius: 50%;
       transform: translate(-50%, -50%);
+      transition: border-radius 0.15s ease;
+    }
+
+    #cursor-dot.square {
+      border-radius: 0;
     }
 
     #cursor-label {
@@ -123,6 +128,140 @@
     }
 
     #cursor-label.active { opacity: 1; }
+
+    /* CV OVERLAY */
+    .cv-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+    }
+
+    .cv-overlay.open { display: block; }
+
+    body.cv-open { overflow: hidden; }
+
+    .cv-box {
+      position: absolute;
+      top: 1rem;
+      left: 6rem;
+      right: 6rem;
+      bottom: 6rem;
+      background: #05ff00;
+      --text: rgba(0, 0, 0, 0.85);
+      color: var(--text);
+      font-family: var(--font-mono);
+      overflow: auto;
+    }
+
+    .cv-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 0.5rem;
+      padding: 0;
+      height: 100%;
+      align-items: start;
+      font-size: 0.9rem;
+    }
+
+    .col-photo {
+      grid-column: span 5;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .col-exp-a, .col-exp-b, .col-software { padding-top: 1.5em; }
+    .col-exp-a { grid-column: span 2; }
+    .col-exp-b { grid-column: span 2; }
+    .col-software { grid-column: span 3; }
+
+    .cv-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      flex: 0 0 auto;
+    }
+
+    .cv-title {
+      font-family: var(--font-mono);
+      font-size: 6.4em;
+      font-weight: 400;
+      line-height: 0.95;
+    }
+
+    .cv-close {
+      color: var(--text);
+      text-decoration: none;
+      display: block;
+    }
+
+    .cv-close svg {
+      width: 5.2em;
+      height: 5.2em;
+      display: block;
+    }
+
+    .cv-arrow {
+      display: inline-block;
+      width: 0.9em;
+      height: 0.9em;
+      vertical-align: -0.12em;
+    }
+
+    .cv-arrow svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .cv-photo {
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cv-heading {
+      font-family: var(--font-mono);
+      font-size: 2.2em;
+      font-weight: 600;
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin: 0 0 0.5em;
+    }
+
+    .cv-section + .cv-section { margin-top: 1em; }
+
+    .cv-entry {
+      margin-bottom: 0.6em;
+      break-inside: avoid;
+      line-height: 1.2;
+    }
+
+    .cv-entry b { font-weight: 700; }
+
+    .exp-spacer { height: 22em; }
+
+    .software-list, .idiomas-list {
+      line-height: 1.5;
+    }
+
+    .cv-easter {
+      margin-top: 1.5em;
+      font-size: 0.85em;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 900px) {
+      .cv-box { top: 0; left: 0; right: 0; bottom: 0; }
+      .cv-grid { grid-template-columns: 1fr; gap: 2rem; padding: 1.5rem; font-size: 1rem; height: auto; min-height: 100%; }
+      .col-photo, .col-exp-a, .col-exp-b, .col-software { grid-column: 1 / -1; height: auto; }
+      .col-photo { display: block; }
+      .cv-photo { height: auto; object-fit: initial; }
+      .exp-spacer { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -130,7 +269,7 @@
   <nav>
     <a href="index.html">1. Proyectos</a>
     <a href="about.html">2. About</a>
-    <a href="cv.html">3. CV</a>
+    <a href="cv.html" id="cv-link">3. CV</a>
     <a href="contact.html">4. Contact</a>
   </nav>
 
@@ -236,6 +375,90 @@
     </div>
   </main>
 
+  <div id="cv-overlay" class="cv-overlay">
+    <div class="cv-box">
+      <div class="cv-grid">
+
+        <div class="col-photo">
+          <div class="cv-top">
+            <span class="cv-title">CV</span>
+            <a class="cv-close" href="index.html" aria-label="Cerrar">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32">
+                <path fill="currentColor" d="M 8.51 7.21 L 7.21 8.51 L 14.72 16.00 L 7.21 23.52 L 8.48 24.80 L 15.99 17.30 L 23.48 24.80 L 24.77 23.50 L 17.27 16.00 L 24.80 8.48 L 23.52 7.21 L 15.99 14.72 L 8.51 7.21 Z"></path>
+              </svg>
+            </a>
+          </div>
+          <img class="cv-photo" src="img/CV.jpg" alt="Taller de Mateo">
+        </div>
+
+        <div class="col-exp-a">
+          <div class="cv-section">
+            <h2 class="cv-heading">Estudios</h2>
+            <div class="cv-entry">
+              <b>2022 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>presente<br>DISEÑO, ELISAVA</b><br>
+              Barcelona, España
+            </div>
+            <div class="cv-entry">
+              <b>2017 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>2021<br>ARQUITECTURA, ETSAB</b><br>
+              Barcelona, España
+            </div>
+          </div>
+
+          <div class="cv-section">
+            <h2 class="cv-heading">Experiencia</h2>
+            <div class="cv-entry">
+              <b>2025 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>presente<br>Galería200CENT</b><br>
+              Miembro de la junta
+            </div>
+            <div class="cv-entry">
+              <b>2020 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>2025<br>Santi Moix Studio</b><br>
+              Asistencia en taller, logística, fotografía, diseño y producción de estructuras de exhibición, producción e instalación de obra (Barcelona, Miami, Milán, Nueva York)
+            </div>
+            <div class="cv-entry">
+              <b>2019 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>2024<br>Galería Marlborough</b>, Barcelona<br>
+              Instalación, envalaje y manipulación de obra. Diseño y producción de cajas para transporte.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-exp-b">
+          <div class="exp-spacer"></div>
+          <div class="cv-entry">
+            <b>2017 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>2024<br>taller de oquis</b><br>
+            diseño y producción (moët, filmin, jura)
+          </div>
+          <div class="cv-entry">
+            <b>2013 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>presente</b><br>
+            Associació Veïns Verdi del Mig, Barcelona<br>
+            Diversas colaboraciones<br>
+            Parte del equipo de diseño y producción del decorado<br>
+            Verdi del Mig - Festa Major de Gràcia
+          </div>
+        </div>
+
+        <div class="col-software">
+          <div class="cv-section">
+            <h2 class="cv-heading">Software</h2>
+            <div class="software-list">
+              Photoshop<br>Indesign<br>Illustrator<br>PremierePro<br>AfterEffects<br><br>
+              AutoCad<br>Fusion360<br>Rhino3D<br>Sketchup
+            </div>
+          </div>
+
+          <div class="cv-section">
+            <h2 class="cv-heading">Idiomas</h2>
+            <div class="idiomas-list">
+              Castellano<br>Catalán<br>Inglés
+            </div>
+          </div>
+
+          <div class="cv-easter">#FFD400</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <div id="cursor-dot"></div>
   <div id="cursor-label"></div>
 
@@ -260,6 +483,51 @@
         label.classList.remove('active');
       });
     });
+
+    document.querySelectorAll('nav a').forEach(a => {
+      a.addEventListener('mouseenter', () => dot.classList.add('square'));
+      a.addEventListener('mouseleave', () => dot.classList.remove('square'));
+    });
+  </script>
+
+  <script>
+    // CV overlay
+    const cvOverlay = document.getElementById('cv-overlay');
+    const cvLink = document.getElementById('cv-link');
+    const cvClose = document.querySelector('.cv-close');
+
+    function openCV(push = true) {
+      cvOverlay.classList.add('open');
+      document.body.classList.add('cv-open');
+      if (push) history.pushState({ cv: true }, '', '#cv');
+    }
+
+    function closeCV(push = true) {
+      cvOverlay.classList.remove('open');
+      document.body.classList.remove('cv-open');
+      if (push) history.pushState({}, '', 'index.html');
+    }
+
+    cvLink.addEventListener('click', e => {
+      e.preventDefault();
+      openCV();
+    });
+
+    cvClose.addEventListener('click', e => {
+      e.preventDefault();
+      closeCV();
+    });
+
+    cvOverlay.addEventListener('click', e => {
+      if (e.target === cvOverlay) closeCV();
+    });
+
+    window.addEventListener('popstate', () => {
+      if (location.hash === '#cv') openCV(false);
+      else closeCV(false);
+    });
+
+    if (location.hash === '#cv') openCV(false);
   </script>
 
 
