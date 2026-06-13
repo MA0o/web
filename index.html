@@ -133,7 +133,7 @@
     .cv-overlay {
       position: fixed;
       inset: 0;
-      z-index: 200;
+      z-index: 10000;
       display: none;
     }
 
@@ -533,6 +533,30 @@
     if (location.hash === '#cv') openCV(false);
   </script>
 
+  <script>
+    // Match the close icon's visual height to the "CV" title's glyph height
+    const cvTitle = document.querySelector('.cv-title');
+    const cvCloseSvg = document.querySelector('.cv-close svg');
+    const closeIconRatio = (24.80 - 7.21) / 32;
+    const measureCanvas = document.createElement('canvas');
+    const measureCtx = measureCanvas.getContext('2d');
+
+    function sizeCloseIcon() {
+      const cs = getComputedStyle(cvTitle);
+      measureCtx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+      const m = measureCtx.measureText('CV');
+      const visualHeight = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
+      const iconSize = visualHeight / closeIconRatio;
+      cvCloseSvg.style.width = iconSize + 'px';
+      cvCloseSvg.style.height = iconSize + 'px';
+    }
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(sizeCloseIcon);
+    }
+    window.addEventListener('resize', sizeCloseIcon);
+    sizeCloseIcon();
+  </script>
 
   <script>
     // Mobile: red dot animation
