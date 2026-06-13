@@ -260,10 +260,12 @@
 
     @media (max-width: 900px) {
       .cv-box { top: 0; left: 0; right: 0; bottom: 0; }
-      .cv-grid { grid-template-columns: 1fr; gap: 2rem; padding: 0.4rem; font-size: 1rem; height: auto; min-height: 100%; }
+      .cv-grid { grid-template-columns: 1fr; gap: 0; padding: 0; font-size: 1rem; height: auto; min-height: 100%; }
       .col-photo, .col-exp-a, .col-exp-b, .col-software { grid-column: 1 / -1; height: auto; }
       .col-photo { display: block; }
-      .cv-photo { height: auto; object-fit: initial; width: calc(100% + 0.8rem); margin: 0 -0.4rem; }
+      .cv-top { margin-bottom: 0; padding: 0.2em 0.3rem; }
+      .cv-photo { height: auto; object-fit: initial; width: 100%; margin: 0; display: block; }
+      .col-exp-a, .col-exp-b, .col-software { padding: 1.5em 0.8rem 0; }
       .exp-spacer { display: none; }
       .cv-title { font-size: 16vw; }
     }
