@@ -183,7 +183,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 1rem;
+      margin-bottom: 0.3em;
       flex: 0 0 auto;
     }
 
@@ -260,10 +260,10 @@
 
     @media (max-width: 900px) {
       .cv-box { top: 0; left: 0; right: 0; bottom: 0; }
-      .cv-grid { grid-template-columns: 1fr; gap: 2rem; padding: 1.5rem; font-size: 1rem; height: auto; min-height: 100%; }
+      .cv-grid { grid-template-columns: 1fr; gap: 2rem; padding: 0.4rem; font-size: 1rem; height: auto; min-height: 100%; }
       .col-photo, .col-exp-a, .col-exp-b, .col-software { grid-column: 1 / -1; height: auto; }
       .col-photo { display: block; }
-      .cv-photo { height: auto; object-fit: initial; width: calc(100% + 3rem); margin: 0 -1.5rem; }
+      .cv-photo { height: auto; object-fit: initial; width: calc(100% + 0.8rem); margin: 0 -0.4rem; }
       .exp-spacer { display: none; }
       .cv-title { font-size: 16vw; }
     }
@@ -388,7 +388,7 @@
           <div class="cv-top">
             <span class="cv-title">CV</span>
             <a class="cv-close" href="index.html" aria-label="Cerrar">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="7.21 7.21 17.59 17.59">
                 <path fill="currentColor" d="M 8.51 7.21 L 7.21 8.51 L 14.72 16.00 L 7.21 23.52 L 8.48 24.80 L 15.99 17.30 L 23.48 24.80 L 24.77 23.50 L 17.27 16.00 L 24.80 8.48 L 23.52 7.21 L 15.99 14.72 L 8.51 7.21 Z"></path>
               </svg>
             </a>
@@ -539,7 +539,6 @@
     // Match the close icon's visual height to the "CV" title's glyph height
     const cvTitle = document.querySelector('.cv-title');
     const cvCloseSvg = document.querySelector('.cv-close svg');
-    const closeIconRatio = (24.80 - 7.21) / 32;
     const measureCanvas = document.createElement('canvas');
     const measureCtx = measureCanvas.getContext('2d');
 
@@ -548,9 +547,8 @@
       measureCtx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
       const m = measureCtx.measureText('CV');
       const visualHeight = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
-      const iconSize = visualHeight / closeIconRatio;
-      cvCloseSvg.style.width = iconSize + 'px';
-      cvCloseSvg.style.height = iconSize + 'px';
+      cvCloseSvg.style.width = visualHeight + 'px';
+      cvCloseSvg.style.height = visualHeight + 'px';
     }
 
     if (document.fonts && document.fonts.ready) {
