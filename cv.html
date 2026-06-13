@@ -1,1 +1,193 @@
-<!DOCTYPE html><html><head><meta charset='UTF-8'><title>cv</title></head><body></body></html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV — Mateo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #05ff00;
+      --text: rgba(0, 0, 0, 0.85);
+      --font-mono: 'IBM Plex Mono', 'Courier New', Courier, monospace;
+    }
+
+    html, body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      min-height: 100vh;
+    }
+
+    .cv-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 0.5rem;
+      padding: 1.5rem 6rem 6rem;
+      min-height: 100vh;
+      align-items: start;
+    }
+
+    .col-photo { grid-column: span 5; }
+    .col-exp-a, .col-exp-b, .col-software { padding-top: 2.5rem; }
+    .col-exp-a { grid-column: span 2; }
+    .col-exp-b { grid-column: span 2; }
+    .col-software { grid-column: span 3; }
+
+    .cv-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .cv-title {
+      font-family: var(--font-mono);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 400;
+      line-height: 0.95;
+    }
+
+    .cv-close {
+      color: var(--text);
+      text-decoration: none;
+      display: block;
+    }
+
+    .cv-close svg {
+      width: clamp(3rem, 7vw, 6rem);
+      height: clamp(3rem, 7vw, 6rem);
+      display: block;
+    }
+
+    .cv-photo {
+      width: 100%;
+      display: block;
+    }
+
+    .cv-heading {
+      font-family: var(--font-mono);
+      font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+      font-weight: 600;
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin: 0 0 0.75rem;
+    }
+
+    .cv-section + .cv-section { margin-top: 1.5rem; }
+
+    .cv-entry {
+      margin-bottom: 1rem;
+      break-inside: avoid;
+      line-height: 1.2;
+    }
+
+    .cv-entry b { font-weight: 700; }
+
+    .exp-spacer { height: 32rem; }
+
+    .software-list, .idiomas-list {
+      line-height: 1.5;
+    }
+
+    .cv-easter {
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 900px) {
+      .cv-grid { grid-template-columns: 1fr; gap: 2rem; padding: 1.5rem; }
+      .col-photo, .col-exp-a, .col-exp-b, .col-software { grid-column: 1 / -1; }
+      .exp-spacer { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cv-grid">
+
+    <div class="col-photo">
+      <div class="cv-top">
+        <span class="cv-title">CV</span>
+        <a class="cv-close" href="index.html" aria-label="Cerrar">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32">
+            <path fill="currentColor" d="M 8.51 7.21 L 7.21 8.51 L 14.72 16.00 L 7.21 23.52 L 8.48 24.80 L 15.99 17.30 L 23.48 24.80 L 24.77 23.50 L 17.27 16.00 L 24.80 8.48 L 23.52 7.21 L 15.99 14.72 L 8.51 7.21 Z"></path>
+          </svg>
+        </a>
+      </div>
+      <img class="cv-photo" src="img/CV.jpg" alt="Taller de Mateo">
+    </div>
+
+    <div class="col-exp-a">
+      <div class="cv-section">
+        <h2 class="cv-heading">Estudios</h2>
+        <div class="cv-entry">
+          <b>2022 → presente<br>DISEÑO, ELISAVA</b><br>
+          Barcelona, España
+        </div>
+        <div class="cv-entry">
+          <b>2017 → 2021<br>ARQUITECTURA, ETSAB</b><br>
+          Barcelona, España
+        </div>
+      </div>
+
+      <div class="cv-section">
+        <h2 class="cv-heading">Experiencia</h2>
+        <div class="cv-entry">
+          <b>2025 → presente<br>Galería200CENT</b><br>
+          Miembro de la junta
+        </div>
+        <div class="cv-entry">
+          <b>2020 → 2025<br>Santi Moix Studio</b><br>
+          Asistencia en taller, logística, fotografía, diseño y producción de estructuras de exhibición, producción e instalación de obra (Barcelona, Miami, Milán, Nueva York)
+        </div>
+        <div class="cv-entry">
+          <b>2019 → 2024<br>Galería Marlborough</b>, Barcelona<br>
+          Instalación, envalaje y manipulación de obra. Diseño y producción de cajas para transporte.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-exp-b">
+      <div class="exp-spacer"></div>
+      <div class="cv-entry">
+        <b>2017 → 2024<br>taller de oquis</b><br>
+        diseño y producción (moët, filmin, jura)
+      </div>
+      <div class="cv-entry">
+        <b>2013 → presente</b><br>
+        Associació Veïns Verdi del Mig, Barcelona<br>
+        Diversas colaboraciones<br>
+        Parte del equipo de diseño y producción del decorado<br>
+        Verdi del Mig - Festa Major de Gràcia
+      </div>
+    </div>
+
+    <div class="col-software">
+      <div class="cv-section">
+        <h2 class="cv-heading">Software</h2>
+        <div class="software-list">
+          Photoshop<br>Indesign<br>Illustrator<br>PremierePro<br>AfterEffects<br><br>
+          AutoCad<br>Fusion360<br>Rhino3D<br>Sketchup
+        </div>
+      </div>
+
+      <div class="cv-section">
+        <h2 class="cv-heading">Idiomas</h2>
+        <div class="idiomas-list">
+          Castellano<br>Catalán<br>Inglés
+        </div>
+      </div>
+
+      <div class="cv-easter">#FFD400</div>
+    </div>
+
+  </div>
+
+</body>
+</html>
