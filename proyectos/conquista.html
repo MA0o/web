@@ -30,7 +30,7 @@
       position: fixed;
       top: 0; left: 0;
       width: 100%;
-      padding: 0.25rem 0.6rem;
+      padding: 0.12rem 0.5rem;
       z-index: 100;
       font-size: var(--nav-size);
       line-height: 1.1;
@@ -60,7 +60,7 @@
 
     @media (max-width: 800px) {
       nav { font-size: 1.3rem; }
-      .sequence { margin-top: 6.5rem; }
+      .sequence { margin-top: 3rem; }
     }
 
     /* CURSOR */
@@ -85,6 +85,22 @@
     @media (max-width: 900px) {
       #cursor-dot { display: none; }
     }
+
+        .title-corner {
+      position: fixed;
+      bottom: 0;
+      z-index: 100;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      white-space: nowrap;
+      padding: 0.12rem 0.5rem;
+      pointer-events: none;
+      line-height: 1.1;
+    }
+    .title-corner-left  { left: 0; }
+    .title-corner-right { right: 0; }
 
     /* SEQUENCE */
     .sequence {
@@ -137,75 +153,7 @@
     @media (max-width: 800px) {
       .project-text { grid-column: 1 / -1; }
     }
-
-    /* VIEWER */
-    .viewer {
-      position: fixed;
-      inset: 0;
-      z-index: 10000;
-      background: #000000;
-      display: none;
-      overflow-x: auto;
-      overflow-y: hidden;
-      scroll-snap-type: x mandatory;
-    }
-
-    .viewer.open { display: block; }
-
-    body.viewer-open { overflow: hidden; }
-
-    .viewer-close {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      color: #ffffff;
-      z-index: 10001;
-      display: block;
-      text-decoration: none;
-    }
-
-    .viewer-close svg {
-      width: clamp(2rem, 5vw, 4rem);
-      height: clamp(2rem, 5vw, 4rem);
-      display: block;
-    }
-
-    .viewer-prev, .viewer-next {
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #ffffff;
-      z-index: 10001;
-      display: block;
-      text-decoration: none;
-    }
-
-    .viewer-prev { left: 1rem; }
-    .viewer-next { right: 1rem; }
-
-    .viewer-prev svg, .viewer-next svg {
-      width: clamp(2rem, 5vw, 4rem);
-      height: clamp(2rem, 5vw, 4rem);
-      display: block;
-    }
-
-    .viewer-prev svg {
-      transform: scaleX(-1);
-    }
-
-    .viewer-images {
-      display: flex;
-      height: 100%;
-    }
-
-    .viewer-images img {
-      flex: 0 0 100%;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      scroll-snap-align: start;
-      display: block;
-    }
+      nav a[data-i18n="nav-cv"] { display: none; }
   </style>
 </head>
 <body>
@@ -241,56 +189,23 @@
 
   <div class="content">
     <div class="project-text">
-      <p data-i18n="p1">Este es el diario de Conquista, el primer jinete del apocalipsis. A partir de la película de “El séptimo sello”, imaginé un objeto que podría existir dentro de ese universo y que pertenece a un personaje intruso, que se camufla en la trama.</p>
+      <p data-i18n="p1">Este es el diario de Conquista, el primer jinete del apocalipsis. A partir de la película de "El séptimo sello", imaginé un objeto que podría existir dentro de ese universo y que pertenece a un personaje intruso, que se camufla en la trama.</p>
 
       <p data-i18n="p2">A Conquista la introduzco como el contrapunto de Muerte; silencio y ruido, fin y principio, certeza y conflicto, descanso y lucha etc.</p>
 
       <p data-i18n="p3">Conquista no es eterna por tanto ha de ser más observadora que la muerte. Conquista observa y cuestiona a Jof, el personaje más inocente y soñador, desafiando su fe y su arte en un mundo marcado por la peste y el silencio de Dios.</p>
 
       <div class="quote-block">
-        <p class="quote-mark">“</p>
+        <p class="quote-mark">"</p>
         <p data-i18n="quote">Vi cuando el Cordero rompió el primero de los siete sellos y oí a uno de los cuatro seres vivientes que decía con voz de trueno: «¡Ven!». Miré y apareció un caballo blanco. El jinete llevaba un arco; se le dio una corona y salió como vencedor, para seguir venciendo.</p>
-        <p class="quote-mark">”</p>
+        <p class="quote-mark">"</p>
         <cite data-i18n="citation">Apocalipsis 6:1-17</cite>
       </div>
     </div>
   </div>
 
-  <div class="viewer" id="viewer">
-    <a class="viewer-close" href="#" aria-label="Cerrar">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="7.21 7.21 17.59 17.59">
-        <path fill="currentColor" d="M 8.51 7.21 L 7.21 8.51 L 14.72 16.00 L 7.21 23.52 L 8.48 24.80 L 15.99 17.30 L 23.48 24.80 L 24.77 23.50 L 17.27 16.00 L 24.80 8.48 L 23.52 7.21 L 15.99 14.72 L 8.51 7.21 Z"></path>
-      </svg>
-    </a>
-
-    <a class="viewer-prev" href="#" aria-label="Anterior">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 77.14 135.23">
-        <rect fill="currentColor" x="31.83" y="-9.24" width="13.48" height="95.62" transform="translate(-15.98 38.57) rotate(-45)"/>
-        <rect fill="currentColor" x="31.83" y="48.85" width="13.48" height="95.62" transform="translate(79.64 1.04) rotate(45)"/>
-      </svg>
-    </a>
-
-    <a class="viewer-next" href="#" aria-label="Siguiente">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 77.14 135.23">
-        <rect fill="currentColor" x="31.83" y="-9.24" width="13.48" height="95.62" transform="translate(-15.98 38.57) rotate(-45)"/>
-        <rect fill="currentColor" x="31.83" y="48.85" width="13.48" height="95.62" transform="translate(79.64 1.04) rotate(45)"/>
-      </svg>
-    </a>
-    <div class="viewer-images">
-      <img src="../img/proyectos/conquista/1.png" alt="">
-      <img src="../img/proyectos/conquista/2.png" alt="">
-      <img src="../img/proyectos/conquista/3.png" alt="">
-      <img src="../img/proyectos/conquista/4.png" alt="">
-      <img src="../img/proyectos/conquista/5.png" alt="">
-      <img src="../img/proyectos/conquista/6.png" alt="">
-      <img src="../img/proyectos/conquista/7.png" alt="">
-      <img src="../img/proyectos/conquista/8.png" alt="">
-      <img src="../img/proyectos/conquista/9.png" alt="">
-      <img src="../img/proyectos/conquista/10.png" alt="">
-      <img src="../img/proyectos/conquista/11.png" alt="">
-      <img src="../img/proyectos/conquista/12.png" alt="">
-    </div>
-  </div>
+  <div class="title-corner title-corner-left">conquista</div>
+  <div class="title-corner title-corner-right">conquista</div>
 
   <div id="cursor-dot"></div>
 
@@ -302,7 +217,7 @@
       dot.style.top = e.clientY + 'px';
     });
 
-    document.querySelectorAll('nav a, .viewer-close, .viewer-prev, .viewer-next').forEach(a => {
+    document.querySelectorAll('nav a').forEach(a => {
       a.addEventListener('mouseenter', () => dot.classList.add('square'));
       a.addEventListener('mouseleave', () => dot.classList.remove('square'));
     });
@@ -316,9 +231,9 @@
         'nav-about': '2. Sobre mí',
         'nav-cv': '3. CV',
         'nav-contact': '4. Contacto',
-        'p1': 'Este es el diario de Conquista, el primer jinete del apocalipsis. A partir de la película de “El séptimo sello”, imaginé un objeto que podría existir dentro de ese universo y que pertenece a un personaje intruso, que se camufla en la trama.',
+        'p1': 'Este es el diario de Conquista, el primer jinete del apocalipsis. A partir de la película de "El séptimo sello", imaginé un objeto que podría existir dentro de ese universo y que pertenece a un personaje intruso, que se camufla en la trama.',
         'p2': 'A Conquista la introduzco como el contrapunto de Muerte; silencio y ruido, fin y principio, certeza y conflicto, descanso y lucha etc.',
-        'p3': 'Conquista no es eterna por tanto ha de ser más observadora que la muerte. Conquista observa y cuestiona a Jof, el personaje más inocente y soñador, desafiando su fe y su arte en un mundo marcado por la peste y el silencio de Dios.',
+        'p3': 'Conquista no es eterna por tanto ha de ser más observadora que la muerte. Conquesta observa y cuestiona a Jof, el personaje más inocente y soñador, desafiando su fe y su arte en un mundo marcado por la peste y el silencio de Dios.',
         'quote': 'Vi cuando el Cordero rompió el primero de los siete sellos y oí a uno de los cuatro seres vivientes que decía con voz de trueno: «¡Ven!». Miré y apareció un caballo blanco. El jinete llevaba un arco; se le dio una corona y salió como vencedor, para seguir venciendo.',
         'citation': 'Apocalipsis 6:1-17',
       },
@@ -327,10 +242,10 @@
         'nav-about': '2. About',
         'nav-cv': '3. CV',
         'nav-contact': '4. Contact',
-        'p1': 'This is the diary of Conquest, the first horseman of the apocalypse. Inspired by the film “The Seventh Seal”, I imagined an object that could exist within that universe and that belongs to an intruder character, one who camouflages itself within the plot.',
+        'p1': 'This is the diary of Conquest, the first horseman of the apocalypse. Inspired by the film "The Seventh Seal", I imagined an object that could exist within that universe and that belongs to an intruder character, one who camouflages itself within the plot.',
         'p2': 'I introduce Conquest as the counterpoint to Death; silence and noise, end and beginning, certainty and conflict, rest and struggle, etc.',
         'p3': 'Conquest is not eternal, and therefore must be more observant than Death. Conquest watches and questions Jof, the most innocent and dreamy character, challenging his faith and his art in a world marked by the plague and the silence of God.',
-        'quote': 'I watched as the Lamb opened the first of the seven seals. Then I heard one of the four living creatures say in a voice like thunder, “Come!”. I looked, and there before me was a white horse! Its rider held a bow, and he was given a crown, and he rode out as a conqueror bent on conquest.',
+        'quote': 'I watched as the Lamb opened the first of the seven seals. Then I heard one of the four living creatures say in a voice like thunder, "Come!". I looked, and there before me was a white horse! Its rider held a bow, and he was given a crown, and he rode out as a conqueror bent on conquest.',
         'citation': 'Revelation 6:1-17',
       },
       ca: {
@@ -338,10 +253,10 @@
         'nav-about': '2. Sobre mi',
         'nav-cv': '3. CV',
         'nav-contact': '4. Contacte',
-        'p1': 'Aquest és el diari de Conquesta, el primer genet de l’apocalipsi. A partir de la pel·lícula “El setè segell”, vaig imaginar un objecte que podria existir dins d’aquell univers i que pertany a un personatge intrús, que es camufla dins la trama.',
+        'p1': 'Aquest és el diari de Conquesta, el primer genet de l'apocalipsi. A partir de la pel·lícula "El setè segell", vaig imaginar un objecte que podria existir dins d'aquell univers i que pertany a un personatge intrús, que es camufla dins la trama.',
         'p2': 'Introdueixo Conquesta com el contrapunt de la Mort; silenci i soroll, final i principi, certesa i conflicte, descans i lluita, etc.',
         'p3': 'Conquesta no és eterna i per tant ha de ser més observadora que la Mort. Conquesta observa i qüestiona Jof, el personatge més innocent i somiador, desafiant la seva fe i el seu art en un món marcat per la pesta i el silenci de Déu.',
-        'quote': 'Vaig veure que l’Anyell obria el primer dels set segells, i vaig sentir un dels quatre vivents que deia amb veu de tro: «Vine!». Vaig mirar, i hi havia un cavall blanc. El seu genet duia un arc; li van donar una corona i va sortir com a vencedor, per continuar vencent.',
+        'quote': 'Vaig veure que l'Anyell obria el primer dels set segells, i vaig sentir un dels quatre vivents que deia amb veu de tro: «Vine!». Vaig mirar, i hi havia un cavall blanc. El seu genet duia un arc; li van donar una corona i va sortir com a vencedor, per continuar vencent.',
         'citation': 'Apocalipsi 6:1-17',
       },
     };
@@ -379,47 +294,7 @@
     }, 750);
   </script>
 
-  <script>
-    // Fullscreen viewer
-    const sequence = document.getElementById('sequence');
-    const viewer = document.getElementById('viewer');
-    const viewerClose = document.querySelector('.viewer-close');
-    const viewerPrev = document.querySelector('.viewer-prev');
-    const viewerNext = document.querySelector('.viewer-next');
-    const viewerImgs = document.querySelectorAll('.viewer-images img');
-
-    function openViewer() {
-      viewer.classList.add('open');
-      document.body.classList.add('viewer-open');
-      viewer.scrollLeft = seqIndex * viewerImgs[0].getBoundingClientRect().width;
-    }
-
-    function closeViewer() {
-      viewer.classList.remove('open');
-      document.body.classList.remove('viewer-open');
-    }
-
-    sequence.addEventListener('click', openViewer);
-
-    viewerClose.addEventListener('click', e => {
-      e.preventDefault();
-      closeViewer();
-    });
-
-    viewerPrev.addEventListener('click', e => {
-      e.preventDefault();
-      viewer.scrollBy({ left: -viewerImgs[0].getBoundingClientRect().width, behavior: 'smooth' });
-    });
-
-    viewerNext.addEventListener('click', e => {
-      e.preventDefault();
-      viewer.scrollBy({ left: viewerImgs[0].getBoundingClientRect().width, behavior: 'smooth' });
-    });
-
-    viewer.addEventListener('click', e => {
-      if (e.target === viewer) closeViewer();
-    });
-  </script>
+  <script src="../js/viewer.js"></script>
 
 </body>
 </html>

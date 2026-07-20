@@ -17,21 +17,23 @@
       --font-mono: 'IBM Plex Mono', 'Courier New', Courier, monospace;
       --nav-size: 1rem;
       --gutter: 0.3rem;
+      --nav-h: 1.05rem;
     }
 
     html, body {
       background-color: var(--bg);
       color: var(--text);
       font-family: var(--font-mono);
-      min-height: 100vh;
+      height: 100%;
+      overflow: hidden;
     }
 
-    /* NAV */
+    /* ── NAV ─────────────────────────────────────────────────────────────── */
     nav {
       position: fixed;
       top: 0; left: 0;
       width: 100%;
-      padding: 0.25rem 0.6rem;
+      padding: 0.12rem 0.5rem;
       z-index: 100;
       font-size: var(--nav-size);
       line-height: 1.1;
@@ -59,12 +61,7 @@
     .lang-link { opacity: 0.4; }
     .lang-link.active { opacity: 1; }
 
-    @media (max-width: 800px) {
-      nav { font-size: 1.3rem; }
-      .hero { margin-top: 6.5rem; }
-    }
-
-    /* CURSOR */
+    /* ── CURSOR ───────────────────────────────────────────────────────────── */
     * { cursor: none; }
 
     #cursor-dot {
@@ -79,50 +76,107 @@
       transition: border-radius 0.15s ease;
     }
 
-    #cursor-dot.square {
-      border-radius: 0;
-    }
+    #cursor-dot.square { border-radius: 0; }
 
     @media (max-width: 900px) {
       #cursor-dot { display: none; }
     }
 
-    /* HERO */
-    .hero {
-      width: 100%;
-      display: block;
+        .title-corner {
+      position: fixed;
+      bottom: 0;
+      z-index: 100;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      white-space: nowrap;
+      padding: 0.12rem 0.5rem;
+      pointer-events: none;
+      line-height: 1.1;
+    }
+    .title-corner-left  { left: 0; }
+    .title-corner-right { right: 0; }
+
+    /* ── LAYOUT B ─────────────────────────────────────────────────────────── */
+    .layout-b {
+      display: flex;
+      height: 100vh;
+      padding-top: var(--nav-h);
     }
 
-    .hero img {
-      width: 100%;
-      display: block;
+    /* Left panel — text, 30% */
+    .lb-text {
+      width: 30%;
+      flex-shrink: 0;
+      overflow-y: auto;
+      padding: 7.5rem 1.5rem 3rem;
     }
 
-    /* MEDIA GRID */
-    .media-grid {
-      columns: 3;
-      column-gap: var(--gutter);
-      padding: var(--gutter);
-    }
-
-    .media-grid img {
-      width: 100%;
-      display: block;
-      margin-bottom: var(--gutter);
-      break-inside: avoid;
-    }
-
-    @media (max-width: 800px) { .media-grid { columns: 2; } }
-    @media (max-width: 500px) { .media-grid { columns: 1; } }
-
-    /* TEXT */
-    .project-text {
-      padding: 2rem;
-      max-width: 700px;
-      text-align: left;
-      line-height: 1.4;
+    .lb-text h1 {
       font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
     }
+
+    .lb-text p {
+      font-size: 0.75rem;
+      line-height: 1.5;
+      margin-bottom: 1em;
+    }
+
+    /* Right panel — images, scrolls independently */
+    .lb-gallery {
+      flex: 1;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--bg);
+      align-content: start;
+      scrollbar-width: none;
+    }
+    .lb-gallery::-webkit-scrollbar { display: none; }
+
+    .lb-gallery img {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: var(--bg);
+    }
+
+    /* Alternating: every 3rd image spans full width */
+    .lb-gallery img:nth-child(3n) {
+      grid-column: 1 / -1;
+    }
+
+    /* ── RESPONSIVE ────────────────────────────────────────────────────────── */
+    @media (max-width: 800px) {
+      html, body { overflow: auto; }
+      .layout-b {
+        flex-direction: column;
+        height: auto;
+        padding-top: 4rem;
+      }
+      .lb-text {
+        width: 100%;
+        overflow-y: visible;
+        border-bottom: 1px solid rgba(0,0,0,0.15);
+      }
+      .lb-gallery {
+        overflow-y: visible;
+        columns: 2;
+        padding: var(--gutter);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .lb-gallery { columns: 1; }
+    }
+      nav a[data-i18n="nav-cv"] { display: none; }
   </style>
 </head>
 <body>
@@ -141,29 +195,46 @@
     </div>
   </nav>
 
-  <div class="hero">
-    <img src="../img/proyectos/haller-t/hero.gif" alt="">
+  <div class="layout-b">
+
+    <aside class="lb-text">
+      <p data-i18n="p1">Haller-T propone una capa adicional. No una corrección, ni una muleta: una extensión del lenguaje. A través de un sistema de cables y tensores, el proyecto introduce la tensión como una fuerza que complementa la compresión que define a USM. La misma lógica estructural, pero en sentido opuesto. El resultado son configuraciones que no eran posibles dentro del sistema: voladizos, elementos suspendidos, grandes luces, o una conexión explícita entre el mobiliario y su entorno. Haller-T no inventa un sistema nuevo. Demuestra que el sistema existente contenía, dentro de su propia lógica, el espacio exacto donde podía introducirse la tensión.</p>
+    </aside>
+
+    <div class="lb-gallery">
+      <img src="../img/proyectos/haller-t/hero.gif" alt="">
+      <img src="../img/proyectos/haller-t/08.jpg" alt="">
+      <img src="../img/proyectos/haller-t/04.jpg" alt="">
+      <img src="../img/proyectos/haller-t/05.jpg" alt="">
+      <img src="../img/proyectos/haller-t/06.jpg" alt="">
+      <img src="../img/proyectos/haller-t/07.jpg" alt="">
+      <img src="../img/proyectos/haller-t/03.jpg" alt="">
+      <img src="../img/proyectos/haller-t/01.jpg" alt="">
+      <img src="../img/proyectos/haller-t/02.jpg" alt="">
+    </div>
+
   </div>
 
-  <div class="media-grid">
-    <img src="../img/proyectos/haller-t/08.jpg" alt="">
-    <img src="../img/proyectos/haller-t/04.jpg" alt="">
-    <img src="../img/proyectos/haller-t/05.jpg" alt="">
-    <img src="../img/proyectos/haller-t/06.jpg" alt="">
-    <img src="../img/proyectos/haller-t/07.jpg" alt="">
-    <img src="../img/proyectos/haller-t/03.jpg" alt="">
-    <img src="../img/proyectos/haller-t/01.jpg" alt="">
-    <img src="../img/proyectos/haller-t/02.jpg" alt="">
-  </div>
-
-  <div class="project-text">
-    <p data-i18n="p1">Haller-T propone una capa adicional. No una corrección, ni una muleta: una extensión del lenguaje. A través de un sistema de cables y tensores, el proyecto introduce la tensión como una fuerza que complementa la compresión que define a USM. La misma lógica estructural, pero en sentido opuesto. El resultado son configuraciones que no eran posibles dentro del sistema: voladizos, elementos suspendidos, grandes luces, o una conexión explícita entre el mobiliario y su entorno. Haller-T no inventa un sistema nuevo. Demuestra que el sistema existente contenía, dentro de su propia lógica, el espacio exacto donde podía introducirse la tensión.</p>
-  </div>
+  <div class="title-corner title-corner-left">Haller-T</div>
+  <div class="title-corner title-corner-right">Haller-T</div>
 
   <div id="cursor-dot"></div>
 
   <script>
-    // i18n
+    const dot = document.getElementById('cursor-dot');
+
+    document.addEventListener('mousemove', e => {
+      dot.style.left = e.clientX + 'px';
+      dot.style.top = e.clientY + 'px';
+    });
+
+    document.querySelectorAll('nav a').forEach(a => {
+      a.addEventListener('mouseenter', () => dot.classList.add('square'));
+      a.addEventListener('mouseleave', () => dot.classList.remove('square'));
+    });
+  </script>
+
+  <script>
     const translations = {
       es: {
         'nav-projects': '1. Proyectos',
@@ -210,19 +281,7 @@
     applyLang(localStorage.getItem('lang') || 'es');
   </script>
 
-  <script>
-    const dot = document.getElementById('cursor-dot');
-
-    document.addEventListener('mousemove', e => {
-      dot.style.left = e.clientX + 'px';
-      dot.style.top = e.clientY + 'px';
-    });
-
-    document.querySelectorAll('nav a').forEach(a => {
-      a.addEventListener('mouseenter', () => dot.classList.add('square'));
-      a.addEventListener('mouseleave', () => dot.classList.remove('square'));
-    });
-  </script>
+  <script src="../js/viewer.js"></script>
 
 </body>
 </html>
