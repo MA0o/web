@@ -6,23 +6,25 @@
   style.textContent = `
     #ct-overlay {
       position: fixed; inset: 0; z-index: 9998;
-      display: none; align-items: center; justify-content: center;
+      display: none;
+      align-items: center; justify-content: center;
+      background: rgba(0, 0, 0, 0.45);
     }
     #ct-overlay.open { display: flex; }
 
     #ct-box {
+      --w: 280px;
+      width: var(--w);
+      background: #ffdf41;
       display: flex;
       flex-direction: column;
-      width: 280px;
-      background: #ffdf41;
     }
 
-    /* row 1: close button, right-aligned */
+    /* row 1: close button right-aligned */
     #ct-header {
       display: flex;
       justify-content: flex-end;
       padding: 0.4rem 0.4rem 0;
-      flex-shrink: 0;
     }
     #ct-close {
       background: none; border: none; cursor: none;
@@ -34,25 +36,28 @@
       display: block;
     }
 
-    /* row 2: image, fills popup width */
+    /* row 2: image — square crop, fills popup width */
     #ct-img {
       width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
       display: block;
-      flex-shrink: 0;
     }
 
-    /* row 3: info, left-aligned, fills remaining height */
+    /* row 3: info — same height as image (= 1× width) */
     #ct-info {
-      flex: 1;
+      width: 100%;
+      height: var(--w);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 0.8rem 1rem 1rem;
+      padding: 1rem;
       gap: 0.2em;
       font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
       font-size: 0.75rem;
       line-height: 1.4;
       color: #000eff;
+      box-sizing: border-box;
     }
     #ct-info a {
       color: #000eff; text-decoration: none;
@@ -85,17 +90,6 @@
   document.body.appendChild(overlay);
 
   document.getElementById('ct-img').src = BASE + 'img/perfil.jpg';
-
-  // once image loads, set popup height = 2× width + header
-  const img = document.getElementById('ct-img');
-  const box = document.getElementById('ct-box');
-  function setHeight() {
-    const w = box.offsetWidth;
-    const headerH = document.getElementById('ct-header').offsetHeight;
-    box.style.height = (w * 2 + headerH) + 'px';
-  }
-  if (img.complete) setHeight();
-  else img.addEventListener('load', setHeight);
 
   // ── Cursor ────────────────────────────────────────────────────────────────
   const CUR_ALL = ['triangle-right','triangle-left','cross','magnify','plus','square'];
