@@ -39,22 +39,22 @@
       display: block;
     }
 
-    /* row 2: image — square crop, fills popup width */
+    /* row 2: image — landscape crop (4:3) fills popup width */
     #ct-img {
       width: 100%;
-      aspect-ratio: 1;
+      aspect-ratio: 4 / 3;
       object-fit: cover;
       display: block;
     }
 
-    /* row 3: info — 75% of image height, nav font style */
+    /* row 3: info — half image height, nav font style */
     #ct-info {
       width: 100%;
-      height: calc(var(--w) * 0.75);
+      height: calc(var(--w) * 0.5);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 0.12rem 0.5rem;
+      padding: 0.12rem 0.5rem 1.2rem;
       gap: 0.15em;
       font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
       font-size: 1rem;
