@@ -4,7 +4,9 @@
  *
  * - All <img> outside <nav> become clickable (opens lightbox at that index).
  * - #sequence pages: clicking the sequence opens at the active slide.
- * - Keyboard: Escape, ←, →. Touch: swipe. Counter: n / total.
+ * - Keyboard: Escape (close/unzoom), ←, →. Touch: swipe.
+ * - Click image in lightbox → zoom 2×, drag to pan, click again → unzoom.
+ * - External links (target="_blank") → plus cursor.
  */
 (function () {
 
@@ -40,6 +42,7 @@
       pointer-events: none;
       user-select: none;
       -webkit-user-drag: none;
+      transition: transform 0.25s ease;
     }
 
     #vwr-close {
@@ -53,9 +56,13 @@
       z-index: 10001;
       background: none; border: none;
       color: #fff; cursor: none; padding: 0; line-height: 0;
+      transition: opacity 0.2s;
     }
     #vwr-prev { left: 1rem; }
     #vwr-next { right: 1rem; }
+    #vwr-prev.vwr-hidden, #vwr-next.vwr-hidden {
+      opacity: 0; pointer-events: none;
+    }
     #vwr-close svg, #vwr-prev svg, #vwr-next svg {
       width: clamp(2rem, 5vw, 4rem);
       height: clamp(2rem, 5vw, 4rem);
@@ -75,21 +82,18 @@
       pointer-events: none; user-select: none;
     }
 
-    /* cursor on zoomable images */
     img.vwr-zoomable { cursor: none !important; }
 
-    /* cursor classes — absolute paths work from any directory */
+    /* ── cursor classes ──────────────────────────────────────────────────── */
     #cursor-dot.triangle-right {
       border-radius: 0;
-      width: 48px;
-      height: 48px;
+      width: 48px; height: 48px;
       -webkit-mask: url('/icons/cursors/cursor-arrow-right.svg') center / contain no-repeat;
       mask: url('/icons/cursors/cursor-arrow-right.svg') center / contain no-repeat;
     }
     #cursor-dot.triangle-left {
       border-radius: 0;
-      width: 48px;
-      height: 48px;
+      width: 48px; height: 48px;
       -webkit-mask: url('/icons/cursors/cursor-arrow-left.svg') center / contain no-repeat;
       mask: url('/icons/cursors/cursor-arrow-left.svg') center / contain no-repeat;
     }
@@ -103,6 +107,12 @@
       border-radius: 0;
       -webkit-mask: url('/icons/cursors/cursor-magnify.svg') center / contain no-repeat;
       mask: url('/icons/cursors/cursor-magnify.svg') center / contain no-repeat;
+    }
+    #cursor-dot.plus {
+      border-radius: 0;
+      clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%,
+                          65% 65%, 65% 100%, 35% 100%, 35% 65%, 0% 65%, 0% 35%, 35% 35%);
+      transform: translate(-50%, -50%);
     }
   `;
   document.head.appendChild(style);
@@ -143,10 +153,25 @@
 
   let total = 0;
 
-  // ── Helpers ───────────────────────────────────────────────────────────────
-  function curAdd(c)    { if (dot) dot.classList.add(c); }
-  function curRemove(c) { if (dot) dot.classList.remove(c); }
+  // ── Cursor management ─────────────────────────────────────────────────────
+  const CUR_ALL = ['triangle-right', 'triangle-left', 'cross', 'magnify', 'plus', 'square'];
 
+  function setCursor(cls) {
+    if (!dot) return;
+    CUR_ALL.forEach(c => dot.classList.remove(c));
+    if (cls) dot.classList.add(cls);
+  }
+  function clearCursor() { setCursor(null); }
+
+  // External links → plus cursor (global, all pages)
+  document.addEventListener('mouseover', e => {
+    if (e.target.closest('a[target="_blank"]')) setCursor('plus');
+  });
+  document.addEventListener('mouseout', e => {
+    if (e.target.closest('a[target="_blank"]')) clearCursor();
+  });
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
   function currentIndex() {
     if (overlay.clientWidth === 0) return 0;
     return Math.round(overlay.scrollLeft / overlay.clientWidth);
@@ -156,11 +181,64 @@
     counter.textContent = `${currentIndex() + 1} / ${total}`;
   }
 
-  function scrollTo(idx) {
-    idx = Math.max(0, Math.min(idx, total - 1));
-    overlay.scrollLeft = idx * overlay.clientWidth;
-    updateCounter();
+  // ── Zoom ──────────────────────────────────────────────────────────────────
+  let zoomed = false, zoomImg = null, panX = 0, panY = 0;
+  let ptrDown = false, didDrag = false;
+  let ptrStartX = 0, ptrStartY = 0, ptrPanX = 0, ptrPanY = 0;
+
+  function enterZoom() {
+    zoomed = true;
+    zoomImg = track.children[currentIndex()];
+    panX = 0; panY = 0;
+    overlay.style.overflowX = 'hidden';
+    overlay.style.scrollSnapType = 'none';
+    zoomImg.style.transition = 'transform 0.25s ease';
+    zoomImg.style.transform = 'scale(2)';
+    btnPrev.classList.add('vwr-hidden');
+    btnNext.classList.add('vwr-hidden');
+    setCursor('cross');
   }
+
+  function exitZoom() {
+    if (!zoomImg) return;
+    zoomed = false;
+    zoomImg.style.transition = 'transform 0.25s ease';
+    zoomImg.style.transform = '';
+    const img = zoomImg;
+    zoomImg = null; panX = 0; panY = 0;
+    setTimeout(() => { img.style.transition = ''; }, 250);
+    overlay.style.overflowX = 'auto';
+    overlay.style.scrollSnapType = 'x mandatory';
+    btnPrev.classList.remove('vwr-hidden');
+    btnNext.classList.remove('vwr-hidden');
+    setCursor('magnify');
+  }
+
+  overlay.addEventListener('pointerdown', e => {
+    if (e.target.closest('#vwr-close, #vwr-prev, #vwr-next')) return;
+    ptrDown = true; didDrag = false;
+    ptrStartX = e.clientX; ptrStartY = e.clientY;
+    if (zoomed) { ptrPanX = panX; ptrPanY = panY; }
+    try { overlay.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+
+  overlay.addEventListener('pointermove', e => {
+    if (!ptrDown || !zoomed || !zoomImg) return;
+    const dx = e.clientX - ptrStartX, dy = e.clientY - ptrStartY;
+    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) didDrag = true;
+    panX = ptrPanX + dx; panY = ptrPanY + dy;
+    zoomImg.style.transition = 'none';
+    zoomImg.style.transform = `translate(${panX}px, ${panY}px) scale(2)`;
+  });
+
+  overlay.addEventListener('pointerup', e => {
+    if (!ptrDown) return;
+    ptrDown = false;
+    if (didDrag) return;
+    if (e.target.closest('#vwr-close, #vwr-prev, #vwr-next')) return;
+    if (zoomed) exitZoom();
+    else enterZoom();
+  });
 
   // ── Open / Close ──────────────────────────────────────────────────────────
   function open(srcs, idx) {
@@ -174,22 +252,24 @@
     });
     overlay.classList.add('open');
     document.body.classList.add('vwr-open');
-    // Wait one frame so the overlay is painted and clientWidth is available
     requestAnimationFrame(() => {
       overlay.scrollLeft = idx * overlay.clientWidth;
       updateCounter();
     });
+    setCursor('magnify');
   }
 
   function close() {
+    if (zoomed) exitZoom();
     overlay.classList.remove('open');
     document.body.classList.remove('vwr-open');
-    // Clear track to free memory
+    clearCursor();
     setTimeout(() => { track.innerHTML = ''; }, 400);
   }
 
   // ── Controls ──────────────────────────────────────────────────────────────
   function step(dir) {
+    if (zoomed) return;
     const idx = currentIndex();
     const next = (idx + dir + total) % total;
     overlay.scrollTo({ left: next * overlay.clientWidth, behavior: 'smooth' });
@@ -203,28 +283,32 @@
 
   document.addEventListener('keydown', e => {
     if (!overlay.classList.contains('open')) return;
-    if (e.key === 'Escape')     close();
+    if (e.key === 'Escape') { if (zoomed) exitZoom(); else close(); }
     if (e.key === 'ArrowLeft')  step(-1);
     if (e.key === 'ArrowRight') step(+1);
   });
 
-  // Touch swipe
+  // Touch swipe (only when not zoomed)
   let tx0 = 0;
   overlay.addEventListener('touchstart', e => { tx0 = e.touches[0].clientX; }, { passive: true });
   overlay.addEventListener('touchend', e => {
+    if (zoomed) return;
     const dx = e.changedTouches[0].clientX - tx0;
     if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1);
   });
 
-  // ── Cursor bindings for controls ──────────────────────────────────────────
-  if (dot) {
-    btnClose.addEventListener('mouseenter', () => curAdd('cross'));
-    btnClose.addEventListener('mouseleave', () => curRemove('cross'));
-    btnPrev.addEventListener('mouseenter',  () => curAdd('triangle-left'));
-    btnPrev.addEventListener('mouseleave',  () => curRemove('triangle-left'));
-    btnNext.addEventListener('mouseenter',  () => curAdd('triangle-right'));
-    btnNext.addEventListener('mouseleave',  () => curRemove('triangle-right'));
-  }
+  // ── Cursor inside overlay (zone-based) ───────────────────────────────────
+  overlay.addEventListener('mouseover', e => {
+    if (!dot) return;
+    if (e.target.closest('#vwr-close')) { setCursor('cross'); return; }
+    if (e.target.closest('#vwr-prev'))  { setCursor('triangle-left'); return; }
+    if (e.target.closest('#vwr-next'))  { setCursor('triangle-right'); return; }
+    setCursor(zoomed ? 'cross' : 'magnify');
+  });
+  overlay.addEventListener('mouseout', e => {
+    if (!dot) return;
+    if (!overlay.contains(e.relatedTarget)) clearCursor();
+  });
 
   // ── Image discovery & binding ─────────────────────────────────────────────
   function collectImages() {
@@ -236,25 +320,20 @@
   const sequence = document.getElementById('sequence');
 
   if (sequence) {
-    // Conquista-style: whole animated strip opens viewer at active frame
     sequence.style.cursor = 'none';
-    sequence.addEventListener('mouseenter', () => curAdd('magnify'));
-    sequence.addEventListener('mouseleave', () => curRemove('magnify'));
+    sequence.addEventListener('mouseenter', () => setCursor('magnify'));
+    sequence.addEventListener('mouseleave', () => clearCursor());
     sequence.addEventListener('click', () => {
       const imgs = [...sequence.querySelectorAll('img')];
       const srcs = imgs.map(i => i.src);
       const active = imgs.findIndex(i => i.classList.contains('active'));
       open(srcs, active >= 0 ? active : 0);
     });
-
   } else {
-    // Standard: each content image opens viewer
     const imgs = collectImages();
     const srcs = imgs.map(i => i.src);
     imgs.forEach((img, idx) => {
       img.classList.add('vwr-zoomable');
-      img.addEventListener('mouseenter', () => curAdd('magnify'));
-      img.addEventListener('mouseleave', () => curRemove('magnify'));
       img.addEventListener('click', () => open(srcs, idx));
     });
   }
