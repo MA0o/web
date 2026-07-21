@@ -1,5 +1,8 @@
 (function () {
 
+  // resolve base URL so the image path works on any hosting subdirectory
+  const BASE = (document.currentScript || {src:''}).src.replace(/js\/contact\.js.*$/, '');
+
   const style = document.createElement('style');
   style.textContent = `
     #ct-overlay {
@@ -47,7 +50,7 @@
   overlay.id = 'ct-overlay';
   overlay.innerHTML = `
     <div id="ct-box">
-      <img id="ct-img" src="/img/perfil.jpg" alt="">
+      <img id="ct-img" alt="">
       <button id="ct-close" aria-label="Cerrar">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="7.21 7.21 17.59 17.59">
           <path fill="currentColor" d="M8.51 7.21 7.21 8.51 14.72 16 7.21 23.52 8.48 24.8 15.99 17.3 23.48 24.8 24.77 23.5 17.27 16 24.8 8.48 23.52 7.21 15.99 14.72 8.51 7.21Z"/>
@@ -61,6 +64,7 @@
     </div>
   `;
   document.body.appendChild(overlay);
+  document.getElementById('ct-img').src = BASE + 'img/perfil.jpg';
 
   // ── Cursor ────────────────────────────────────────────────────────────────
   const CUR_ALL = ['triangle-right','triangle-left','cross','magnify','plus','square'];
