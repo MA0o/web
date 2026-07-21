@@ -59,6 +59,15 @@
 
     img.vwr-zoomable { cursor: none !important; }
 
+    /* external links — difference blend like the nav */
+    a[target="_blank"] {
+      background: #ffffff;
+      color: #000000;
+      mix-blend-mode: difference;
+      padding: 0.05em 0.2em;
+      text-decoration: none;
+    }
+
     /* ── cursor shapes ─────────────────────────────────────────────────── */
     #cursor-dot.triangle-right {
       border-radius: 0; width: 48px; height: 48px;
