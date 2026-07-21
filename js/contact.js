@@ -16,8 +16,7 @@
     #ct-overlay.open { display: flex; }
 
     #ct-box {
-      --w: 210px;
-      width: var(--w);
+      width: 320px;
       background: #ffdf41;
       display: flex;
       flex-direction: column;
@@ -47,14 +46,13 @@
       display: block;
     }
 
-    /* row 3: info — half image height, nav font style */
+    /* row 3: info — auto height, nav font style */
     #ct-info {
       width: 100%;
-      height: calc(var(--w) * 0.5);
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      padding: 0.12rem 0.5rem 1.2rem;
+      justify-content: flex-start;
+      padding: 0.4rem 0.5rem 1.2rem;
       gap: 0.15em;
       font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
       font-size: 1rem;
