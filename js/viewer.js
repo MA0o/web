@@ -62,6 +62,11 @@
       display: block;
     }
 
+    @media (max-width: 900px) {
+      #vwr-prev, #vwr-next { display: none; }
+      #vwr-close svg { width: 3.5rem; height: 3.5rem; }
+    }
+
     #vwr-counter {
       position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%);
       z-index: 10001; color: #fff;
