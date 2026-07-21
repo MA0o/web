@@ -81,25 +81,13 @@
     }
 
     /* VIDEO BACKGROUND */
-    #video-bg {
+    #bg-video {
       position: fixed;
       inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       z-index: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    #video-bg iframe {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      /* scale to cover: whichever dimension is bigger wins */
-      width: 177.78vh;  /* 16/9 × 100vh */
-      height: 56.25vw;  /* 9/16 × 100vw */
-      min-width: 100%;
-      min-height: 100%;
-      border: 0;
       pointer-events: none;
     }
 
@@ -142,15 +130,6 @@
     .title-corner-left  { left: 0; }
     .title-corner-right { right: 0; }
 
-    @media (max-width: 900px) {
-      #video-bg iframe {
-        width: 177.78dvh;
-        height: 100dvh;
-        min-width: 177.78dvh;
-        min-height: 100dvh;
-      }
-    }
-
     @media (max-width: 800px) {
       nav { font-size: 1rem; }
       .page-text { max-width: 90vw; }
@@ -175,12 +154,10 @@
     </div>
   </nav>
 
-  <div id="video-bg">
-    <iframe src="https://www.youtube.com/embed/q3MoIaY_Ei8?autoplay=1&mute=1&loop=1&playlist=q3MoIaY_Ei8&controls=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1"
-            title="sinóptico"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen></iframe>
-  </div>
+  <video id="bg-video" autoplay muted loop playsinline
+         poster="../img/proyectos/sinóptico/portada.jpg">
+    <source src="../img/proyectos/sinóptico/loop.mp4" type="video/mp4">
+  </video>
 
   <div class="page-content">
     <div class="page-text">
