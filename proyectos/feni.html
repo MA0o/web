@@ -143,17 +143,22 @@
       right: 0;
       z-index: 50;
       background: var(--bg);
-      border-top: 1px solid var(--text);
       padding: 0.6rem 1.2rem 0.5rem;
       font-size: 0.75rem;
       line-height: 1.5;
+    }
+
+    @media (max-width: 800px) {
+      nav { font-size: 1.3rem; }
     }
 
     nav a[data-i18n="nav-cv"] { display: none; }
 
     a.red-link {
       color: red;
-      text-decoration: none;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 0.2em;
     }
   </style>
 </head>

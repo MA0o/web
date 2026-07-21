@@ -166,36 +166,26 @@
     /* ── RESPONSIVE ────────────────────────────────────────────────────────── */
     @media (max-width: 800px) {
       html, body { overflow: auto; }
+      nav { font-size: 1.3rem; }
       .layout-b {
-        display: block;
+        flex-direction: column;
         height: auto;
-        padding-top: var(--nav-h);
-        padding-bottom: 5rem;
+        padding-top: 4rem;
       }
       .lb-text {
-        position: fixed;
-        bottom: 0; left: 0; right: 0;
-        width: 100%;
-        z-index: 50;
-        background: var(--bg);
-        border-top: 1px solid var(--text);
-        padding: 0.6rem 1.2rem 0.5rem;
-        overflow-y: auto;
-        max-height: 35vh;
-      }
-      .lb-gallery {
-        flex: none;
         width: 100%;
         overflow-y: visible;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        border-bottom: 1px solid rgba(0,0,0,0.15);
       }
-      .lb-gallery img { aspect-ratio: 2 / 3; object-fit: cover; height: auto; }
-      .lb-gallery img:nth-child(1),
-      .lb-gallery img:nth-child(3),
-      .lb-gallery img:nth-child(4),
-      .lb-gallery img:nth-child(7) { aspect-ratio: 3 / 2; }
-      .lb-gallery img:nth-child(2) { aspect-ratio: 1 / 1; }
+      .lb-gallery {
+        overflow-y: visible;
+        columns: 2;
+        padding: var(--gutter);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .lb-gallery { columns: 1; }
     }
       nav a[data-i18n="nav-cv"] { display: none; }
   </style>
