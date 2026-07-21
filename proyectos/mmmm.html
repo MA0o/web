@@ -10,18 +10,22 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
       --bg: #ffffff;
       --text: #000000;
       --font-mono: 'IBM Plex Mono', 'Courier New', Courier, monospace;
       --nav-size: 1rem;
     }
+
     html, body {
       background-color: var(--bg);
       color: var(--text);
       font-family: var(--font-mono);
       min-height: 100vh;
     }
+
+    /* NAV */
     nav {
       position: fixed;
       top: 0; left: 0;
@@ -37,21 +41,28 @@
       justify-content: space-between;
       align-items: flex-start;
     }
+
     nav a {
       display: block;
       width: fit-content;
       color: #000000;
       text-decoration: none;
     }
+
     .nav-lang {
       display: flex;
       flex-direction: column;
       align-items: flex-end;
     }
+
     .lang-link { opacity: 0.4; }
     .lang-link.active { opacity: 1; }
+
     @media (max-width: 800px) { nav { font-size: 1rem; } }
+
+    /* CURSOR */
     * { cursor: none; }
+
     #cursor-dot {
       position: fixed;
       pointer-events: none;
@@ -63,18 +74,29 @@
       transform: translate(-50%, -50%);
       transition: border-radius 0.15s ease;
     }
+
     #cursor-dot.square { border-radius: 0; }
+
     @media (max-width: 900px) { #cursor-dot { display: none; } }
-    .placeholder {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+
+    /* GALLERY */
+    .gallery {
+      padding-top: 1.4rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
     }
-      .title-corner {
+
+    .gallery img {
+      width: 100%;
+      display: block;
+    }
+
+    /* TITLE CORNERS */
+    .title-corner {
       position: fixed;
       bottom: 0;
-      z-index: 100;
+      z-index: 110;
       font-family: var(--font-mono);
       font-size: 1rem;
       color: #ffffff;
@@ -86,10 +108,12 @@
     }
     .title-corner-left  { left: 0; }
     .title-corner-right { right: 0; }
-      nav a[data-i18n="nav-cv"] { display: none; }
+
+    nav a[data-i18n="nav-cv"] { display: none; }
   </style>
 </head>
 <body>
+
   <nav>
     <div class="nav-links">
       <a href="../index.html" data-i18n="nav-projects">1. Proyectos</a>
@@ -103,13 +127,59 @@
       <a href="#" class="lang-link" data-lang="ca">CAT</a>
     </div>
   </nav>
-  <div class="placeholder">
-    <span>MMMM</span>
+
+  <div class="gallery">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_01.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_02.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_03.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_04.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_05.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_06.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_07.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_08.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_09.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_10.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_11.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_12.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_13.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_14.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_15.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_16.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_17.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_18.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_19.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_20.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_21.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_22.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_23.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_24.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_25.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_26.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_27.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_28.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_29.png" alt="">
+    <img src="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_30.png" alt="">
   </div>
+
   <div class="title-corner title-corner-left">MMMM</div>
   <div class="title-corner title-corner-right">MMMM</div>
 
   <div id="cursor-dot"></div>
+
+  <script>
+    const dot = document.getElementById('cursor-dot');
+    document.addEventListener('mousemove', e => {
+      dot.style.left = e.clientX + 'px';
+      dot.style.top  = e.clientY + 'px';
+    });
+    document.addEventListener('mouseover', e => {
+      if (e.target.closest('a')) dot.classList.add('square');
+    });
+    document.addEventListener('mouseout', e => {
+      if (e.target.closest('a')) dot.classList.remove('square');
+    });
+  </script>
+
   <script>
     const translations = {
       es: { 'nav-projects': '1. Proyectos', 'nav-about': '2. Sobre mí', 'nav-cv': '3. CV', 'nav-contact': '4. Contacto' },
@@ -132,17 +202,9 @@
     });
     applyLang(localStorage.getItem('lang') || 'es');
   </script>
-  <script>
-    const dot = document.getElementById('cursor-dot');
-    document.addEventListener('mousemove', e => {
-      dot.style.left = e.clientX + 'px';
-      dot.style.top = e.clientY + 'px';
-    });
-    document.querySelectorAll('nav a').forEach(a => {
-      a.addEventListener('mouseenter', () => dot.classList.add('square'));
-      a.addEventListener('mouseleave', () => dot.classList.remove('square'));
-    });
-  </script>
+
   <script src="../js/contact.js"></script>
+  <script src="../js/viewer.js"></script>
+
 </body>
 </html>
