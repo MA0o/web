@@ -60,11 +60,15 @@
 
     @media (max-width: 800px) {
       nav { font-size: 1.3rem; }
+      body { overflow-x: hidden; }
       .sequence {
-        width: 50%;
+        position: relative;
+        width: 125vw;
+        left: 50%;
+        transform: translateX(-50%);
         aspect-ratio: auto;
-        height: 106vw;
-        margin: 3rem auto 0;
+        height: 265vw;
+        margin-top: 3rem;
       }
     }
 
