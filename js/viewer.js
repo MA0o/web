@@ -420,7 +420,7 @@
     const imgs = [...document.querySelectorAll('img')].filter(
       img => !img.closest('nav') && !img.closest('#vwr-overlay')
     );
-    const srcs = imgs.map(i => i.src);
+    const srcs = imgs.map(i => i.dataset.full || i.src);
     imgs.forEach((img, idx) => {
       img.classList.add('vwr-zoomable');
       img.addEventListener('click', () => open(srcs, idx));
