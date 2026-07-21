@@ -101,6 +101,10 @@
       filter: invert(1) brightness(1.5) hue-rotate(180deg);
     }
 
+    figure.project[data-wip]:hover .thumb {
+      filter: invert(1) brightness(1.5) hue-rotate(180deg);
+    }
+
     .deco { width: 100%; height: 220px; background: #e0e0e0; }
 
     /* RESPONSIVE */
@@ -351,15 +355,6 @@
         </a>
       </figure>
 
-      <figure class="project">
-        <svg class="thumb" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto;">
-          <rect x="0" y="0" width="100" height="130" fill="white"/>
-          <rect x="0.5" y="0.5" width="99" height="129" fill="none" stroke="black" stroke-width="1" vector-effect="non-scaling-stroke"/>
-          <line x1="0" y1="0" x2="100" y2="130" stroke="black" stroke-width="1" vector-effect="non-scaling-stroke"/>
-          <line x1="100" y1="0" x2="0" y2="130" stroke="black" stroke-width="1" vector-effect="non-scaling-stroke"/>
-        </svg>
-      </figure>
-
       <figure class="project" data-title="innotable">
         <a href="proyectos/innotable.html">
           <img class="thumb" src="img/proyectos/innotable/portada.jpg" alt="">
@@ -396,30 +391,10 @@
         </a>
       </figure>
 
-      <figure class="project" data-title="f/00">
-        <a href="proyectos/f00-low.html">
-          <svg class="thumb" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto;">
-            <rect x="0" y="0" width="100" height="130" fill="white"/>
-            <rect x="0.5" y="0.5" width="99" height="129" fill="none" stroke="black" stroke-width="1" vector-effect="non-scaling-stroke"/>
-            <line x1="0" y1="0" x2="100" y2="130" stroke="black" stroke-width="1" vector-effect="non-scaling-stroke"/>
-            <line x1="100" y1="0" x2="0" y2="130" stroke="black" stroke-width="1" vector-effect="non-scaling-stroke"/>
-          </svg>
-        </a>
-      </figure>
-
       <figure class="project" data-title="FLAIX">
         <a href="proyectos/flaix.html">
           <img class="thumb" src="img/proyectos/flaix/portada.jpg" alt="">
         </a>
-      </figure>
-
-      <figure class="project">
-        <svg class="thumb" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto;">
-          <rect x="0" y="0" width="100" height="130" fill="white"/>
-          <rect x="0.5" y="0.5" width="99" height="129" fill="none" stroke="black" stroke-width="1" vector-effect="non-scaling-stroke"/>
-          <line x1="0" y1="0" x2="100" y2="130" stroke="black" stroke-width="1" vector-effect="non-scaling-stroke"/>
-          <line x1="100" y1="0" x2="0" y2="130" stroke="black" stroke-width="1" vector-effect="non-scaling-stroke"/>
-        </svg>
       </figure>
 
       <figure class="project" data-title="POLLO AL LIMÓN">
@@ -428,24 +403,8 @@
         </a>
       </figure>
 
-      <figure class="project" data-title="caramelo">
-        <a href="proyectos/caramelo.html">
-          <svg class="thumb" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto;">
-            <rect x="0" y="0" width="100" height="130" fill="white"/>
-            <rect x="0.5" y="0.5" width="99" height="129" fill="none" stroke="black" stroke-width="1" vector-effect="non-scaling-stroke"/>
-            <line x1="0" y1="0" x2="100" y2="130" stroke="black" stroke-width="1" vector-effect="non-scaling-stroke"/>
-            <line x1="100" y1="0" x2="0" y2="130" stroke="black" stroke-width="1" vector-effect="non-scaling-stroke"/>
-          </svg>
-        </a>
-      </figure>
-
-      <figure class="project">
-        <svg class="thumb" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto;">
-          <rect x="0" y="0" width="100" height="130" fill="white"/>
-          <rect x="0.5" y="0.5" width="99" height="129" fill="none" stroke="black" stroke-width="1" vector-effect="non-scaling-stroke"/>
-          <line x1="0" y1="0" x2="100" y2="130" stroke="black" stroke-width="1" vector-effect="non-scaling-stroke"/>
-          <line x1="100" y1="0" x2="0" y2="130" stroke="black" stroke-width="1" vector-effect="non-scaling-stroke"/>
-        </svg>
+      <figure class="project" data-title="caramelo" data-wip>
+        <img class="thumb" src="img/proyectos/caramelo/portada.jpg" alt="">
       </figure>
 
       <figure class="project" data-title="ASE D'OR">
@@ -588,6 +547,18 @@
     document.querySelectorAll('.cv-close').forEach(el => {
       el.addEventListener('mouseenter', () => dot.classList.add('cross'));
       el.addEventListener('mouseleave', () => dot.classList.remove('cross'));
+    });
+
+    document.querySelectorAll('figure.project[data-wip]').forEach(fig => {
+      fig.addEventListener('mouseenter', () => {
+        dot.classList.add('cross');
+        label.textContent = fig.dataset.title;
+        label.classList.add('active');
+      });
+      fig.addEventListener('mouseleave', () => {
+        dot.classList.remove('cross');
+        label.classList.remove('active');
+      });
     });
   </script>
 
