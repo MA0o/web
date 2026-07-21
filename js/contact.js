@@ -16,7 +16,7 @@
     #ct-overlay.open { display: flex; }
 
     #ct-box {
-      --w: 280px;
+      --w: 210px;
       width: var(--w);
       background: #ffdf41;
       display: flex;
@@ -39,10 +39,10 @@
       display: block;
     }
 
-    /* row 2: image — landscape crop (4:3) fills popup width */
+    /* row 2: image — square crop, fills popup width */
     #ct-img {
       width: 100%;
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 1;
       object-fit: cover;
       display: block;
     }
