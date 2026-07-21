@@ -192,14 +192,20 @@
   // ── Zoom ──────────────────────────────────────────────────────────────────
   function enterZoom(cx, cy) {
     const W = window.innerWidth, H = window.innerHeight;
-    zoomed = true; currentScale = 2;
     zoomImg = track.children[currentIndex()];
-    // pan so the clicked/tapped point stays fixed after 2× scale
-    panX = W / 2 - cx;
-    panY = H / 2 - cy;
+    // fill viewport width, but never less than 2×
+    let s = 2;
+    if (zoomImg && zoomImg.naturalWidth && zoomImg.naturalHeight) {
+      const fillW = (W / H) * (zoomImg.naturalHeight / zoomImg.naturalWidth);
+      s = Math.max(fillW, 2);
+    }
+    zoomed = true; currentScale = s;
+    // general formula: keeps the clicked point fixed for any scale
+    panX = (W / 2 - cx) * (s - 1);
+    panY = (H / 2 - cy) * (s - 1);
     lockScroll();
     zoomImg.style.transition = 'transform 0.25s ease';
-    applyZoom(zoomImg, 2, panX, panY);
+    applyZoom(zoomImg, s, panX, panY);
     btnPrev.classList.add('vwr-hidden');
     btnNext.classList.add('vwr-hidden');
     setCursor('cross');
