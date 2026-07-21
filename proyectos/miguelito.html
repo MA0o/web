@@ -93,6 +93,18 @@
       display: block;
     }
 
+    .gallery .project-text {
+      font-size: 0.75rem;
+      line-height: 1.5;
+      text-align: justify;
+      padding: 0.5rem;
+      grid-row: span 2;
+    }
+
+    .gallery .project-text p + p {
+      margin-top: 1em;
+    }
+
     /* TITLE CORNERS */
     .title-corner {
       position: fixed;
@@ -130,10 +142,20 @@
   </nav>
 
   <div class="gallery">
-    <!-- fila 1: video en col 2, resto vacío -->
+    <!-- fila 0: texto en col 4 -->
+    <div class="gap"></div>
+    <div class="gap"></div>
+    <div class="gap"></div>
+    <div class="project-text">
+      <p>Miguelito es un abrojo de metal cortado y plegado mediante CNC con forma humana. Un objeto multiusos (con resultados discutibles). Puede aguantar el móvil, pero se le cae, puede marcar un libro pero se le va, puede pisar papeles, pero se levanta. Miguelito aguanta botellas, espanta pájaros, sostiene fruta, pisa papeles, guarda llaves, sirve de gancho, de cenicero, de flor, de colgador. Hace de todo pero no muy bien.</p>
+      <p>"</p>
+      <p>Todos somos un poco Miguelito.</p>
+    </div>
+    <div class="gap"></div>
+
+    <!-- fila 1: video en col 2, col 4 ocupado por texto (span 2) -->
     <div class="gap"></div>
     <video autoplay muted loop playsinline><source src="../img/proyectos/miguelito/bailarinmiguelin-loop.mp4" type="video/mp4"></video>
-    <div class="gap"></div>
     <div class="gap"></div>
     <div class="gap"></div>
 
