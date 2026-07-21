@@ -1,6 +1,9 @@
 (function () {
 
-  const BASE = (document.currentScript || {src:''}).src.replace(/js\/contact\.js.*$/, '');
+  // robust base: currentScript first, then query the DOM (works if currentScript is null)
+  const _cs = document.currentScript;
+  const _el = _cs || document.querySelector('script[src*="contact.js"]');
+  const BASE = _el ? _el.src.replace(/js\/contact\.js.*$/, '') : '';
 
   const style = document.createElement('style');
   style.textContent = `
@@ -44,18 +47,18 @@
       display: block;
     }
 
-    /* row 3: info — same height as image (= 1× width) */
+    /* row 3: info — 75% of image height, nav font style */
     #ct-info {
       width: 100%;
-      height: var(--w);
+      height: calc(var(--w) * 0.75);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 1rem;
-      gap: 0.2em;
+      padding: 0.12rem 0.5rem;
+      gap: 0.15em;
       font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
-      font-size: 0.75rem;
-      line-height: 1.4;
+      font-size: 1rem;
+      line-height: 1.1;
       color: #000eff;
       box-sizing: border-box;
     }
