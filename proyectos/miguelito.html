@@ -60,6 +60,19 @@
 
     @media (max-width: 800px) { nav { font-size: 1rem; } }
 
+    @media (max-width: 900px) {
+      .gallery {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .gallery .gap {
+        display: none;
+      }
+      .gallery .project-text {
+        grid-row: auto;
+        grid-column: auto;
+      }
+    }
+
     /* CURSOR */
     * { cursor: none; }
 
