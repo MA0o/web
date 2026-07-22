@@ -67,16 +67,18 @@
       .gallery .gap {
         display: none;
       }
-      /* gaps col2+col3 junto a video1, y col1+col2 junto a video2 */
+      /* gaps col2+col3 del row de video1 */
       .gallery > :nth-child(8),
-      .gallery > :nth-child(9),
-      .gallery > :nth-child(25),
-      .gallery > :nth-child(26) {
+      .gallery > :nth-child(9) {
         display: block;
       }
       .gallery .project-text {
         grid-column: 1 / -1;
         grid-row: auto;
+      }
+      /* video2 forzado a col3 */
+      .gallery > :nth-child(28) {
+        grid-column: 3;
       }
     }
 
