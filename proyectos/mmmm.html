@@ -97,6 +97,8 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       width: 100%;
+      padding-top: 3.6rem;
+      pointer-events: none;
     }
 
     .rgbo-cell {
@@ -151,6 +153,13 @@
     </div>
   </nav>
 
+  <section class="rgbo-section">
+    <div class="rgbo-cell" id="rgbo-r"></div>
+    <div class="rgbo-cell" id="rgbo-g"></div>
+    <div class="rgbo-cell" id="rgbo-b"></div>
+    <div class="rgbo-cell" id="rgbo-o"></div>
+  </section>
+
   <div class="gallery">
     <img src="../img/proyectos/mmmm/escaners/thumbs/pagina_01.jpg" data-full="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_01.png" alt="">
     <img src="../img/proyectos/mmmm/escaners/thumbs/pagina_02.jpg" data-full="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_02.png" alt="">
@@ -183,13 +192,6 @@
     <img src="../img/proyectos/mmmm/escaners/thumbs/pagina_29.jpg" data-full="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_29.png" alt="">
     <img src="../img/proyectos/mmmm/escaners/thumbs/pagina_30.jpg" data-full="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_30.png" alt="">
   </div>
-
-  <section class="rgbo-section">
-    <div class="rgbo-cell" id="rgbo-r"></div>
-    <div class="rgbo-cell" id="rgbo-g"></div>
-    <div class="rgbo-cell" id="rgbo-b"></div>
-    <div class="rgbo-cell" id="rgbo-o"></div>
-  </section>
 
   <div class="title-corner title-corner-left">MMMM</div>
   <div class="title-corner title-corner-right">MMMM</div>
@@ -245,7 +247,7 @@
 
       anims.forEach(({ id, dir, files }) => {
         const cell = document.getElementById(id);
-        const srcs = files.map(f => `${base}${dir}/${f}`);
+        const srcs = files.map(f => `${base}${dir}/thumbs/${f}`);
 
         const imgs = srcs.map((src, i) => {
           const img = document.createElement('img');
