@@ -92,6 +92,29 @@
       display: block;
     }
 
+    /* RGBO ANIMATIONS */
+    .rgbo-section {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      width: 100%;
+    }
+
+    .rgbo-cell {
+      position: relative;
+      aspect-ratio: 2 / 3;
+      overflow: hidden;
+    }
+
+    .rgbo-cell img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      display: block;
+    }
+
     /* TITLE CORNERS */
     .title-corner {
       position: fixed;
@@ -161,6 +184,13 @@
     <img src="../img/proyectos/mmmm/escaners/thumbs/pagina_30.jpg" data-full="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_30.png" alt="">
   </div>
 
+  <section class="rgbo-section">
+    <div class="rgbo-cell" id="rgbo-r"></div>
+    <div class="rgbo-cell" id="rgbo-g"></div>
+    <div class="rgbo-cell" id="rgbo-b"></div>
+    <div class="rgbo-cell" id="rgbo-o"></div>
+  </section>
+
   <div class="title-corner title-corner-left">MMMM</div>
   <div class="title-corner title-corner-right">MMMM</div>
 
@@ -201,6 +231,39 @@
       a.addEventListener('click', e => { e.preventDefault(); applyLang(a.dataset.lang); });
     });
     applyLang(localStorage.getItem('lang') || 'es');
+  </script>
+
+  <script>
+    (function () {
+      const base = '../img/proyectos/mmmm/';
+      const anims = [
+        { id: 'rgbo-r', dir: 'R', files: ['_MP_3496.jpg','_MP_3501.jpg','_MP_3507.jpg','_MP_3517.jpg','_MP_3520.jpg','_MP_3525.jpg','_MP_3529.jpg','_MP_3532.jpg','_MP_3535.jpg','_MP_3671.jpg','_MP_3679.jpg'] },
+        { id: 'rgbo-g', dir: 'G', files: ['_MP_3537.jpg','_MP_3540.jpg','_MP_3547.jpg','_MP_3549.jpg','_MP_3551.jpg','_MP_3555.jpg','_MP_3559.jpg','_MP_3563.jpg','_MP_3654.jpg','_MP_3660.jpg','_MP_3665.jpg'] },
+        { id: 'rgbo-b', dir: 'B', files: ['_MP_3494.jpg','_MP_3682.jpg','_MP_3687.jpg','_MP_3691.jpg','_MP_3697.jpg','_MP_3700.jpg','_MP_3702.jpg','_MP_3706.jpg','_MP_3715.jpg'] },
+        { id: 'rgbo-o', dir: 'O', files: ['_MP_3569.jpg','_MP_3574.jpg','_MP_3576.jpg','_MP_3579.jpg','_MP_3581.jpg','_MP_3583.jpg','_MP_3591.jpg','_MP_3597.jpg','_MP_3606.jpg','_MP_3628.jpg','_MP_3636.jpg','_MP_3647.jpg'] },
+      ];
+
+      anims.forEach(({ id, dir, files }) => {
+        const cell = document.getElementById(id);
+        const srcs = files.map(f => `${base}${dir}/${f}`);
+
+        const imgs = srcs.map((src, i) => {
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = '';
+          if (i === 0) img.style.opacity = '1';
+          cell.appendChild(img);
+          return img;
+        });
+
+        let current = 0;
+        setInterval(() => {
+          imgs[current].style.opacity = '0';
+          current = (current + 1) % imgs.length;
+          imgs[current].style.opacity = '1';
+        }, 200);
+      });
+    })();
   </script>
 
   <script src="../js/contact.js"></script>
