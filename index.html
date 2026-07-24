@@ -913,28 +913,7 @@
         grid.style.position = 'relative';
         grid.style.height   = Math.round(totalH + 32) + 'px';
 
-        // Línea por centros
-        let svg = document.getElementById('constellation-line');
-        if (!svg) {
-          svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-          svg.id = 'constellation-line';
-          svg.style.cssText = 'position:absolute;top:0;left:0;pointer-events:none;z-index:0;overflow:visible;';
-          grid.insertBefore(svg, grid.firstChild);
-        }
-        svg.setAttribute('width', W);
-        svg.setAttribute('height', Math.round(totalH + 32));
 
-        let poly = svg.querySelector('polyline');
-        if (!poly) {
-          poly = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
-          poly.setAttribute('fill', 'none');
-          poly.setAttribute('stroke', '#000');
-          poly.setAttribute('stroke-width', '1');
-          svg.appendChild(poly);
-        }
-        poly.setAttribute('points',
-          placed.map(p => `${Math.round(p.x + p.w / 2)},${Math.round(p.y + p.h / 2)}`).join(' ')
-        );
       }
 
       // Esperar a que carguen las imágenes antes de calcular posiciones
@@ -964,9 +943,7 @@
           });
           grid.style.position = '';
           grid.style.height   = '';
-          const oldSvg = document.getElementById('constellation-line');
-          if (oldSvg) oldSvg.remove();
-          constellation();
+constellation();
         }, 200);
       });
     })();
