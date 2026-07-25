@@ -101,7 +101,7 @@
     #cursor-info strong { display: block; font-weight: 700; margin-bottom: 0.25em; }
     #cursor-info span   { display: block; }
 
-    @media (max-width: 900px) { #cursor-dot { display: none; } }
+    @media (max-width: 900px) { #cursor-dot { display: none; } #cursor-info { display: none !important; } }
 
     /* OVERLAY */
     #img-overlay {
@@ -114,7 +114,7 @@
     #img-overlay.open { display: block; }
     #img-overlay img {
       position: absolute;
-      height: 200vh;
+      height: 140vh;
       width: auto;
       left: 50%;
       transform: translateX(-50%);
@@ -156,7 +156,7 @@
     /* desfase 0.5 imagen entre filas 1↔3 y 2↔4 */
     .carousel-row:nth-child(3) .carousel-track,
     .carousel-row:nth-child(4) .carousel-track {
-      animation-delay: calc(-120s / 218);
+      animation-delay: calc(-171s / 218);
     }
 
     @keyframes scroll-left {
@@ -169,8 +169,8 @@
       to   { transform: translateX(0); }
     }
 
-    .track-left  { animation: scroll-left  120s linear infinite; }
-    .track-right { animation: scroll-right 120s linear infinite; }
+    .track-left  { animation: scroll-left  171s linear infinite; }
+    .track-right { animation: scroll-right 171s linear infinite; }
 
     /* TITLE CORNERS */
     .title-corner {
@@ -347,7 +347,7 @@
         const fullImg = new Image();
         fullImg.onload = () => {
           overlayImg.src = fullSrc;
-          overlayImg.style.top = (window.innerHeight * 0.5 - cy * window.innerHeight * 2) + 'px';
+          overlayImg.style.top = (window.innerHeight * 0.5 - cy * window.innerHeight * 1.4) + 'px';
           overlay.classList.add('open');
           if (currentData) {
             cursorInfo.innerHTML = `<strong>${currentData.nombre}</strong><span>${currentData.texto}</span>`;
@@ -395,14 +395,11 @@
       });
 
       overlay.addEventListener('click', () => { if (!overContent) closeOverlay(); });
+      overlay.addEventListener('touchend', (e) => { e.preventDefault(); closeOverlay(); }, { passive: false });
 
       const allImgs = Array.from(document.querySelectorAll('.carousel-track img'));
 
-      document.querySelector('.carousel-wrap').addEventListener('click', (e) => {
-        const cx = e.clientX;
-        const cy = e.clientY;
-
-        // Candidates: images whose bounding rect contains cursor
+      function handleCarouselTap(cx, cy) {
         const candidates = allImgs.filter(img => {
           const r = img.getBoundingClientRect();
           return cx >= r.left && cx <= r.right && cy >= r.top && cy <= r.bottom;
@@ -410,7 +407,6 @@
 
         if (!candidates.length) return;
 
-        // Among candidates, pick the last one in DOM order with non-transparent pixel at cursor
         let hit = null;
         for (const img of candidates) {
           if (!img.complete || !img.naturalWidth) continue;
@@ -426,7 +422,24 @@
         }
 
         if (hit) openOverlay(hit);
+      }
+
+      document.querySelector('.carousel-wrap').addEventListener('click', (e) => {
+        handleCarouselTap(e.clientX, e.clientY);
       });
+
+      let touchStartX = 0, touchStartY = 0;
+      document.querySelector('.carousel-wrap').addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+      document.querySelector('.carousel-wrap').addEventListener('touchend', (e) => {
+        const t = e.changedTouches[0];
+        if (Math.abs(t.clientX - touchStartX) < 10 && Math.abs(t.clientY - touchStartY) < 10) {
+          handleCarouselTap(t.clientX, t.clientY);
+          e.preventDefault();
+        }
+      }, { passive: false });
     })();
   </script>
 
