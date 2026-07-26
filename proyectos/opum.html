@@ -114,11 +114,14 @@
     #img-overlay.open { display: block; }
     #img-overlay img {
       position: absolute;
-      height: 140vh;
+      height: 200vh;
       width: auto;
       left: 50%;
       transform: translateX(-50%);
       pointer-events: none;
+    }
+    @media (max-width: 900px) {
+      #img-overlay img { height: 140vh; }
     }
 
     /* CAROUSELS */
@@ -341,7 +344,8 @@
         canvasReady = true;
 
         const cy = contentCenterY();
-        const topPx = (window.innerHeight * 0.5 - cy * window.innerHeight * 1.4) + 'px';
+        const vhMult = window.innerWidth <= 900 ? 1.4 : 2;
+        const topPx = (window.innerHeight * 0.5 - cy * window.innerHeight * vhMult) + 'px';
 
         // Mostrar inmediatamente con thumbnail
         overlayImg.src = srcImg.src;
