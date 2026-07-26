@@ -931,8 +931,8 @@
         let done = 0;
         const check = () => { if (++done >= pending.length) constellation(); };
         pending.forEach(img => {
-          img.addEventListener('load',  check);
-          img.addEventListener('error', check);
+          img.addEventListener('load',  check, { once: true });
+          img.addEventListener('error', check, { once: true });
         });
       }
 
