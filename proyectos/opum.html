@@ -334,7 +334,6 @@
         const n = parseInt((srcImg.src.match(/emes(\d+)\.png/) || [])[1]);
         currentData = imageData[n] || null;
 
-        // Canvas desde thumbnail (ya cargado) para alpha y centro de contenido
         alphaCanvas.width  = srcImg.naturalWidth;
         alphaCanvas.height = srcImg.naturalHeight;
         alphaCtx.clearRect(0, 0, alphaCanvas.width, alphaCanvas.height);
@@ -342,21 +341,28 @@
         canvasReady = true;
 
         const cy = contentCenterY();
+        const topPx = (window.innerHeight * 0.5 - cy * window.innerHeight * 1.4) + 'px';
 
+        // Mostrar inmediatamente con thumbnail
+        overlayImg.src = srcImg.src;
+        overlayImg.style.top = topPx;
+        overlay.classList.add('open');
+        if (currentData) {
+          cursorInfo.innerHTML = `<strong>${currentData.nombre}</strong><span>${currentData.texto}</span>`;
+          cursorInfo.style.display = 'block';
+        }
+
+        // Swap silencioso a hi-res cuando carga
         const fullSrc = srcImg.src.replace('/thumbs/', '/carrousel/');
         const fullImg = new Image();
         fullImg.onload = () => {
-          overlayImg.src = fullSrc;
-          overlayImg.style.top = (window.innerHeight * 0.5 - cy * window.innerHeight * 1.4) + 'px';
-          overlay.classList.add('open');
-          if (currentData) {
-            cursorInfo.innerHTML = `<strong>${currentData.nombre}</strong><span>${currentData.texto}</span>`;
-            cursorInfo.style.display = 'block';
+          if (overlay.classList.contains('open') && overlayImg.src.includes(srcImg.src.split('/').pop())) {
+            overlayImg.src = fullSrc;
+            alphaCanvas.width  = fullImg.naturalWidth;
+            alphaCanvas.height = fullImg.naturalHeight;
+            alphaCtx.clearRect(0, 0, alphaCanvas.width, alphaCanvas.height);
+            alphaCtx.drawImage(fullImg, 0, 0);
           }
-          alphaCanvas.width  = fullImg.naturalWidth;
-          alphaCanvas.height = fullImg.naturalHeight;
-          alphaCtx.clearRect(0, 0, alphaCanvas.width, alphaCanvas.height);
-          alphaCtx.drawImage(fullImg, 0, 0);
         };
         fullImg.src = fullSrc;
       }
