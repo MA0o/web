@@ -427,7 +427,7 @@
 
       <figure class="project" data-title="OPUM">
         <a href="proyectos/opum.html">
-          <img class="thumb" src="img/proyectos/opum/portada.gif" alt="">
+          <img class="thumb" id="opum-thumb" src="img/proyectos/opum/thumbs/emes1.png" alt="">
         </a>
       </figure>
 
@@ -955,5 +955,19 @@ constellation();
     })();
   </script>
   <script src="js/contact.js"></script>
+  <script>
+    (function () {
+      const thumb = document.getElementById('opum-thumb');
+      if (!thumb) return;
+      const nums = Array.from({length: 110}, (_, i) => i + 1).filter(n => n !== 103);
+      const srcs = nums.map(n => `img/proyectos/opum/thumbs/emes${n}.png`);
+      srcs.forEach(s => { new Image().src = s; });
+      let idx = 0;
+      setInterval(() => {
+        idx = (idx + 1) % srcs.length;
+        thumb.src = srcs[idx];
+      }, 120);
+    })();
+  </script>
 </body>
 </html>
