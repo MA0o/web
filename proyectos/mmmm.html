@@ -83,8 +83,12 @@
     .gallery {
       padding-top: 3.6rem;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 0;
+    }
+
+    @media (max-width: 900px) {
+      .gallery { grid-template-columns: repeat(3, 1fr); }
     }
 
     .gallery img {
@@ -99,6 +103,10 @@
       width: 100%;
       padding-top: 3.5rem;
       pointer-events: none;
+    }
+
+    @media (max-width: 900px) {
+      .rgbo-section { grid-template-columns: repeat(2, 1fr); }
     }
 
     .rgbo-cell {
