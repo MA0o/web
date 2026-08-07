@@ -256,7 +256,7 @@
       function build() {
         const W = gallery.clientWidth;
 
-        const COL_W = W / 5;
+        const COL_W = W / 5 * 1.1;
         const GAP = 6;
 
         const items = rawItems.map(el => {
@@ -308,6 +308,7 @@
         const totalH = placed.reduce((m, p) => Math.max(m, p.y + p.h), 0);
         gallery.style.height = Math.round(totalH + 32) + 'px';
         gallery.style.opacity = '1';
+        lastBuiltW = W;
         if (dot) dot.classList.remove('loading');
       }
 
@@ -326,7 +327,10 @@
       });
 
       let resizeTimer;
+      let lastBuiltW = 0;
       window.addEventListener('resize', () => {
+        const newW = gallery.clientWidth;
+        if (Math.abs(newW - lastBuiltW) < 4) return;
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
           rawItems.forEach(el => {

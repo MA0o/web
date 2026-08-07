@@ -24,7 +24,7 @@
       font-family: var(--font-mono);
     }
 
-    body { height: 320vh; }
+    body { height: 400vh; }
 
     /* NAV */
     nav {
@@ -32,6 +32,7 @@
       top: 0; left: 0;
       width: 100%;
       padding: 0.12rem 0.5rem;
+      min-height: 4.5rem;
       z-index: 200;
       font-size: var(--nav-size);
       line-height: 1.1;
@@ -124,7 +125,7 @@
       align-items: center;
       justify-content: center;
       gap: 1rem;
-      padding: 4rem 1rem 1rem;
+      padding: 5rem 1rem 1rem;
       opacity: 0;
       pointer-events: none;
       will-change: opacity;
@@ -180,6 +181,8 @@
 
     nav a[data-i18n="nav-cv"] { display: none; }
 
+    .nav-links { align-self: flex-end; }
+
     .nav-logo {
       position: absolute;
       left: 50%;
@@ -218,7 +221,6 @@
       <a href="../about.html" data-i18n="nav-about">2. About</a>
       <a href="../archivo.html" data-i18n="nav-archivo">3. Archivo</a>
       <a href="../cv.html" data-i18n="nav-cv">4. CV</a>
-      <a href="../contact.html" data-i18n="nav-contact">4. Contact</a>
     </div>
     <img src="/img/logo-bnw.png" alt="" class="nav-logo">
     <div class="nav-lang">
@@ -241,10 +243,14 @@
       dot.style.top  = e.clientY + 'px';
     });
     document.addEventListener('mouseover', e => {
-      if (e.target.closest('a')) dot.classList.add('square');
+      if (e.target.closest('a, .nav-logo')) dot.classList.add('square');
     });
     document.addEventListener('mouseout', e => {
-      if (e.target.closest('a')) dot.classList.remove('square');
+      if (e.target.closest('a, .nav-logo')) dot.classList.remove('square');
+    });
+    document.querySelector('.nav-logo').addEventListener('click', () => {
+      const o = document.getElementById('ct-overlay');
+      if (o) o.classList.add('open');
     });
   </script>
 
