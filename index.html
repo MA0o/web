@@ -854,7 +854,7 @@
 
       function constellation() {
         const W = grid.clientWidth;
-        if (W < 600) return; // columnas CSS en móvil
+        if (W < 600) { grid.style.opacity = '1'; return; } // columnas CSS en móvil
 
         const figures = [...grid.querySelectorAll('figure.project')];
         if (!figures.length) return;
