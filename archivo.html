@@ -163,11 +163,11 @@
   <div class="gallery">
     <div class="anim-cell" id="anim-tiketa" style="aspect-ratio: 693/1600"></div>
     <div class="anim-cell" id="anim-nanja" style="aspect-ratio: 821/1600"></div>
-    <img src="img/archivo/2025.png" alt="">
-    <img src="img/archivo/flatblcock_grafica_2026.jpg" alt="">
-    <img src="img/archivo/grafica_2025.jpg" alt="">
-    <img src="img/archivo/poster_2025.jpg" alt="">
-    <img src="img/archivo/poster_2025.png" alt="">
+    <img src="img/archivo/thumbs/2025.jpg"                    data-full="img/archivo/2025.png" alt="">
+    <img src="img/archivo/thumbs/flatblcock_grafica_2026.jpg" data-full="img/archivo/flatblcock_grafica_2026.jpg" alt="">
+    <img src="img/archivo/thumbs/grafica_2025.jpg"            data-full="img/archivo/grafica_2025.jpg" alt="">
+    <img src="img/archivo/thumbs/poster_2025-j.jpg"           data-full="img/archivo/poster_2025.jpg" alt="">
+    <img src="img/archivo/thumbs/poster_2025-p.jpg"           data-full="img/archivo/poster_2025.png" alt="">
   </div>
 
   <div id="arch-tooltip"></div>
@@ -358,7 +358,8 @@
       function parse(el) {
         let base = '';
         if (el.tagName === 'IMG') {
-          base = el.src.split('/').pop().replace(/\.[^.]+$/, '');
+          const src = el.dataset.full || el.src;
+          base = src.split('/').pop().replace(/\.[^.]+$/, '');
         } else {
           base = (el.id || '').replace('anim-', '');
         }
