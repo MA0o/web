@@ -77,6 +77,8 @@
     .grid {
       columns: 5;
       column-gap: var(--gutter);
+      opacity: 0;
+      transition: opacity 0.2s;
     }
 
     figure.project {
@@ -919,8 +921,7 @@
         const totalH = placed.reduce((m, p) => Math.max(m, p.y + p.h), 0);
         grid.style.position = 'relative';
         grid.style.height   = Math.round(totalH + 32) + 'px';
-
-
+        grid.style.opacity  = '1';
       }
 
       // Esperar a que carguen las imágenes antes de calcular posiciones
@@ -950,6 +951,7 @@
           });
           grid.style.position = '';
           grid.style.height   = '';
+          grid.style.opacity  = '0';
 constellation();
         }, 200);
       });
