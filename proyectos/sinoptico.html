@@ -18,14 +18,26 @@
       --nav-size: 1rem;
     }
 
-    html {
+    html, body {
       background-color: var(--bg);
       color: var(--text);
       font-family: var(--font-mono);
+      height: 100%;
+      overflow: hidden;
     }
 
-    body {
+    #scroller {
+      position: fixed;
+      inset: 0;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+      z-index: 50;
+      background: transparent;
+    }
+
+    #scroller-inner {
       height: 320vh;
+      pointer-events: none;
     }
 
     /* NAV */
@@ -71,12 +83,13 @@
       width: 24px;
       height: 24px;
       background: red;
-      border-radius: 50%;
+      -webkit-mask: url('../icons/cursors/cursor-flecha.svg') center / contain no-repeat;
+      mask: url('../icons/cursors/cursor-flecha.svg') center / contain no-repeat;
       transform: translate(-50%, -50%);
       transition: border-radius 0.15s ease;
     }
 
-    #cursor-dot.square { border-radius: 0; }
+    #cursor-dot.square { -webkit-mask: none; mask: none; border-radius: 0; }
 
     @media (max-width: 900px) { #cursor-dot { display: none; } }
 
@@ -185,6 +198,8 @@
 </head>
 <body>
 
+  <div id="scroller"><div id="scroller-inner"></div></div>
+
   <video id="bg-video" autoplay muted loop playsinline
          poster="../img/proyectos/sinóptico/portada.jpg">
     <source src="../img/proyectos/sinóptico/loop.mp4" type="video/mp4">
@@ -275,8 +290,10 @@
       function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
       function progress(s, a, b) { return clamp((s - a) / (b - a), 0, 1); }
 
+      const scroller = document.getElementById('scroller');
+
       function onScroll() {
-        const s  = window.scrollY;
+        const s  = scroller.scrollTop;
         const vh = window.innerHeight;
 
         // Text slides up: 0 → 0.5vh
@@ -294,7 +311,7 @@
         sVistas.style.opacity = vitP.toFixed(3);
       }
 
-      window.addEventListener('scroll', onScroll, { passive: true });
+      scroller.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
     })();
   </script>

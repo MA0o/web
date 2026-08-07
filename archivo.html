@@ -70,12 +70,13 @@
       width: 24px;
       height: 24px;
       background: red;
-      border-radius: 50%;
+      -webkit-mask: url('icons/cursors/cursor-flecha.svg') center / contain no-repeat;
+      mask: url('icons/cursors/cursor-flecha.svg') center / contain no-repeat;
       transform: translate(-50%, -50%);
       transition: border-radius 0.15s ease;
     }
 
-    #cursor-dot.square { border-radius: 0; }
+    #cursor-dot.square { -webkit-mask: none; mask: none; border-radius: 0; }
 
     @media (max-width: 900px) { #cursor-dot { display: none; } }
 
@@ -84,24 +85,7 @@
       padding-top: 3.6rem;
       opacity: 0;
       transition: opacity 0.15s;
-    }
-
-    .gallery-row {
-      display: flex;
-      overflow: hidden;
-    }
-
-    .gallery-row img,
-    .gallery-row .anim-cell {
-      height: 400px;
-      width: auto;
-      display: block;
-      flex-shrink: 0;
-    }
-
-    @media (max-width: 900px) {
-      .gallery-row img,
-      .gallery-row .anim-cell { height: 200px; }
+      position: relative;
     }
 
     .anim-cell { overflow: hidden; }
@@ -111,6 +95,52 @@
       height: 100%;
       object-fit: cover;
       display: block;
+    }
+
+    /* Mobile: simple stacked flow */
+    @media (max-width: 600px) {
+      .gallery > img,
+      .gallery > .anim-cell {
+        display: block;
+        width: 100%;
+        position: static !important;
+        height: auto !important;
+      }
+      .anim-cell img { height: auto; object-fit: contain; }
+    }
+
+    /* CURSOR LOADER STATE */
+    @property --loader-a {
+      syntax: '<angle>';
+      inherits: false;
+      initial-value: 0deg;
+    }
+
+    @keyframes loader-sectors {
+      to { --loader-a: 360deg; }
+    }
+
+    #cursor-dot.loading {
+      -webkit-mask: none;
+      mask: none;
+      border-radius: 50%;
+      background: conic-gradient(red var(--loader-a), transparent 0deg);
+      animation: loader-sectors 1.2s steps(12, end) infinite;
+    }
+
+    /* TOOLTIP */
+    #arch-tooltip {
+      position: fixed;
+      pointer-events: none;
+      z-index: 500;
+      background: #000;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      line-height: 1.5;
+      padding: 0.3em 0.5em;
+      display: none;
+      white-space: nowrap;
     }
 
     nav a[data-i18n="nav-cv"] { display: none; }
@@ -136,13 +166,14 @@
   <div class="gallery">
     <div class="anim-cell" id="anim-tiketa" style="aspect-ratio: 693/1600"></div>
     <div class="anim-cell" id="anim-nanja" style="aspect-ratio: 821/1600"></div>
-    <img src="img/archivo/IMG-20251112-WA0001.jpg" alt="">
-    <img src="img/archivo/IMG-20251112-WA0003.jpg" alt="">
-    <img src="img/archivo/IMG-20251219-WA0011.jpg" alt="">
-    <img src="img/archivo/NEW TREND 2.png" alt="">
-    <img src="img/archivo/WERN.png" alt="">
+    <img src="img/archivo/2025.png" alt="">
+    <img src="img/archivo/flatblcock_grafica_2026.jpg" alt="">
+    <img src="img/archivo/grafica_2025.jpg" alt="">
+    <img src="img/archivo/poster_2025.jpg" alt="">
+    <img src="img/archivo/poster_2025.png" alt="">
   </div>
 
+  <div id="arch-tooltip"></div>
   <div id="cursor-dot"></div>
 
   <script>
@@ -183,7 +214,7 @@
   </script>
 
   <script>
-    // Animations
+    // Animations: tiketa + nanja cycling frames at 500ms
     (function () {
       const anims = [
         { id: 'anim-tiketa', frames: ['img/archivo/tiketa1.jpeg', 'img/archivo/tiketa2.jpeg', 'img/archivo/tiketa3.jpeg'] },
@@ -204,60 +235,157 @@
   </script>
 
   <script>
-    // Row layout: fixed height rows, gap alternates left/right
+    // Constellation layout — same algorithm as index.html
     (function () {
       const gallery = document.querySelector('.gallery');
       if (!gallery) return;
 
-      const items = [...gallery.children];
+      const dot = document.getElementById('cursor-dot');
+      const rawItems = [...gallery.children];
 
-      function getW(el, h) {
+      function getAspect(el) {
         if (el.tagName === 'IMG') {
-          if (!el.naturalWidth || !el.naturalHeight) return h;
-          return el.naturalWidth / el.naturalHeight * h;
+          if (el.naturalWidth && el.naturalHeight) return el.naturalHeight / el.naturalWidth;
+          return 4 / 3;
         }
         const ar = el.style.aspectRatio;
         if (ar && ar.includes('/')) {
           const [n, d] = ar.split('/').map(Number);
-          return n / d * h;
+          return d / n;
         }
-        return h;
+        return 1;
       }
 
       function build() {
         const W = gallery.clientWidth;
-        const rowH = window.innerWidth <= 900 ? 200 : 400;
-        const rows = [];
-        let row = [], rowW = 0;
-        items.forEach(el => {
-          const w = getW(el, rowH);
-          if (rowW + w > W + 1 && row.length) { rows.push(row); row = [el]; rowW = w; }
-          else { row.push(el); rowW += w; }
-        });
-        if (row.length) rows.push(row);
+        if (W < 600) {
+          gallery.style.opacity = '1';
+          if (dot) dot.classList.remove('loading');
+          return;
+        }
 
-        gallery.innerHTML = '';
-        gallery.style.opacity = '1';
-        rows.forEach((rowItems, i) => {
-          const div = document.createElement('div');
-          div.className = 'gallery-row';
-          div.style.justifyContent = i % 2 === 0 ? 'flex-start' : 'flex-end';
-          rowItems.forEach(el => div.appendChild(el));
-          gallery.appendChild(div);
+        const COL_W = W / 5;
+        const GAP = 6;
+
+        const items = rawItems.map(el => {
+          const aspect = getAspect(el);
+          return { el, w: COL_W, h: COL_W * aspect };
         });
+
+        const COLS = 5;
+        const AVG_H = items.reduce((s, it) => s + it.h, 0) / items.length;
+        const ROW_H = AVG_H * 1.8 + GAP * 4;
+        const JX = COL_W * 3.0;
+        const JY = ROW_H * 1.2;
+
+        const placed = [];
+
+        function overlaps(ax, ay, aw, ah) {
+          for (const p of placed) {
+            if (ax + aw + GAP > p.x && ax < p.x + p.w + GAP &&
+                ay + ah + GAP > p.y && ay < p.y + p.h + GAP) return true;
+          }
+          return false;
+        }
+
+        items.forEach(({ el, w, h }, i) => {
+          const col = i % COLS;
+          const row = Math.floor(i / COLS);
+          const baseX = col * (W / COLS) + (W / COLS - w) / 2;
+          const baseY = row * ROW_H;
+
+          let bx = baseX, by = baseY;
+
+          for (let t = 0; t < 150; t++) {
+            const s = Math.min(t * 0.12 + 1, 3.5);
+            const rx = (Math.random() * 2 - 1) * JX * s;
+            const ry = (Math.random() * 2 - 1) * JY * s;
+            const cx = Math.max(GAP, Math.min(W - w - GAP, baseX + rx));
+            const cy = Math.max(GAP, baseY + ry);
+            if (!overlaps(cx, cy, w, h)) { bx = cx; by = cy; break; }
+          }
+
+          placed.push({ x: bx, y: by, w, h });
+          el.style.position = 'absolute';
+          el.style.left   = Math.round(bx) + 'px';
+          el.style.top    = Math.round(by) + 'px';
+          el.style.width  = Math.round(w)  + 'px';
+          el.style.height = Math.round(h)  + 'px';
+        });
+
+        const totalH = placed.reduce((m, p) => Math.max(m, p.y + p.h), 0);
+        gallery.style.height = Math.round(totalH + 32) + 'px';
+        gallery.style.opacity = '1';
+        if (dot) dot.classList.remove('loading');
       }
 
-      const imgs = items.filter(el => el.tagName === 'IMG');
+      if (dot) dot.classList.add('loading');
+
+      const imgs = rawItems.filter(el => el.tagName === 'IMG');
       let done = 0;
       const check = () => { if (++done >= imgs.length) build(); };
       if (!imgs.length) { build(); }
       else imgs.forEach(img => {
         if (img.complete) check();
-        else { img.addEventListener('load', check, { once: true }); img.addEventListener('error', check, { once: true }); }
+        else {
+          img.addEventListener('load',  check, { once: true });
+          img.addEventListener('error', check, { once: true });
+        }
       });
 
-      let t;
-      window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(build, 150); });
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          rawItems.forEach(el => {
+            el.style.position = '';
+            el.style.left     = '';
+            el.style.top      = '';
+            el.style.width    = '';
+            el.style.height   = '';
+          });
+          gallery.style.height  = '';
+          gallery.style.opacity = '0';
+          build();
+        }, 200);
+      });
+    })();
+  </script>
+
+  <script>
+    // Hover tooltip: parse nombre / tipo / año from filename
+    (function () {
+      const tooltip = document.getElementById('arch-tooltip');
+      if (!tooltip) return;
+
+      function parse(el) {
+        let base = '';
+        if (el.tagName === 'IMG') {
+          base = el.src.split('/').pop().replace(/\.[^.]+$/, '');
+        } else {
+          base = (el.id || '').replace('anim-', '');
+        }
+        const p = base.split('_');
+        return [p[0] || '', p[1] || '', p[2] || ''];
+      }
+
+      document.querySelectorAll('.gallery img, .gallery .anim-cell').forEach(el => {
+        const [nombre, tipo, año] = parse(el);
+        el.addEventListener('mouseenter', () => {
+          tooltip.innerHTML = `${nombre}<br>${tipo}<br>${año}`;
+          tooltip.style.display = 'block';
+        });
+        el.addEventListener('mouseleave', () => {
+          tooltip.style.display = 'none';
+        });
+      });
+
+      document.addEventListener('mousemove', e => {
+        if (tooltip.style.display !== 'none') {
+          tooltip.style.left = (e.clientX + 14) + 'px';
+          tooltip.style.top  = (e.clientY - 10) + 'px';
+        }
+      });
     })();
   </script>
 

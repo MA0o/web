@@ -73,12 +73,15 @@
       width: 24px;
       height: 24px;
       background: red;
-      border-radius: 50%;
+      -webkit-mask: url('../icons/cursors/cursor-flecha.svg') center / contain no-repeat;
+      mask: url('../icons/cursors/cursor-flecha.svg') center / contain no-repeat;
       transform: translate(-50%, -50%);
       transition: border-radius 0.15s ease;
     }
 
     #cursor-dot.square {
+      -webkit-mask: none;
+      mask: none;
       border-radius: 0;
     }
 
