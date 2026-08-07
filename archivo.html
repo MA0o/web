@@ -82,23 +82,27 @@
     /* GALLERY */
     .gallery {
       padding-top: 3.6rem;
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 0;
+    }
+
+    .gallery-row {
+      display: flex;
+      overflow: hidden;
+    }
+
+    .gallery-row img,
+    .gallery-row .anim-cell {
+      height: 280px;
+      width: auto;
+      display: block;
+      flex-shrink: 0;
     }
 
     @media (max-width: 900px) {
-      .gallery { grid-template-columns: repeat(3, 1fr); }
+      .gallery-row img,
+      .gallery-row .anim-cell { height: 160px; }
     }
 
-    .gallery img {
-      width: 100%;
-      display: block;
-    }
-
-    .anim-cell {
-      overflow: hidden;
-    }
+    .anim-cell { overflow: hidden; }
 
     .anim-cell img {
       width: 100%;
@@ -108,6 +112,47 @@
     }
 
     nav a[data-i18n="nav-cv"] { display: none; }
+
+    /* LIGHTBOX */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #lightbox.open { display: flex; }
+
+    #lightbox img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+      user-select: none;
+    }
+
+    #lb-prev, #lb-next {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 40%;
+      cursor: none;
+    }
+
+    #lb-prev { left: 0; }
+    #lb-next { right: 0; }
+
+    #lb-close {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      width: 2rem;
+      height: 2rem;
+      cursor: none;
+    }
   </style>
 </head>
 <body>
@@ -135,6 +180,15 @@
     <img src="img/archivo/IMG-20251219-WA0011.jpg" alt="">
     <img src="img/archivo/NEW TREND 2.png" alt="">
     <img src="img/archivo/WERN.png" alt="">
+  </div>
+
+  <div id="lightbox">
+    <img id="lb-img" src="" alt="">
+    <div id="lb-prev"></div>
+    <div id="lb-next"></div>
+    <svg id="lb-close" viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8.51 7.21 7.21 8.51 14.72 16 7.21 23.52l1.27 1.28L16 17.3l7.48 7.5 1.29-1.3L17.27 16 24.8 8.48 23.52 7.21 16 14.72Z"/>
+    </svg>
   </div>
 
   <div id="cursor-dot"></div>
@@ -177,6 +231,7 @@
   </script>
 
   <script>
+    // Animations
     (function () {
       const anims = [
         { id: 'anim-tiketa', frames: ['img/archivo/tiketa1.jpeg', 'img/archivo/tiketa2.jpeg', 'img/archivo/tiketa3.jpeg'] },
@@ -193,6 +248,133 @@
         let idx = 0;
         setInterval(() => { idx = (idx + 1) % frames.length; img.src = frames[idx]; }, 500);
       });
+    })();
+  </script>
+
+  <script>
+    // Row layout: fixed height rows, gap alternates left/right
+    (function () {
+      const gallery = document.querySelector('.gallery');
+      if (!gallery) return;
+
+      const items = [...gallery.children];
+
+      function getW(el, h) {
+        if (el.tagName === 'IMG') {
+          if (!el.naturalWidth || !el.naturalHeight) return h;
+          return el.naturalWidth / el.naturalHeight * h;
+        }
+        const ar = el.style.aspectRatio;
+        if (ar && ar.includes('/')) {
+          const [n, d] = ar.split('/').map(Number);
+          return n / d * h;
+        }
+        return h;
+      }
+
+      function build() {
+        const W = gallery.clientWidth;
+        const rowH = window.innerWidth <= 900 ? 160 : 280;
+        const rows = [];
+        let row = [], rowW = 0;
+        items.forEach(el => {
+          const w = getW(el, rowH);
+          if (rowW + w > W + 1 && row.length) { rows.push(row); row = [el]; rowW = w; }
+          else { row.push(el); rowW += w; }
+        });
+        if (row.length) rows.push(row);
+
+        gallery.innerHTML = '';
+        rows.forEach((rowItems, i) => {
+          const div = document.createElement('div');
+          div.className = 'gallery-row';
+          div.style.justifyContent = i % 2 === 0 ? 'flex-start' : 'flex-end';
+          rowItems.forEach(el => div.appendChild(el));
+          gallery.appendChild(div);
+        });
+      }
+
+      const imgs = items.filter(el => el.tagName === 'IMG');
+      let done = 0;
+      const check = () => { if (++done >= imgs.length) build(); };
+      if (!imgs.length) { build(); }
+      else imgs.forEach(img => {
+        if (img.complete) check();
+        else { img.addEventListener('load', check, { once: true }); img.addEventListener('error', check, { once: true }); }
+      });
+
+      let t;
+      window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(build, 150); });
+    })();
+  </script>
+
+  <script>
+    // Lightbox
+    (function () {
+      const lightbox = document.getElementById('lightbox');
+      const lbImg   = document.getElementById('lb-img');
+      const lbPrev  = document.getElementById('lb-prev');
+      const lbNext  = document.getElementById('lb-next');
+      const lbClose = document.getElementById('lb-close');
+
+      // Flat list of viewable srcs (static images + anim current frame)
+      let srcs = [];
+      let cur  = 0;
+
+      function collectSrcs() {
+        srcs = [];
+        document.querySelectorAll('.gallery-row img, .gallery-row .anim-cell img').forEach(img => {
+          srcs.push(img.src);
+        });
+      }
+
+      function open(idx) {
+        collectSrcs();
+        cur = ((idx % srcs.length) + srcs.length) % srcs.length;
+        lbImg.src = srcs[cur];
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function close() {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      function prev() { cur = (cur - 1 + srcs.length) % srcs.length; lbImg.src = srcs[cur]; }
+      function next() { cur = (cur + 1) % srcs.length; lbImg.src = srcs[cur]; }
+
+      // Delegate click on gallery items
+      document.querySelector('.gallery').addEventListener('click', e => {
+        const img = e.target.closest('img, .anim-cell');
+        if (!img) return;
+        collectSrcs();
+        let src;
+        if (img.tagName === 'IMG') src = img.src;
+        else src = img.querySelector('img')?.src;
+        const idx = srcs.indexOf(src);
+        open(idx >= 0 ? idx : 0);
+      });
+
+      lbPrev.addEventListener('click', prev);
+      lbNext.addEventListener('click', next);
+      lbClose.addEventListener('click', close);
+      lightbox.addEventListener('click', e => { if (e.target === lightbox) close(); });
+
+      document.addEventListener('keydown', e => {
+        if (!lightbox.classList.contains('open')) return;
+        if (e.key === 'ArrowLeft')  prev();
+        if (e.key === 'ArrowRight') next();
+        if (e.key === 'Escape')     close();
+      });
+
+      // Swipe on mobile
+      let tx = 0;
+      lightbox.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+      lightbox.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - tx;
+        if (Math.abs(dx) > 40) dx < 0 ? next() : prev();
+      }, { passive: true });
     })();
   </script>
 
