@@ -75,7 +75,7 @@
       transition: border-radius 0.15s ease;
     }
 
-    #cursor-dot.square { -webkit-mask: url('icons/cursors/cursor-flecha.svg') center / contain no-repeat; mask: url('icons/cursors/cursor-flecha.svg') center / contain no-repeat; border-radius: 0; }
+    #cursor-dot.square { border-radius: 0; -webkit-mask: none; mask: none; }
 
     @media (max-width: 900px) { #cursor-dot { display: none; } }
 
@@ -96,17 +96,6 @@
       display: block;
     }
 
-    /* Mobile: simple stacked flow */
-    @media (max-width: 600px) {
-      .gallery > img,
-      .gallery > .anim-cell {
-        display: block;
-        width: 100%;
-        position: static !important;
-        height: auto !important;
-      }
-      .anim-cell img { height: auto; object-fit: contain; }
-    }
 
     /* CURSOR LOADER STATE */
     @property --loader-a {
@@ -266,11 +255,6 @@
 
       function build() {
         const W = gallery.clientWidth;
-        if (W < 600) {
-          gallery.style.opacity = '1';
-          if (dot) dot.classList.remove('loading');
-          return;
-        }
 
         const COL_W = W / 5;
         const GAP = 6;
