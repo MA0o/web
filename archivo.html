@@ -82,6 +82,8 @@
     /* GALLERY */
     .gallery {
       padding-top: 3.6rem;
+      opacity: 0;
+      transition: opacity 0.15s;
     }
 
     .gallery-row {
@@ -235,6 +237,7 @@
         if (row.length) rows.push(row);
 
         gallery.innerHTML = '';
+        gallery.style.opacity = '1';
         rows.forEach((rowItems, i) => {
           const div = document.createElement('div');
           div.className = 'gallery-row';
