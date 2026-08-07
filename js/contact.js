@@ -122,4 +122,16 @@
     a.addEventListener('click', e => { e.preventDefault(); open(); });
   });
 
+  // ── Logo blink ─────────────────────────────────────────────────────────────
+  const logo = document.querySelector('.nav-logo');
+  if (logo) {
+    const srcA = logo.src;
+    const srcB = srcA.replace('logo-bnw.png', 'logo-bnw-p.png');
+    new Image().src = srcB;
+    setInterval(() => {
+      logo.src = srcB;
+      setTimeout(() => { logo.src = srcA; }, 200);
+    }, 7000);
+  }
+
 })();
