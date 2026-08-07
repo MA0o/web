@@ -91,7 +91,7 @@
 
     .gallery-row img,
     .gallery-row .anim-cell {
-      height: 450px;
+      height: 400px;
       width: auto;
       display: block;
       flex-shrink: 0;
@@ -224,7 +224,7 @@
 
       function build() {
         const W = gallery.clientWidth;
-        const rowH = window.innerWidth <= 900 ? 200 : 450;
+        const rowH = window.innerWidth <= 900 ? 200 : 400;
         const rows = [];
         let row = [], rowW = 0;
         items.forEach(el => {
