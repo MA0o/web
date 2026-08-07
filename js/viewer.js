@@ -71,13 +71,14 @@
     /* ── cursor shapes ─────────────────────────────────────────────────── */
     #cursor-dot.triangle-right {
       border-radius: 0; width: 48px; height: 48px;
-      -webkit-mask: url('/icons/cursors/cursor-arrow-right.svg') center/contain no-repeat;
-      mask: url('/icons/cursors/cursor-arrow-right.svg') center/contain no-repeat;
+      -webkit-mask: url('/icons/cursors/cursor-flecha.svg') center/contain no-repeat;
+      mask: url('/icons/cursors/cursor-flecha.svg') center/contain no-repeat;
     }
     #cursor-dot.triangle-left {
       border-radius: 0; width: 48px; height: 48px;
-      -webkit-mask: url('/icons/cursors/cursor-arrow-left.svg') center/contain no-repeat;
-      mask: url('/icons/cursors/cursor-arrow-left.svg') center/contain no-repeat;
+      -webkit-mask: url('/icons/cursors/cursor-flecha.svg') center/contain no-repeat;
+      mask: url('/icons/cursors/cursor-flecha.svg') center/contain no-repeat;
+      transform: translate(-50%, -50%) scaleX(-1);
     }
     #cursor-dot.cross {
       border-radius: 0;
