@@ -353,7 +353,8 @@
     // Hover tooltip: parse nombre / tipo / año from filename
     (function () {
       const tooltip = document.getElementById('arch-tooltip');
-      if (!tooltip) return;
+      const gallery = document.querySelector('.gallery');
+      if (!tooltip || !gallery) return;
 
       function parse(el) {
         let base = '';
@@ -366,22 +367,28 @@
         return [p[0] || '', p[1] || '', p[2] || ''];
       }
 
-      document.querySelectorAll('.gallery img, .gallery .anim-cell').forEach(el => {
-        const [nombre, tipo, año] = parse(el);
-        el.addEventListener('mouseenter', () => {
-          tooltip.innerHTML = `${nombre}<br>${tipo}<br>${año}`;
+      let current = null;
+
+      gallery.addEventListener('mousemove', e => {
+        const item = e.target.closest && e.target.closest('.gallery > img, .gallery > .anim-cell');
+        tooltip.style.left = (e.clientX + 14) + 'px';
+        tooltip.style.top  = (e.clientY - 10) + 'px';
+        if (item) {
+          if (item !== current) {
+            current = item;
+            const [n, t, y] = parse(item);
+            tooltip.innerHTML = `${n}<br>${t}<br>${y}`;
+          }
           tooltip.style.display = 'block';
-        });
-        el.addEventListener('mouseleave', () => {
+        } else {
+          current = null;
           tooltip.style.display = 'none';
-        });
+        }
       });
 
-      document.addEventListener('mousemove', e => {
-        if (tooltip.style.display !== 'none') {
-          tooltip.style.left = (e.clientX + 14) + 'px';
-          tooltip.style.top  = (e.clientY - 10) + 'px';
-        }
+      gallery.addEventListener('mouseleave', () => {
+        current = null;
+        tooltip.style.display = 'none';
       });
     })();
   </script>
