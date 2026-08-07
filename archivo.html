@@ -91,7 +91,7 @@
 
     .gallery-row img,
     .gallery-row .anim-cell {
-      height: 280px;
+      height: 450px;
       width: auto;
       display: block;
       flex-shrink: 0;
@@ -99,7 +99,7 @@
 
     @media (max-width: 900px) {
       .gallery-row img,
-      .gallery-row .anim-cell { height: 160px; }
+      .gallery-row .anim-cell { height: 200px; }
     }
 
     .anim-cell { overflow: hidden; }
@@ -112,47 +112,6 @@
     }
 
     nav a[data-i18n="nav-cv"] { display: none; }
-
-    /* LIGHTBOX */
-    #lightbox {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      z-index: 10000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
-
-    #lightbox.open { display: flex; }
-
-    #lightbox img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      display: block;
-      user-select: none;
-    }
-
-    #lb-prev, #lb-next {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 40%;
-      cursor: none;
-    }
-
-    #lb-prev { left: 0; }
-    #lb-next { right: 0; }
-
-    #lb-close {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      width: 2rem;
-      height: 2rem;
-      cursor: none;
-    }
   </style>
 </head>
 <body>
@@ -180,15 +139,6 @@
     <img src="img/archivo/IMG-20251219-WA0011.jpg" alt="">
     <img src="img/archivo/NEW TREND 2.png" alt="">
     <img src="img/archivo/WERN.png" alt="">
-  </div>
-
-  <div id="lightbox">
-    <img id="lb-img" src="" alt="">
-    <div id="lb-prev"></div>
-    <div id="lb-next"></div>
-    <svg id="lb-close" viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg">
-      <path d="M8.51 7.21 7.21 8.51 14.72 16 7.21 23.52l1.27 1.28L16 17.3l7.48 7.5 1.29-1.3L17.27 16 24.8 8.48 23.52 7.21 16 14.72Z"/>
-    </svg>
   </div>
 
   <div id="cursor-dot"></div>
@@ -274,7 +224,7 @@
 
       function build() {
         const W = gallery.clientWidth;
-        const rowH = window.innerWidth <= 900 ? 160 : 280;
+        const rowH = window.innerWidth <= 900 ? 200 : 450;
         const rows = [];
         let row = [], rowW = 0;
         items.forEach(el => {
@@ -308,77 +258,8 @@
     })();
   </script>
 
-  <script>
-    // Lightbox
-    (function () {
-      const lightbox = document.getElementById('lightbox');
-      const lbImg   = document.getElementById('lb-img');
-      const lbPrev  = document.getElementById('lb-prev');
-      const lbNext  = document.getElementById('lb-next');
-      const lbClose = document.getElementById('lb-close');
-
-      // Flat list of viewable srcs (static images + anim current frame)
-      let srcs = [];
-      let cur  = 0;
-
-      function collectSrcs() {
-        srcs = [];
-        document.querySelectorAll('.gallery-row img, .gallery-row .anim-cell img').forEach(img => {
-          srcs.push(img.src);
-        });
-      }
-
-      function open(idx) {
-        collectSrcs();
-        cur = ((idx % srcs.length) + srcs.length) % srcs.length;
-        lbImg.src = srcs[cur];
-        lightbox.classList.add('open');
-        document.body.style.overflow = 'hidden';
-      }
-
-      function close() {
-        lightbox.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-
-      function prev() { cur = (cur - 1 + srcs.length) % srcs.length; lbImg.src = srcs[cur]; }
-      function next() { cur = (cur + 1) % srcs.length; lbImg.src = srcs[cur]; }
-
-      // Delegate click on gallery items
-      document.querySelector('.gallery').addEventListener('click', e => {
-        const img = e.target.closest('img, .anim-cell');
-        if (!img) return;
-        collectSrcs();
-        let src;
-        if (img.tagName === 'IMG') src = img.src;
-        else src = img.querySelector('img')?.src;
-        const idx = srcs.indexOf(src);
-        open(idx >= 0 ? idx : 0);
-      });
-
-      lbPrev.addEventListener('click', prev);
-      lbNext.addEventListener('click', next);
-      lbClose.addEventListener('click', close);
-      lightbox.addEventListener('click', e => { if (e.target === lightbox) close(); });
-
-      document.addEventListener('keydown', e => {
-        if (!lightbox.classList.contains('open')) return;
-        if (e.key === 'ArrowLeft')  prev();
-        if (e.key === 'ArrowRight') next();
-        if (e.key === 'Escape')     close();
-      });
-
-      // Swipe on mobile
-      let tx = 0;
-      lightbox.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
-      lightbox.addEventListener('touchend', e => {
-        const dx = e.changedTouches[0].clientX - tx;
-        if (Math.abs(dx) > 40) dx < 0 ? next() : prev();
-      }, { passive: true });
-    })();
-  </script>
-
   <script src="js/contact.js"></script>
+  <script src="js/viewer.js"></script>
 
 </body>
 </html>
