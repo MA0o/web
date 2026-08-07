@@ -272,7 +272,7 @@
         const x  = Math.max(1, Math.min((col + 0.5) / 4 * 100 - w / 2 + jx, 99 - w));
         const y  = Math.max(3, Math.min((row + 0.5) / 3 * 100 + jy, 85));
         const img = document.createElement('img');
-        img.src = `../img/proyectos/sinóptico/vistas/${file}`;
+        img.src = `../img/proyectos/sinóptico/vistas/thumbs/${file.replace(/\.[^.]+$/, '.jpg')}`;
         img.alt = '';
         img.style.cssText = `width:${w}%;left:${x}%;top:${y}%;`;
         container.appendChild(img);
