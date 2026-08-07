@@ -22,8 +22,6 @@
       background-color: var(--bg);
       color: var(--text);
       font-family: var(--font-mono);
-      height: 100%;
-      overflow: hidden;
     }
 
     /* NAV */
@@ -32,7 +30,7 @@
       top: 0; left: 0;
       width: 100%;
       padding: 0.12rem 0.5rem;
-      z-index: 100;
+      z-index: 200;
       font-size: var(--nav-size);
       line-height: 1.1;
       mix-blend-mode: difference;
@@ -76,9 +74,7 @@
 
     #cursor-dot.square { border-radius: 0; }
 
-    @media (max-width: 900px) {
-      #cursor-dot { display: none; }
-    }
+    @media (max-width: 900px) { #cursor-dot { display: none; } }
 
     /* VIDEO BACKGROUND */
     #bg-video {
@@ -91,8 +87,8 @@
       pointer-events: none;
     }
 
-    /* CENTERED TEXT */
-    .page-content {
+    /* SECTION 1 — TEXT */
+    #section-text {
       position: fixed;
       inset: 0;
       z-index: 10;
@@ -101,6 +97,7 @@
       justify-content: center;
       padding: 5rem 2rem;
       pointer-events: none;
+      will-change: transform, opacity;
     }
 
     .page-text {
@@ -116,11 +113,49 @@
     .page-text p { margin-bottom: 1em; }
     .page-text p:last-child { margin-bottom: 0; }
 
+    /* SECTION 2 — AXO */
+    #section-axo {
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 4rem 1rem 1rem;
+      opacity: 0;
+      pointer-events: none;
+      will-change: opacity;
+    }
+
+    #section-axo img {
+      max-height: 85vh;
+      max-width: 48%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* SECTION 3 — VISTAS */
+    #section-vistas {
+      position: fixed;
+      inset: 0;
+      z-index: 6;
+      background: #000;
+      opacity: 0;
+      pointer-events: none;
+      will-change: opacity;
+    }
+
+    #section-vistas img {
+      position: absolute;
+      object-fit: contain;
+    }
+
     /* TITLE CORNERS */
     .title-corner {
       position: fixed;
       bottom: 0;
-      z-index: 110;
+      z-index: 210;
       font-family: var(--font-mono);
       font-size: 1rem;
       color: #ffffff;
@@ -133,15 +168,42 @@
     .title-corner-left  { left: 0; }
     .title-corner-right { right: 0; }
 
+    /* SCROLL DRIVER */
+    #scroll-driver { height: 400vh; }
+
     @media (max-width: 800px) {
       nav { font-size: 1rem; }
       .page-text { max-width: 90vw; }
+      #section-axo { flex-direction: column; gap: 0.5rem; padding: 5rem 0.5rem 0.5rem; }
+      #section-axo img { max-height: 42vh; max-width: 90%; }
     }
 
     nav a[data-i18n="nav-cv"] { display: none; }
   </style>
 </head>
 <body>
+
+  <video id="bg-video" autoplay muted loop playsinline
+         poster="../img/proyectos/sinóptico/portada.jpg">
+    <source src="../img/proyectos/sinóptico/loop-540.mp4" type="video/mp4">
+  </video>
+
+  <div id="section-text">
+    <div class="page-text">
+      <p data-i18n="p1">El proyecto plantea un punto de observación en El Prat de Llobregat, entendido como un territorio híbrido donde conviven, sin jerarquías claras, fauna, vegetación, industria e infraestructuras. La propuesta asume esa condición de fricción y superposición como material de proyecto y concibe la arquitectura como un dispositivo de lectura: una pieza que orienta la mirada y convierte la complejidad del lugar en experiencia espacial.</p>
+      <p data-i18n="p2">El observatorio se estructura en torno a una escalera central de hierro contenida por una cáscara de hormigón. A lo largo del ascenso, una serie de catalejos encuadran vistas parciales del entorno hasta culminar en un mirador panorámico. Su altura se define para emerger por encima de las cañas, mientras que el acceso subterráneo actúa como umbral sensorial. El conjunto, del color de la vegetación, busca disolverse en el ecosistema y operar como un habitante más del paisaje.</p>
+    </div>
+  </div>
+
+  <div id="section-axo">
+    <img src="../img/proyectos/sinóptico/axo.png" alt="">
+    <img src="../img/proyectos/sinóptico/axo seccion.png" alt="">
+  </div>
+
+  <div id="section-vistas"></div>
+
+  <!-- scroll driver: invisible, just provides scrollable height -->
+  <div id="scroll-driver"></div>
 
   <nav>
     <div class="nav-links">
@@ -158,31 +220,18 @@
     </div>
   </nav>
 
-  <video id="bg-video" autoplay muted loop playsinline
-         poster="../img/proyectos/sinóptico/portada.jpg">
-    <source src="../img/proyectos/sinóptico/loop.mp4" type="video/mp4">
-  </video>
-
-  <div class="page-content">
-    <div class="page-text">
-      <p data-i18n="p1">El proyecto plantea un punto de observación en El Prat de Llobregat, entendido como un territorio híbrido donde conviven, sin jerarquías claras, fauna, vegetación, industria e infraestructuras. La propuesta asume esa condición de fricción y superposición como material de proyecto y concibe la arquitectura como un dispositivo de lectura: una pieza que orienta la mirada y convierte la complejidad del lugar en experiencia espacial.</p>
-      <p data-i18n="p2">El observatorio se estructura en torno a una escalera central de hierro contenida por una cáscara de hormigón. A lo largo del ascenso, una serie de catalejos encuadran vistas parciales del entorno hasta culminar en un mirador panorámico. Su altura se define para emerger por encima de las cañas, mientras que el acceso subterráneo actúa como umbral sensorial. El conjunto, del color de la vegetación, busca disolverse en el ecosistema y operar como un habitante más del paisaje.</p>
-    </div>
-  </div>
-
   <div class="title-corner title-corner-left">sinóptico</div>
   <div class="title-corner title-corner-right">sinóptico</div>
 
   <div id="cursor-dot"></div>
 
   <script>
+    // Cursor
     const dot = document.getElementById('cursor-dot');
-
     document.addEventListener('mousemove', e => {
       dot.style.left = e.clientX + 'px';
       dot.style.top  = e.clientY + 'px';
     });
-
     document.addEventListener('mouseover', e => {
       if (e.target.closest('a')) dot.classList.add('square');
     });
@@ -192,28 +241,82 @@
   </script>
 
   <script>
+    // Scatter vistas images in a 4×3 grid with random jitter
+    (function () {
+      const srcs = [
+        '_MP_3356.jpg', '_MP_3357.jpg', '_MP_3360-2.jpg', '_MP_3362.jpg',
+        '_MP_3366.jpg', '_MP_3367.jpg', '_MP_3368.jpg',  '_MP_3382b.png',
+        '_MP_3384.jpg', '_MP_3385.jpg', '_MP_3387.jpg',  '_MP_3389.jpg',
+      ];
+      const container = document.getElementById('section-vistas');
+      srcs.forEach((file, i) => {
+        const col = i % 4;
+        const row = Math.floor(i / 4);
+        const jx = (Math.random() - 0.5) * 12;
+        const jy = (Math.random() - 0.5) * 18;
+        const w  = 13 + Math.random() * 7;
+        const x  = Math.max(1, Math.min((col + 0.5) / 4 * 100 - w / 2 + jx, 99 - w));
+        const y  = Math.max(3, Math.min((row + 0.5) / 3 * 100 + jy, 85));
+        const img = document.createElement('img');
+        img.src = `../img/proyectos/sinóptico/vistas/${file}`;
+        img.alt = '';
+        img.style.cssText = `width:${w}%;left:${x}%;top:${y}%;`;
+        container.appendChild(img);
+      });
+    })();
+  </script>
+
+  <script>
+    // Scroll animation
+    (function () {
+      const sText   = document.getElementById('section-text');
+      const sAxo    = document.getElementById('section-axo');
+      const sVistas = document.getElementById('section-vistas');
+
+      function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
+      function progress(s, a, b) { return clamp((s - a) / (b - a), 0, 1); }
+
+      function onScroll() {
+        const s  = window.scrollY;
+        const vh = window.innerHeight;
+
+        // Section 1 → text slides up: 0 to 0.8vh
+        const tP = progress(s, 0, vh * 0.8);
+        sText.style.transform = `translateY(${-110 * tP}vh)`;
+        sText.style.opacity   = (1 - tP * 1.4).toFixed(3);
+
+        // Section 2 → axo: fade in 2–2.3vh, hold, fade out 2.8–3vh
+        const axoIn  = progress(s, vh * 2,   vh * 2.3);
+        const axoOut = progress(s, vh * 2.8, vh * 3);
+        sAxo.style.opacity = (axoIn * (1 - axoOut)).toFixed(3);
+
+        // Section 3 → vistas: fade in 3–3.3vh
+        const vitP = progress(s, vh * 3, vh * 3.3);
+        sVistas.style.opacity = vitP.toFixed(3);
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+
+  <script>
     const translations = {
       es: {
-        'nav-projects': '1. Proyectos', 'nav-archivo': '3. Archivo',
-        'nav-about': '2. Sobre mí',
-        'nav-cv': '3. CV',
-        'nav-contact': '4. Contacto',
+        'nav-projects': '1. Proyectos', 'nav-about': '2. Sobre mí', 'nav-archivo': '3. Archivo',
+        'nav-cv': '4. CV', 'nav-contact': '4. Contacto',
         'p1': 'El proyecto plantea un punto de observación en El Prat de Llobregat, entendido como un territorio híbrido donde conviven, sin jerarquías claras, fauna, vegetación, industria e infraestructuras. La propuesta asume esa condición de fricción y superposición como material de proyecto y concibe la arquitectura como un dispositivo de lectura: una pieza que orienta la mirada y convierte la complejidad del lugar en experiencia espacial.',
         'p2': 'El observatorio se estructura en torno a una escalera central de hierro contenida por una cáscara de hormigón. A lo largo del ascenso, una serie de catalejos encuadran vistas parciales del entorno hasta culminar en un mirador panorámico. Su altura se define para emerger por encima de las cañas, mientras que el acceso subterráneo actúa como umbral sensorial. El conjunto, del color de la vegetación, busca disolverse en el ecosistema y operar como un habitante más del paisaje.',
       },
       en: {
-        'nav-projects': '1. Projects', 'nav-archivo': '3. Archive',
-        'nav-about': '2. About',
-        'nav-cv': '3. CV',
-        'nav-contact': '4. Contact',
+        'nav-projects': '1. Projects', 'nav-about': '2. About', 'nav-archivo': '3. Archive',
+        'nav-cv': '4. CV', 'nav-contact': '4. Contact',
         'p1': 'The project proposes an observation point in El Prat de Llobregat, understood as a hybrid territory where fauna, vegetation, industry and infrastructure coexist without clear hierarchies. The proposal embraces this condition of friction and overlap as design material, conceiving architecture as a reading device: a piece that orients the gaze and transforms the complexity of the site into spatial experience.',
         'p2': 'The observatory is structured around a central iron staircase enclosed within a concrete shell. Along the ascent, a series of telescopes frame partial views of the surroundings, culminating in a panoramic lookout. Its height is defined to emerge above the reeds, while the underground access acts as a sensory threshold. The ensemble, the colour of the vegetation, seeks to dissolve into the ecosystem and operate as one more inhabitant of the landscape.',
       },
       ca: {
-        'nav-projects': '1. Projectes', 'nav-archivo': '3. Arxiu',
-        'nav-about': '2. Sobre mi',
-        'nav-cv': '3. CV',
-        'nav-contact': '4. Contacte',
+        'nav-projects': '1. Projectes', 'nav-about': '2. Sobre mi', 'nav-archivo': '3. Arxiu',
+        'nav-cv': '4. CV', 'nav-contact': '4. Contacte',
         'p1': "El projecte planteja un punt d'observació al Prat de Llobregat, entès com un territori híbrid on conviuen, sense jerarquies clares, fauna, vegetació, indústria i infraestructures. La proposta assumeix aquesta condició de fricció i superposició com a material de projecte i concep l'arquitectura com un dispositiu de lectura: una peça que orienta la mirada i converteix la complexitat del lloc en experiència espacial.",
         'p2': "L'observatori s'estructura al voltant d'una escala central de ferro continguda per una closca de formigó. Al llarg de l'ascens, una sèrie de catalejos emmarquen vistes parcials de l'entorn fins a culminar en un mirador panoràmic. La seva alçada es defineix per emergir per sobre dels canys, mentre que l'accés subterrani actua com a llindar sensorial. El conjunt, del color de la vegetació, busca dissoldre's en l'ecosistema i operar com un habitant més del paisatge.",
       },
@@ -232,17 +335,12 @@
     }
 
     document.querySelectorAll('.lang-link').forEach(a => {
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        applyLang(a.dataset.lang);
-      });
+      a.addEventListener('click', e => { e.preventDefault(); applyLang(a.dataset.lang); });
     });
-
     applyLang(localStorage.getItem('lang') || 'es');
   </script>
 
   <script src="../js/contact.js"></script>
-  <script src="../js/viewer.js"></script>
 
 </body>
 </html>
