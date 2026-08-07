@@ -25,7 +25,7 @@
     }
 
     body {
-      height: 400vh;
+      height: 320vh;
     }
 
     /* NAV */
@@ -187,7 +187,7 @@
 
   <video id="bg-video" autoplay muted loop playsinline
          poster="../img/proyectos/sinóptico/portada.jpg">
-    <source src="../img/proyectos/sinóptico/loop-540.mp4" type="video/mp4">
+    <source src="../img/proyectos/sinóptico/loop.mp4" type="video/mp4">
   </video>
 
   <div id="section-text">
@@ -279,18 +279,18 @@
         const s  = window.scrollY;
         const vh = window.innerHeight;
 
-        // Section 1 → text slides up: 0 to 0.8vh
-        const tP = progress(s, 0, vh * 0.8);
+        // Text slides up: 0 → 0.5vh
+        const tP = progress(s, 0, vh * 0.5);
         sText.style.transform = `translateY(${-110 * tP}vh)`;
-        sText.style.opacity   = (1 - tP * 1.4).toFixed(3);
+        sText.style.opacity   = (1 - tP * 1.6).toFixed(3);
 
-        // Section 2 → axo: fade in 2–2.3vh, hold, fade out 2.8–3vh
-        const axoIn  = progress(s, vh * 2,   vh * 2.3);
-        const axoOut = progress(s, vh * 2.8, vh * 3);
+        // Axo: fade in 0.8–1.1vh, hold, fade out 1.6–1.9vh
+        const axoIn  = progress(s, vh * 0.8, vh * 1.1);
+        const axoOut = progress(s, vh * 1.6, vh * 1.9);
         sAxo.style.opacity = (axoIn * (1 - axoOut)).toFixed(3);
 
-        // Section 3 → vistas: fade in 3–3.3vh
-        const vitP = progress(s, vh * 3, vh * 3.3);
+        // Vistas: fade in 2–2.3vh
+        const vitP = progress(s, vh * 2, vh * 2.3);
         sVistas.style.opacity = vitP.toFixed(3);
       }
 
