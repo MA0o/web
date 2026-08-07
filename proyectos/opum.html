@@ -219,7 +219,6 @@ clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100
       <a href="../about.html" data-i18n="nav-about">2. About</a>
       <a href="../archivo.html" data-i18n="nav-archivo">3. Archivo</a>
       <a href="../cv.html" data-i18n="nav-cv">4. CV</a>
-      <a href="../contact.html" data-i18n="nav-contact">4. Contact</a>
     </div>
     <img src="/img/logo-bnw.png" alt="" class="nav-logo">
     <div class="nav-lang">
@@ -283,10 +282,10 @@ clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100
       cursorInfo.style.top  = e.clientY + 'px';
     });
     document.addEventListener('mouseover', e => {
-      if (e.target.closest('a')) dot.classList.add('square');
+      if (e.target.closest('a, .nav-logo')) dot.classList.add('square');
     });
     document.addEventListener('mouseout', e => {
-      if (e.target.closest('a')) dot.classList.remove('square');
+      if (e.target.closest('a, .nav-logo')) dot.classList.remove('square');
     });
   </script>
 

@@ -122,7 +122,7 @@
     a.addEventListener('click', e => { e.preventDefault(); open(); });
   });
 
-  // ── Logo blink ─────────────────────────────────────────────────────────────
+  // ── Logo ──────────────────────────────────────────────────────────────────
   const logo = document.querySelector('.nav-logo');
   if (logo) {
     const srcA = logo.src;
@@ -132,6 +132,9 @@
       logo.src = srcB;
       setTimeout(() => { logo.src = srcA; }, 200);
     }, 7000);
+    logo.addEventListener('click', open);
+    logo.addEventListener('mouseenter', () => setCursor('square'));
+    logo.addEventListener('mouseleave', () => setCursor(null));
   }
 
 })();
