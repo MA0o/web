@@ -32,6 +32,7 @@
       top: 0; left: 0;
       width: 100%;
       padding: 0.12rem 0.5rem;
+      min-height: 4.5rem;
       z-index: 100;
       font-size: var(--nav-size);
       line-height: 1.1;
@@ -188,6 +189,7 @@ clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100
       mix-blend-mode: difference;
       white-space: nowrap;
       padding: 0.12rem 0.5rem;
+      min-height: 4.5rem;
       pointer-events: none;
       line-height: 1.1;
     }
@@ -195,6 +197,8 @@ clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100
     .title-corner-right { right: 0; }
 
     nav a[data-i18n="nav-cv"] { display: none; }
+
+    .nav-links { align-self: flex-end; }
 
     .nav-logo {
       position: absolute;
