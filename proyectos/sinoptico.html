@@ -18,10 +18,14 @@
       --nav-size: 1rem;
     }
 
-    html, body {
+    html {
       background-color: var(--bg);
       color: var(--text);
       font-family: var(--font-mono);
+    }
+
+    body {
+      min-height: 400vh;
     }
 
     /* NAV */
@@ -168,8 +172,6 @@
     .title-corner-left  { left: 0; }
     .title-corner-right { right: 0; }
 
-    /* SCROLL DRIVER */
-    #scroll-driver { height: 400vh; }
 
     @media (max-width: 800px) {
       nav { font-size: 1rem; }
@@ -201,9 +203,6 @@
   </div>
 
   <div id="section-vistas"></div>
-
-  <!-- scroll driver: invisible, just provides scrollable height -->
-  <div id="scroll-driver"></div>
 
   <nav>
     <div class="nav-links">
