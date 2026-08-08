@@ -52,14 +52,14 @@
 
     #vwr-counter {
       display: none;
-      position: fixed; bottom: 0; right: 0.5rem;
+      position: fixed; bottom: 1rem; right: 0.5rem;
       z-index: 10001; color: #fff;
       font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
       font-size: 0.75rem; opacity: 0.5; pointer-events: none; user-select: none;
     }
     #vwr-caption {
       display: none;
-      position: fixed; bottom: 0; left: 0.5rem;
+      position: fixed; bottom: 1rem; left: 0.5rem;
       z-index: 10001; color: #fff;
       font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
       font-size: 0.75rem; opacity: 0.5; pointer-events: none; user-select: none;
