@@ -51,12 +51,14 @@
     }
 
     #vwr-counter {
+      display: none;
       position: fixed; bottom: 1rem; right: 1rem;
       z-index: 10001; color: #fff;
       font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
       font-size: 0.75rem; opacity: 0.5; pointer-events: none; user-select: none;
     }
     #vwr-caption {
+      display: none;
       position: fixed; bottom: 1rem; left: 1rem;
       z-index: 10001; color: #fff;
       font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
@@ -129,15 +131,21 @@
       </svg>
     </button>
     <div id="vwr-track"></div>
-    <div id="vwr-counter"></div>
-    <div id="vwr-caption"></div>
   `;
   document.body.appendChild(overlay);
 
+  const counterEl = document.createElement('div');
+  counterEl.id = 'vwr-counter';
+  document.body.appendChild(counterEl);
+
+  const captionEl = document.createElement('div');
+  captionEl.id = 'vwr-caption';
+  document.body.appendChild(captionEl);
+
   // ── References ────────────────────────────────────────────────────────────
   const track    = document.getElementById('vwr-track');
-  const counter  = document.getElementById('vwr-counter');
-  const caption  = document.getElementById('vwr-caption');
+  const counter  = counterEl;
+  const caption  = captionEl;
   const btnClose = document.getElementById('vwr-close');
   const btnPrev  = document.getElementById('vwr-prev');
   const btnNext  = document.getElementById('vwr-next');
@@ -151,7 +159,7 @@
   }
 
   // ── Cursor management ─────────────────────────────────────────────────────
-  const CUR_ALL = ['triangle-right','triangle-left','cross','magnify','plus','square'];
+  const CUR_ALL = ['triangle-right','triangle-left','cross','magnify','plus','square','loading'];
   function setCursor(cls) {
     if (!dot) return;
     CUR_ALL.forEach(c => dot.classList.remove(c));
@@ -378,6 +386,8 @@
     });
     overlay.classList.add('open');
     document.body.classList.add('vwr-open');
+    counterEl.style.display = 'block';
+    captionEl.style.display = 'block';
     requestAnimationFrame(() => {
       overlay.scrollLeft = idx * overlay.clientWidth;
       updateCounter();
@@ -389,6 +399,8 @@
     if (zoomed) exitZoom();
     overlay.classList.remove('open');
     document.body.classList.remove('vwr-open');
+    counterEl.style.display = 'none';
+    captionEl.style.display = 'none';
     clearCursor();
     setTimeout(() => { track.innerHTML = ''; }, 400);
   }
