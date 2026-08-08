@@ -122,14 +122,87 @@
     a.addEventListener('click', e => { e.preventDefault(); open(); });
   });
 
-  // ── About: cancelled (strikethrough, cross cursor, no navigation) ─────────
+  // ── About: cancelled — click draws curved arrow to logo ──────────────────
   const aboutLink = document.querySelector('a[data-i18n="nav-about"]');
   if (aboutLink) {
-    aboutLink.addEventListener('click', e => e.preventDefault());
+    aboutLink.addEventListener('click', e => { e.preventDefault(); showAboutArrow(); });
     aboutLink.addEventListener('mouseover', e => e.stopPropagation());
     aboutLink.addEventListener('mouseout',  e => e.stopPropagation());
     aboutLink.addEventListener('mouseenter', () => setCursor('cross'));
     aboutLink.addEventListener('mouseleave', () => setCursor(null));
+  }
+
+  function showAboutArrow() {
+    const logoEl  = document.querySelector('.nav-logo');
+    const aboutEl = document.querySelector('a[data-i18n="nav-about"]');
+    if (!logoEl || !aboutEl) return;
+
+    const prev = document.getElementById('about-arrow-svg');
+    if (prev) prev.remove();
+
+    const aR = aboutEl.getBoundingClientRect();
+    const lR = logoEl.getBoundingClientRect();
+
+    const x1 = aR.right + 3;
+    const y1 = (aR.top + aR.bottom) / 2;
+    const x2 = (lR.left + lR.right) / 2;
+    const y2 = lR.bottom - 3;
+
+    // Arc bowing downward below the nav
+    const bowY = Math.max(y1, y2) + 90;
+    const cx1  = x1 + (x2 - x1) * 0.25;
+    const cy1  = bowY;
+    const cx2  = x1 + (x2 - x1) * 0.75;
+    const cy2  = bowY;
+
+    // Arrowhead: tangent at end = direction from last control point to end
+    const angle = Math.atan2(y2 - cy2, x2 - cx2);
+    const al = 10, aw = 5;
+    const p1x = x2 - al * Math.cos(angle) + aw * Math.sin(angle);
+    const p1y = y2 - al * Math.sin(angle) - aw * Math.cos(angle);
+    const p2x = x2 - al * Math.cos(angle) - aw * Math.sin(angle);
+    const p2y = y2 - al * Math.sin(angle) + aw * Math.cos(angle);
+
+    const ns = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(ns, 'svg');
+    svg.id = 'about-arrow-svg';
+    svg.setAttribute('style', 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:visible');
+
+    const path = document.createElementNS(ns, 'path');
+    path.setAttribute('d', `M ${x1} ${y1} C ${cx1} ${cy1} ${cx2} ${cy2} ${x2} ${y2}`);
+    path.setAttribute('stroke', 'red');
+    path.setAttribute('stroke-width', '2');
+    path.setAttribute('fill', 'none');
+
+    const head = document.createElementNS(ns, 'polygon');
+    head.setAttribute('points', `${x2},${y2} ${p1x},${p1y} ${p2x},${p2y}`);
+    head.setAttribute('fill', 'red');
+    head.style.opacity = '0';
+
+    svg.appendChild(path);
+    svg.appendChild(head);
+    document.body.appendChild(svg);
+
+    const DRAW_MS = 700;
+    const pathLen = path.getTotalLength();
+    path.style.strokeDasharray = '6 4';
+    path.style.strokeDashoffset = String(pathLen);
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      path.style.transition = `stroke-dashoffset ${DRAW_MS}ms ease-in-out`;
+      path.style.strokeDashoffset = '0';
+    }));
+
+    setTimeout(() => {
+      head.style.transition = 'opacity 0.15s';
+      head.style.opacity = '1';
+    }, DRAW_MS - 80);
+
+    setTimeout(() => {
+      svg.style.transition = 'opacity 0.5s';
+      svg.style.opacity = '0';
+      setTimeout(() => svg.remove(), 500);
+    }, DRAW_MS + 1500);
   }
 
   // ── Logo ──────────────────────────────────────────────────────────────────
