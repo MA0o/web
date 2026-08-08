@@ -125,7 +125,6 @@
   // ── About: cancelled (strikethrough, cross cursor, no navigation) ─────────
   const aboutLink = document.querySelector('a[data-i18n="nav-about"]');
   if (aboutLink) {
-    aboutLink.style.textDecoration = 'line-through';
     aboutLink.addEventListener('click', e => e.preventDefault());
     aboutLink.addEventListener('mouseover', e => e.stopPropagation());
     aboutLink.addEventListener('mouseout',  e => e.stopPropagation());
