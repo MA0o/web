@@ -82,7 +82,7 @@
 
     /* GALLERY */
     .gallery {
-      padding-top: 3.6rem;
+      margin-top: 5rem;
       opacity: 0;
       transition: opacity 0.15s;
       position: relative;
@@ -132,22 +132,6 @@
 
     nav a[data-i18n="nav-cv"] { display: none; }
 
-    #mobile-info {
-      display: none;
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: #000;
-      color: #fff;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      line-height: 1.4;
-      padding: 0.6rem 0.8rem 1rem;
-      z-index: 500;
-      pointer-events: none;
-    }
-    #mobile-info.visible { display: block; }
-
-    @media (min-width: 900px) { #mobile-info { display: none !important; } }
 
     .nav-links { align-self: flex-end; }
 
@@ -190,7 +174,6 @@
   </div>
 
   <div id="arch-tooltip"></div>
-  <div id="mobile-info"></div>
   <div id="cursor-dot"></div>
 
   <script>
@@ -277,7 +260,7 @@
         const W = gallery.clientWidth;
 
         const mobile = window.innerWidth < 900;
-        const COL_W = W / 5 * 1.1 * (mobile ? 1.3 : 1);
+        const COL_W = W / 5 * 1.1 * (mobile ? 1.5 : 1);
         const GAP = 6;
 
         const items = rawItems.map(el => {
@@ -389,7 +372,6 @@
       }
 
       let current = null;
-      const mobileInfo = document.getElementById('mobile-info');
 
       gallery.addEventListener('mousemove', e => {
         const item = e.target.closest && e.target.closest('.gallery > img, .gallery > .anim-cell');
@@ -413,22 +395,6 @@
         tooltip.style.display = 'none';
       });
 
-      // Mobile: tap image → show info panel at bottom
-      if (mobileInfo) {
-        gallery.addEventListener('click', e => {
-          const item = e.target.closest('.gallery > img, .gallery > .anim-cell');
-          if (item) {
-            const [n, t, y] = parse(item);
-            mobileInfo.innerHTML = [n, t, y].filter(Boolean).join('&ensp;/&ensp;');
-            mobileInfo.classList.add('visible');
-          } else {
-            mobileInfo.classList.remove('visible');
-          }
-        });
-        document.addEventListener('click', e => {
-          if (!e.target.closest('.gallery')) mobileInfo.classList.remove('visible');
-        });
-      }
     })();
   </script>
 

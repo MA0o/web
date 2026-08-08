@@ -51,10 +51,17 @@
     }
 
     #vwr-counter {
-      position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%);
+      position: fixed; bottom: 1rem; right: 1rem;
       z-index: 10001; color: #fff;
       font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
       font-size: 0.75rem; opacity: 0.5; pointer-events: none; user-select: none;
+    }
+    #vwr-caption {
+      position: fixed; bottom: 1rem; left: 1rem;
+      z-index: 10001; color: #fff;
+      font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
+      font-size: 0.75rem; opacity: 0.5; pointer-events: none; user-select: none;
+      max-width: 60vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
     img.vwr-zoomable { cursor: none !important; }
@@ -123,17 +130,25 @@
     </button>
     <div id="vwr-track"></div>
     <div id="vwr-counter"></div>
+    <div id="vwr-caption"></div>
   `;
   document.body.appendChild(overlay);
 
   // ── References ────────────────────────────────────────────────────────────
   const track    = document.getElementById('vwr-track');
   const counter  = document.getElementById('vwr-counter');
+  const caption  = document.getElementById('vwr-caption');
   const btnClose = document.getElementById('vwr-close');
   const btnPrev  = document.getElementById('vwr-prev');
   const btnNext  = document.getElementById('vwr-next');
   const dot      = document.getElementById('cursor-dot');
   let total = 0;
+  let captions = [];
+
+  function parseCaption(src) {
+    const base = src.split('/').pop().replace(/\.[^.]+$/, '').replace(/-\d+$/, '');
+    return base.split('_').filter(Boolean).join(' / ');
+  }
 
   // ── Cursor management ─────────────────────────────────────────────────────
   const CUR_ALL = ['triangle-right','triangle-left','cross','magnify','plus','square'];
@@ -186,7 +201,11 @@
   function currentIndex() {
     return overlay.clientWidth ? Math.round(overlay.scrollLeft / overlay.clientWidth) : 0;
   }
-  function updateCounter() { counter.textContent = `${currentIndex() + 1} / ${total}`; }
+  function updateCounter() {
+    const i = currentIndex();
+    counter.textContent = `${i + 1} / ${total}`;
+    if (caption) caption.textContent = captions[i] || '';
+  }
   function applyZoom(img, s, px, py) {
     img.style.transform = `translate(${px}px,${py}px) scale(${s})`;
   }
@@ -350,6 +369,7 @@
   // ── Open / Close ──────────────────────────────────────────────────────────
   function open(srcs, idx) {
     total = srcs.length;
+    captions = srcs.map(parseCaption);
     track.innerHTML = '';
     srcs.forEach(src => {
       const img = document.createElement('img');

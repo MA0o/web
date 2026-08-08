@@ -131,7 +131,7 @@
     setInterval(() => {
       logo.src = srcB;
       setTimeout(() => { logo.src = srcA; }, 200);
-    }, 7000);
+    }, 5000);
     logo.addEventListener('click', open);
     logo.addEventListener('mouseenter', () => setCursor('square'));
     logo.addEventListener('mouseleave', () => setCursor(null));
