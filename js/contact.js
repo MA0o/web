@@ -135,72 +135,139 @@
   function showAboutArrow() {
     const logoEl  = document.querySelector('.nav-logo');
     const aboutEl = document.querySelector('a[data-i18n="nav-about"]');
-    if (!logoEl || !aboutEl) return;
+    const navEl   = document.querySelector('nav');
+    if (!logoEl || !aboutEl || !navEl) return;
 
     const prev = document.getElementById('about-arrow-svg');
     if (prev) prev.remove();
 
     const aR = aboutEl.getBoundingClientRect();
     const lR = logoEl.getBoundingClientRect();
+    const nR = navEl.getBoundingClientRect();
 
+    const remPx  = parseFloat(getComputedStyle(document.documentElement).fontSize);
     const x1 = aR.right + 3;
     const y1 = (aR.top + aR.bottom) / 2;
-    const x2 = (lR.left + lR.right) / 2;
-    const y2 = lR.bottom - 3;
+    const x2 = lR.left;
 
-    // Arc bowing downward below the nav
-    const bowY = Math.max(y1, y2) + 90;
-    const cx1  = x1 + (x2 - x1) * 0.25;
-    const cy1  = bowY;
-    const cx2  = x1 + (x2 - x1) * 0.75;
-    const cy2  = bowY;
+    const yTop = nR.top + 3;
+    const yBot = nR.bottom - 3;
+    const yMid = (yTop + yBot) / 2;
+    const yRange = (yBot - yTop) / 2;
+    const yAmp   = yRange * 0.52;
+    const B2     = yAmp * 0.55;
 
-    // Arrowhead: tangent at end = direction from last control point to end
-    const angle = Math.atan2(y2 - cy2, x2 - cx2);
-    const al = 10, aw = 5;
-    const p1x = x2 - al * Math.cos(angle) + aw * Math.sin(angle);
-    const p1y = y2 - al * Math.sin(angle) - aw * Math.cos(angle);
-    const p2x = x2 - al * Math.cos(angle) - aw * Math.sin(angle);
-    const p2y = y2 - al * Math.sin(angle) + aw * Math.cos(angle);
+    const LOOPS  = 3 + Math.floor(Math.random() * 3);
+    const l2opts = {3:[4,5], 4:[3,5], 5:[3,4]};
+    const LOOPS2 = l2opts[LOOPS][Math.floor(Math.random() * 2)];
+    const totalX = x2 - x1;
+    const A1     = totalX / (2 * Math.PI * LOOPS) * 1.9;
 
-    const ns = 'http://www.w3.org/2000/svg';
+    // amplitude ramp: loops build up over first 7rem
+    const tRamp = Math.min(0.3, (remPx * 7) / totalX);
+    const env   = t => t < tRamp ? Math.pow(t / tRamp, 2) : 1;
+
+    const rp   = () => Math.random() * Math.PI * 2;
+    const nx   = [[1.1, rp(), 0.35], [2.7, rp(), 0.14], [4.3, rp(), 0.05]];
+    const ny   = [[0.8, rp(), 0.38], [2.2, rp(), 0.13], [3.7, rp(), 0.05]];
+    const sn   = (t, s) => s.reduce((a, [f, p, w]) => a + w * Math.sin(2 * Math.PI * f * t + p), 0);
+    const fade = t => (1 - Math.pow(1 - t, 3)) * (1 - Math.pow(t, 3));
+    const jx = totalX * 0.01;
+    const jy = yRange  * 0.05;
+
+    const N = 300;
+    const pts = [];
+    for (let i = 0; i <= N; i++) {
+      const t     = i / N;
+      const e     = env(t);
+      const blend = Math.min(1, t / tRamp);
+      const ph1 = 2 * Math.PI * LOOPS  * t;
+      const ph2 = 2 * Math.PI * LOOPS2 * t;
+      const f   = fade(t);
+      const yBase = y1 + (yMid - y1) * blend;
+      const xRaw = x1 + totalX * t
+                 + A1 * (Math.cos(ph1) - 1) * e
+                 + sn(t, nx) * jx * f;
+      const yRaw = yBase
+                 + yAmp * Math.sin(ph1) * e
+                 - B2   * Math.sin(ph2) * e
+                 + sn(t, ny) * jy * f;
+      pts.push([xRaw, Math.max(yTop, Math.min(yBot, yRaw))]);
+    }
+
+    let d = `M ${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
+    for (let i = 1; i <= N; i++) d += ` L ${pts[i][0].toFixed(1)} ${pts[i][1].toFixed(1)}`;
+
+    const ns  = 'http://www.w3.org/2000/svg';
     const svg = document.createElementNS(ns, 'svg');
     svg.id = 'about-arrow-svg';
-    svg.setAttribute('style', 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:visible');
+    svg.setAttribute('style', 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:visible;mix-blend-mode:difference');
+
+    // Clip to nav bounds so nothing escapes
+    const clipId   = 'about-nav-clip';
+    const defs     = document.createElementNS(ns, 'defs');
+    const clip     = document.createElementNS(ns, 'clipPath');
+    clip.id = clipId;
+    const clipRect = document.createElementNS(ns, 'rect');
+    clipRect.setAttribute('x',      String(nR.left));
+    clipRect.setAttribute('y',      String(nR.top));
+    clipRect.setAttribute('width',  String(nR.width));
+    clipRect.setAttribute('height', String(nR.height));
+    clip.appendChild(clipRect);
+    defs.appendChild(clip);
+    svg.appendChild(defs);
+
+    const g = document.createElementNS(ns, 'g');
+    g.setAttribute('clip-path', `url(#${clipId})`);
 
     const path = document.createElementNS(ns, 'path');
-    path.setAttribute('d', `M ${x1} ${y1} C ${cx1} ${cy1} ${cx2} ${cy2} ${x2} ${y2}`);
-    path.setAttribute('stroke', 'red');
-    path.setAttribute('stroke-width', '2');
+    path.setAttribute('d', d);
+    path.setAttribute('stroke', 'white');
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('stroke-linecap', 'round');
     path.setAttribute('fill', 'none');
 
     const head = document.createElementNS(ns, 'polygon');
-    head.setAttribute('points', `${x2},${y2} ${p1x},${p1y} ${p2x},${p2y}`);
-    head.setAttribute('fill', 'red');
-    head.style.opacity = '0';
+    head.setAttribute('fill', 'white');
+    head.setAttribute('points', '0,0 0,0 0,0'); // updated each frame by RAF
 
-    svg.appendChild(path);
-    svg.appendChild(head);
+    g.appendChild(path);
+    g.appendChild(head);
+    svg.appendChild(g);
     document.body.appendChild(svg);
 
-    const DRAW_MS = 700;
+    const DRAW_MS = 900 + LOOPS * 60;
     const pathLen = path.getTotalLength();
-    path.style.strokeDasharray = '6 4';
+    path.style.strokeDasharray  = String(pathLen);
     path.style.strokeDashoffset = String(pathLen);
 
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      path.style.transition = `stroke-dashoffset ${DRAW_MS}ms ease-in-out`;
+      path.style.transition       = `stroke-dashoffset ${DRAW_MS}ms ease-in-out`;
       path.style.strokeDashoffset = '0';
+
+      const t0   = performance.now();
+      const ease = t => t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+      const al = 8, aw = 4;
+      (function animHead(now) {
+        const t   = Math.min((now - t0) / DRAW_MS, 1);
+        const len = ease(t) * pathLen;
+        if (len > 15) {
+          const tip  = path.getPointAtLength(len);
+          const back = path.getPointAtLength(Math.max(0, len - 14));
+          const ang  = Math.atan2(tip.y - back.y, tip.x - back.x);
+          head.setAttribute('points', [
+            `${tip.x.toFixed(1)},${tip.y.toFixed(1)}`,
+            `${(tip.x - al*Math.cos(ang) + aw*Math.sin(ang)).toFixed(1)},${(tip.y - al*Math.sin(ang) - aw*Math.cos(ang)).toFixed(1)}`,
+            `${(tip.x - al*Math.cos(ang) - aw*Math.sin(ang)).toFixed(1)},${(tip.y - al*Math.sin(ang) + aw*Math.cos(ang)).toFixed(1)}`
+          ].join(' '));
+        }
+        if (t < 1) requestAnimationFrame(animHead);
+      })(performance.now());
     }));
 
     setTimeout(() => {
-      head.style.transition = 'opacity 0.15s';
-      head.style.opacity = '1';
-    }, DRAW_MS - 80);
-
-    setTimeout(() => {
       svg.style.transition = 'opacity 0.5s';
-      svg.style.opacity = '0';
+      svg.style.opacity    = '0';
       setTimeout(() => svg.remove(), 500);
     }, DRAW_MS + 1500);
   }
