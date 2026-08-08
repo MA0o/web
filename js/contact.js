@@ -122,6 +122,17 @@
     a.addEventListener('click', e => { e.preventDefault(); open(); });
   });
 
+  // ── About: cancelled (strikethrough, cross cursor, no navigation) ─────────
+  const aboutLink = document.querySelector('a[data-i18n="nav-about"]');
+  if (aboutLink) {
+    aboutLink.style.textDecoration = 'line-through';
+    aboutLink.addEventListener('click', e => e.preventDefault());
+    aboutLink.addEventListener('mouseover', e => e.stopPropagation());
+    aboutLink.addEventListener('mouseout',  e => e.stopPropagation());
+    aboutLink.addEventListener('mouseenter', () => setCursor('cross'));
+    aboutLink.addEventListener('mouseleave', () => setCursor(null));
+  }
+
   // ── Logo ──────────────────────────────────────────────────────────────────
   const logo = document.querySelector('.nav-logo');
   if (logo) {
