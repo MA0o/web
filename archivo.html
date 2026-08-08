@@ -164,13 +164,19 @@
   </nav>
 
   <div class="gallery">
-    <div class="anim-cell" id="anim-tiketa" style="aspect-ratio: 693/1600"></div>
-    <div class="anim-cell" id="anim-nanja" style="aspect-ratio: 821/1600"></div>
-    <img src="img/archivo/thumbs/2025.jpg"                    data-full="img/archivo/2025.png" alt="">
-    <img src="img/archivo/thumbs/flatblcock_grafica_2026.jpg" data-full="img/archivo/flatblcock_grafica_2026.jpg" alt="">
-    <img src="img/archivo/thumbs/grafica_2025.jpg"            data-full="img/archivo/grafica_2025.jpg" alt="">
-    <img src="img/archivo/thumbs/poster_2025-j.jpg"           data-full="img/archivo/poster_2025.jpg" alt="">
-    <img src="img/archivo/thumbs/poster_2025-p.jpg"           data-full="img/archivo/poster_2025.png" alt="">
+    <div class="anim-cell" id="anim-etiqueta" style="aspect-ratio: 693/1600"></div>
+    <div class="anim-cell" id="anim-naranja"  style="aspect-ratio: 821/1600"></div>
+    <div class="anim-cell" id="anim-hoja"     style="aspect-ratio: 750/1334"></div>
+    <img src="img/archivo/thumbs/2025.jpg"                        data-full="img/archivo/2025.png" alt="">
+    <img src="img/archivo/thumbs/flatblcock_grafica_2026.jpg"     data-full="img/archivo/flatblock_grafica_2026.jpg" alt="">
+    <img src="img/archivo/thumbs/grafica_2025.jpg"                data-full="img/archivo/grafica_2025.jpg" alt="">
+    <img src="img/archivo/thumbs/poster_2025-j.jpg"               data-full="img/archivo/poster_2025.jpg" alt="">
+    <img src="img/archivo/thumbs/poster_2025-p.jpg"               data-full="img/archivo/poster_2025.png" alt="">
+    <img src="img/archivo/thumbs/flatblock_2026.jpg"              data-full="img/archivo/flatblock_2026.jpg" alt="">
+    <img src="img/archivo/thumbs/maquetas_2026.jpg"               data-full="img/archivo/maquetas_2026.webp" alt="">
+    <img src="img/archivo/thumbs/comida_2024.jpg"                 data-full="img/archivo/comida_2024.jpg" alt="">
+    <img src="img/archivo/thumbs/pared_2026.jpg"                  data-full="img/archivo/pared_2026.jpg" alt="">
+    <img src="img/archivo/thumbs/1x1_2024.jpg"                    data-full="img/archivo/1x1_2024.jpg" alt="">
   </div>
 
   <div id="arch-tooltip"></div>
@@ -214,11 +220,13 @@
   </script>
 
   <script>
-    // Animations: tiketa + nanja cycling frames at 500ms
+    // Animations: cycling frames at 500ms
     (function () {
+      const T = 'img/archivo/thumbs/';
       const anims = [
-        { id: 'anim-tiketa', frames: ['img/archivo/tiketa1.jpeg', 'img/archivo/tiketa2.jpeg', 'img/archivo/tiketa3.jpeg'] },
-        { id: 'anim-nanja',  frames: ['img/archivo/nanja1.jpeg',  'img/archivo/nanja2.jpeg',  'img/archivo/nanja3.jpeg']  },
+        { id: 'anim-etiqueta', frames: [T+'letras en una etiqueta_20251.jpg', T+'letras en una etiqueta_20252.jpg', T+'letras en una etiqueta_20253.jpg'] },
+        { id: 'anim-naranja',  frames: [T+'letras en una naranja_20251.jpg',  T+'letras en una naranja_20252.jpg',  T+'letras en una naranja_20253.jpg']  },
+        { id: 'anim-hoja',     frames: ['img/archivo/letras en una hoja_20251.jpg','img/archivo/letras en una hoja_20252.jpg','img/archivo/letras en una hoja_20253.jpg','img/archivo/letras en una hoja_20254.jpg','img/archivo/letras en una hoja_20255.jpg'] },
       ];
       anims.forEach(({ id, frames }) => {
         const cell = document.getElementById(id);
