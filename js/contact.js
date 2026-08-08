@@ -9,14 +9,19 @@
   style.textContent = `
     #ct-overlay {
       position: fixed; inset: 0; z-index: 9998;
-      display: none;
-      align-items: center; justify-content: center;
-      background: rgba(0, 0, 0, 0.45);
+      display: flex;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
     }
-    #ct-overlay.open { display: flex; }
+    #ct-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
     #ct-box {
-      width: 320px;
+      position: relative;
+      width: 100%; height: 100%;
       background: #ffdf41;
       display: flex;
       flex-direction: column;
@@ -27,6 +32,7 @@
       display: flex;
       justify-content: flex-end;
       padding: 0.4rem 0.4rem 0;
+      flex-shrink: 0;
     }
     #ct-close {
       background: none; border: none; cursor: none;
@@ -37,34 +43,49 @@
       height: clamp(2rem, 5vw, 4rem);
       display: block;
     }
-
-    /* row 2: image — square crop, fills popup width */
-    #ct-img {
-      width: 100%;
-      aspect-ratio: 1;
-      object-fit: cover;
-      display: block;
+    @media (max-width: 900px) {
+      #ct-close svg { width: 3.5rem; height: 3.5rem; }
     }
 
-    /* row 3: info — auto height, nav font style */
     #ct-info {
-      width: 100%;
+      position: absolute;
+      left: 0; right: 0;
+      bottom: 15rem;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      padding: 0.4rem 0.5rem 1.2rem;
-      gap: 0.15em;
+      align-items: center;
+      justify-content: space-evenly;
+      text-align: center;
+      padding: 0 1rem;
       font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
       font-size: 1rem;
       line-height: 1.1;
       color: #000eff;
-      box-sizing: border-box;
     }
     #ct-info a {
       color: #000eff; text-decoration: none;
       background: none !important;
       mix-blend-mode: normal !important;
       padding: 0 !important;
+    }
+    #cursor-dot.plus {
+      border-radius: 0;
+      -webkit-mask: none;
+      mask: none;
+      clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100%, 35% 100%, 35% 65%, 0% 65%, 0% 35%, 35% 35%);
+    }
+    #ct-copy-tip {
+      position: fixed;
+      pointer-events: none;
+      z-index: 10002;
+      background: #000;
+      color: #fff;
+      font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
+      font-size: 0.75rem;
+      line-height: 1.5;
+      padding: 0.3em 0.5em;
+      display: none;
+      white-space: nowrap;
     }
   `;
   document.head.appendChild(style);
@@ -80,17 +101,20 @@
           </svg>
         </button>
       </div>
-      <img id="ct-img" alt="">
       <div id="ct-info">
         <a href="https://www.instagram.com/mateoprado/" target="_blank">@mateoprado</a>
-        <span>mateucho.04@gmail.com</span>
-        <span>+34 650165341</span>
+        <span data-copy="mateucho.04@gmail.com">mateucho.04@gmail.com</span>
+        <span data-copy="+34 650165341">+34 650165341</span>
       </div>
+      <div id="ct-copy-tip">copiar</div>
     </div>
   `;
   document.body.appendChild(overlay);
 
-  document.getElementById('ct-img').src = BASE + 'img/perfil.jpg';
+  const ctSrcA = BASE + 'img/perfil-hi.png';
+  const ctSrcB = BASE + 'img/perfil-hi-p.png';
+  new Image().src = ctSrcA;
+  new Image().src = ctSrcB;
 
   // ── Cursor ────────────────────────────────────────────────────────────────
   const CUR_ALL = ['triangle-right','triangle-left','cross','magnify','plus','square'];
@@ -109,9 +133,85 @@
   igLink.addEventListener('mouseenter', () => setCursor('plus'));
   igLink.addEventListener('mouseleave', () => setCursor(null));
 
+  // ── Copy tooltip ──────────────────────────────────────────────────────────
+  const copyTip = document.getElementById('ct-copy-tip');
+  overlay.querySelectorAll('[data-copy]').forEach(span => {
+    span.addEventListener('mouseenter', () => {
+      copyTip.style.display = 'block';
+      setCursor('square');
+    });
+    span.addEventListener('mousemove', e => {
+      copyTip.style.left = (e.clientX + 14) + 'px';
+      copyTip.style.top  = (e.clientY - 10) + 'px';
+    });
+    span.addEventListener('mouseleave', () => {
+      copyTip.style.display = 'none';
+      setCursor(null);
+    });
+    span.addEventListener('click', () => {
+      navigator.clipboard.writeText(span.dataset.copy).catch(() => {});
+    });
+  });
+
   // ── Open / Close ──────────────────────────────────────────────────────────
-  function open()  { overlay.classList.add('open'); }
-  function close() { overlay.classList.remove('open'); setCursor(null); }
+  const navLogo = document.querySelector('.nav-logo');
+  let logoClone = null;
+  let blinkTimer = null;
+
+  function startBlink() {
+    blinkTimer = setInterval(() => {
+      if (!logoClone) return;
+      logoClone.src = ctSrcB;
+      setTimeout(() => { if (logoClone) logoClone.src = ctSrcA; }, 200);
+    }, 5000);
+  }
+
+  function stopBlink() {
+    clearInterval(blinkTimer);
+    blinkTimer = null;
+  }
+
+  function open() {
+    if (navLogo) {
+      const R = navLogo.getBoundingClientRect();
+      const logoScaledBottom = R.top + R.height * 3;
+      document.getElementById('ct-info').style.top = Math.round(logoScaledBottom) + 'px';
+
+      logoClone = document.createElement('img');
+      logoClone.src = ctSrcA;
+      logoClone.alt = '';
+      logoClone.width  = Math.round(R.width);
+      logoClone.height = Math.round(R.height);
+      Object.assign(logoClone.style, {
+        position: 'absolute', pointerEvents: 'none',
+        display: 'block', objectFit: 'contain',
+        left: R.left + 'px', top: R.top + 'px',
+        width: R.width + 'px', height: R.height + 'px',
+        transform: 'scale(1)',
+        transformOrigin: '50% 0%',
+        transition: 'transform 0.35s ease',
+      });
+      overlay.appendChild(logoClone);
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (logoClone) logoClone.style.transform = 'scale(3)';
+      }));
+      startBlink();
+    }
+    overlay.classList.add('open');
+  }
+
+  function close() {
+    stopBlink();
+    overlay.classList.remove('open');
+    if (logoClone) {
+      logoClone.style.transform = 'scale(1)';
+      const c = logoClone;
+      logoClone = null;
+      setTimeout(() => c.remove(), 400);
+    }
+    if (logo && logoSrcA) logo.src = logoSrcA;
+    setCursor(null);
+  }
 
   btnClose.addEventListener('click', close);
   overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
@@ -274,13 +374,14 @@
 
   // ── Logo ──────────────────────────────────────────────────────────────────
   const logo = document.querySelector('.nav-logo');
+  const logoSrcA = logo ? logo.src : '';
   if (logo) {
-    const srcA = logo.src;
-    const srcB = srcA.replace('logo-bnw.png', 'logo-bnw-p.png');
+    const srcB = logoSrcA.replace('logo-bnw.png', 'logo-bnw-p.png');
     new Image().src = srcB;
     setInterval(() => {
+      if (overlay.classList.contains('open')) return;
       logo.src = srcB;
-      setTimeout(() => { logo.src = srcA; }, 200);
+      setTimeout(() => { if (!overlay.classList.contains('open')) logo.src = logoSrcA; }, 200);
     }, 5000);
     logo.addEventListener('click', open);
     logo.addEventListener('mouseenter', () => setCursor('square'));
