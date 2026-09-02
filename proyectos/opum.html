@@ -426,7 +426,7 @@ clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100
         }
 
         // Swap silencioso a hi-res cuando carga
-        const fullSrc = srcImg.src.replace('/thumbs/', '/carrousel/');
+        const fullSrc = srcImg.src.replace('/thumbs/', '/webp/').replace('.png', '.webp');
         const fullImg = new Image();
         fullImg.onload = () => {
           if (overlay.classList.contains('open') && overlayImg.src.includes(srcImg.src.split('/').pop())) {
