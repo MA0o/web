@@ -22,9 +22,51 @@
       background-color: var(--bg);
       color: var(--text);
       font-family: var(--font-mono);
-      height: 100vh;
-      overflow: hidden;
+      overflow-x: hidden;
     }
+
+    /* DEFINITION SECTION */
+    .def-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 2rem;
+    }
+
+    .def-entry {
+      font-family: 'Times New Roman', Times, serif;
+      max-width: 44ch;
+      font-size: 1rem;
+      line-height: 1.4;
+      color: #000;
+    }
+
+    .def-word {
+      display: block;
+      font-size: 1.6rem;
+      font-weight: normal;
+      font-style: italic;
+      margin-bottom: 0.3em;
+      letter-spacing: 0.01em;
+    }
+
+    .def-meta {
+      display: block;
+      font-size: 0.85rem;
+      color: #555;
+      margin-bottom: 1.2em;
+      font-style: normal;
+    }
+
+    .def-num {
+      display: block;
+      padding-left: 1.2em;
+      text-indent: -1.2em;
+      margin-bottom: 0.4em;
+    }
+
+    .def-num:last-child { margin-bottom: 0; }
 
     /* NAV */
     nav {
@@ -189,7 +231,6 @@ clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100
       mix-blend-mode: difference;
       white-space: nowrap;
       padding: 0.12rem 0.5rem;
-      min-height: 4.5rem;
       pointer-events: none;
       line-height: 1.1;
     }
@@ -263,6 +304,16 @@ clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100
       </div>
     </div>
 
+  </div>
+
+  <div class="def-section">
+    <div class="def-entry">
+      <span class="def-word">Eme</span>
+      <span class="def-meta">(sustantivo femenino)</span>
+      <span class="def-num">1. f. Objeto, mecanismo o utensilio que cumple la acción de moler, machacar o majar, para iniciar la digestión fuera del cuerpo.</span>
+      <span class="def-num">2. f. Estructura compuesta por una base, un cuerpo y, opcionalmente, una maza.</span>
+      <span class="def-num">3. f. Todo es una eme mientras parezca una eme, funcione como una eme y se llame eme.</span>
+    </div>
   </div>
 
   <div class="title-corner title-corner-left">OPUM</div>
@@ -476,8 +527,6 @@ clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100
       }, { passive: true });
     })();
   </script>
-
-  <script src="../js/contact.js"></script>
-
+  <script src="/js/nav5.js"></script>
 </body>
 </html>

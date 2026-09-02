@@ -24,7 +24,7 @@
       font-family: var(--font-mono);
     }
 
-    body { height: 400vh; }
+    body { height: 300vh; }
 
     /* NAV */
     nav {
@@ -128,7 +128,7 @@
       padding: 5rem 1rem 1rem;
       opacity: 0;
       pointer-events: none;
-      will-change: opacity;
+      will-change: transform, opacity;
     }
 
     #section-axo img {
@@ -146,7 +146,7 @@
       background: #000;
       opacity: 0;
       pointer-events: none;
-      will-change: opacity;
+      will-change: transform, opacity;
     }
 
     #section-vistas img {
@@ -295,19 +295,22 @@
         const s  = window.scrollY;
         const vh = window.innerHeight;
 
-        // Text slides up: 0 → 0.5vh
-        const tP = progress(s, 0, vh * 0.5);
+        // Text slides up and fades: 0 → 0.4vh
+        const tP = progress(s, 0, vh * 0.4);
         sText.style.transform = `translateY(${-110 * tP}vh)`;
         sText.style.opacity   = (1 - tP * 1.6).toFixed(3);
 
-        // Axo: fade in 0.8–1.1vh, hold, fade out 1.6–1.9vh
-        const axoIn  = progress(s, vh * 0.8, vh * 1.1);
-        const axoOut = progress(s, vh * 1.6, vh * 1.9);
-        sAxo.style.opacity = (axoIn * (1 - axoOut)).toFixed(3);
+        // Axo: slides in from below 0.35–0.6vh, stays until vistas take over
+        const axoIn  = progress(s, vh * 0.35, vh * 0.6);
+        const axoOut = progress(s, vh * 1.0,  vh * 1.25);
+        const axoY   = (1 - axoIn) * 80 + axoOut * -80;
+        sAxo.style.transform = `translateY(${axoY.toFixed(1)}vh)`;
+        sAxo.style.opacity   = (axoIn > 0 ? (1 - axoOut) : 0).toFixed(3);
 
-        // Vistas: fade in 2–2.3vh
-        const vitP = progress(s, vh * 2, vh * 2.3);
-        sVistas.style.opacity = vitP.toFixed(3);
+        // Vistas: slide in from below, same range as axo exit — user decides when
+        const vitP = progress(s, vh * 1.0, vh * 1.25);
+        sVistas.style.transform = `translateY(${((1 - vitP) * 80).toFixed(1)}vh)`;
+        sVistas.style.opacity   = (vitP > 0 ? 1 : 0).toFixed(3);
       }
 
       window.addEventListener('scroll', onScroll, { passive: true });
@@ -354,8 +357,6 @@
     });
     applyLang(localStorage.getItem('lang') || 'es');
   </script>
-
-  <script src="../js/contact.js"></script>
-
+  <script src="/js/nav5.js"></script>
 </body>
 </html>

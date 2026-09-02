@@ -90,7 +90,6 @@
       mix-blend-mode: difference;
       white-space: nowrap;
       padding: 0.12rem 0.5rem;
-      min-height: 4.5rem;
       pointer-events: none;
       line-height: 1.1;
     }
@@ -99,7 +98,7 @@
 
     /* ── LAYOUT C ─────────────────────────────────────────────────────────── */
     .lc-gallery {
-      padding-top: var(--nav-h);
+      padding-top: 0;
       padding-bottom: 5rem;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -205,7 +204,7 @@
   </div>
 
   <div class="lc-text">
-    <p data-i18n="p1">Con <a href="https://www.neo2.com/pol-gilbert-muestra-sus-coleccion-de-estrellas-en-200cent/" target="_blank">Pol Gilbert</a> un día encontramos dos estrellas que habían caído del cielo. una parecía una silla la otra una lámpara. Ninguna funcionaba muy bien como tal: ni era comoda, ni iluminaba, ni era ligera, ni cuidadosa, ni se podía apagar... Pero nada de eso importa porque son nuestras estrellas caídas del cielo.</p>
+    <p data-i18n="p1">Con <a href="https://www.neo2.com/pol-gilbert-muestra-sus-coleccion-de-estrellas-en-200cent/" target="_blank">Pol Gilbert</a> un día encontramos dos estrellas que habían caído del cielo. Una parecía una silla, la otra una lámpara. Ninguna funcionaba muy bien como tal: ni era cómoda, ni iluminaba, ni era ligera, ni cuidadosa, ni se podía apagar... Pero nada de eso importa porque son nuestras estrellas caídas del cielo.</p>
   </div>
 
   <div class="title-corner title-corner-left">FeNi</div>
@@ -236,7 +235,7 @@
         'nav-about': '2. Sobre mí',
         'nav-cv': '3. CV',
         'nav-contact': '4. Contacto',
-        'p1': 'Con <a href="https://www.neo2.com/pol-gilbert-muestra-sus-coleccion-de-estrellas-en-200cent/" target="_blank">Pol Gilbert</a> un día encontramos dos estrellas que habían caído del cielo. una parecía una silla la otra una lámpara. Ninguna funcionaba muy bien como tal: ni era comoda, ni iluminaba, ni era ligera, ni cuidadosa, ni se podía apagar... Pero nada de eso importa porque son nuestras estrellas caídas del cielo.',
+        'p1': 'Con <a href="https://www.neo2.com/pol-gilbert-muestra-sus-coleccion-de-estrellas-en-200cent/" target="_blank">Pol Gilbert</a> un día encontramos dos estrellas que habían caído del cielo. Una parecía una silla, la otra una lámpara. Ninguna funcionaba muy bien como tal: ni era cómoda, ni iluminaba, ni era ligera, ni cuidadosa, ni se podía apagar... Pero nada de eso importa porque son nuestras estrellas caídas del cielo.',
       },
       en: {
         'nav-projects': '1. Projects', 'nav-archivo': '3. Archive',
@@ -275,9 +274,7 @@
 
     applyLang(localStorage.getItem('lang') || 'es');
   </script>
-
-  <script src="../js/contact.js"></script>
   <script src="../js/viewer.js"></script>
-
+  <script src="/js/nav5.js"></script>
 </body>
 </html>

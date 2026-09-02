@@ -178,16 +178,16 @@
       pointer-events: none;
       z-index: 10001;
       font-family: var(--font-mono);
-      font-size: 1rem;
-      color: #ffffff;
-      mix-blend-mode: difference;
+      font-size: 0.75rem;
+      line-height: 1.5;
+      background: #000;
+      color: #fff;
+      padding: 0.3em 0.5em;
       white-space: nowrap;
-      transform: translateY(-50%);
-      opacity: 0;
-      transition: opacity 0.15s ease;
+      display: none;
     }
 
-    #cursor-label.active { opacity: 1; }
+    #cursor-label.active { display: block; }
 
     @media (max-width: 900px) {
       #cursor-dot, #cursor-label { display: none; }
@@ -348,18 +348,7 @@
 <body>
 
   <nav>
-    <div class="nav-links">
-      <a href="index.html" data-i18n="nav-projects">1. Proyectos</a>
-      <a href="about.html" data-i18n="nav-about">2. About</a>
-      <a href="archivo.html" data-i18n="nav-archivo">3. Archivo</a>
-      <a href="cv.html" id="cv-link" data-i18n="nav-cv">4. CV</a>
-    </div>
     <img src="/img/logo-bnw.png" alt="" class="nav-logo">
-    <div class="nav-lang">
-      <a href="#" class="lang-link" data-lang="es">ESP</a>
-      <a href="#" class="lang-link" data-lang="en">ENG</a>
-      <a href="#" class="lang-link" data-lang="ca">CAT</a>
-    </div>
   </nav>
 
   <main>
@@ -560,7 +549,7 @@
       dot.style.left = e.clientX + 'px';
       dot.style.top = e.clientY + 'px';
       label.style.left = (e.clientX + 14) + 'px';
-      label.style.top = e.clientY + 'px';
+      label.style.top  = (e.clientY - 10) + 'px';
     });
 
     document.querySelectorAll('figure.project[data-title] a').forEach(a => {
@@ -992,6 +981,6 @@ constellation();
       });
     })();
   </script>
-  <script src="js/contact.js"></script>
+  <script src="/js/nav5.js"></script>
 </body>
 </html>
