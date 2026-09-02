@@ -1,4 +1,133 @@
-<!DOCTYPE html><html><head><meta charset='UTF-8'><title>About — Mateo</title><link rel="icon" type="image/jpeg" href="/img/perfil.jpg">  <script defer src="https://cloud.umami.is/script.js" data-website-id="484c804e-9f54-4df9-b48e-1540f3366b36"></script>
-</head><body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Mateo</title>
+  <link rel="icon" type="image/jpeg" href="/img/perfil.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="484c804e-9f54-4df9-b48e-1540f3366b36"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root { --font-mono: 'IBM Plex Mono', 'Courier New', Courier, monospace; }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font-mono);
+    }
+
+    * { cursor: none; }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      padding: 0.12rem 0.5rem;
+      min-height: 4.5rem;
+      z-index: 100;
+      mix-blend-mode: difference;
+      background: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .nav-logo {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      height: 100%; width: auto;
+      display: block;
+    }
+
+    .cv-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: block;
+    }
+
+    .cv-box {
+      position: absolute;
+      top: 1rem; left: 6rem; right: 6rem; bottom: 6rem;
+      background: #05ff00;
+      font-family: var(--font-mono);
+      overflow: auto;
+    }
+
+    .cv-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 0.5rem;
+      padding: 0;
+      height: 100%;
+      align-items: start;
+    }
+
+    .col-photo {
+      grid-column: span 12;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cv-top {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex: 0 0 auto;
+    }
+
+    .cv-close {
+      color: rgba(0,0,0,0.85);
+      text-decoration: none;
+      display: block;
+    }
+
+    .cv-close svg { width: 5.2em; height: 5.2em; display: block; font-size: 0.9rem; }
+
+    .cv-photo {
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      .cv-box { top: 0; left: 0; right: 0; bottom: 0; }
+      .cv-grid { grid-template-columns: 1fr; height: auto; min-height: 100%; }
+      .col-photo { height: auto; display: block; }
+      .cv-photo { height: auto; object-fit: initial; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <img src="/img/logo-bnw.png" alt="" class="nav-logo">
+  </nav>
+
+  <div class="cv-overlay">
+    <div class="cv-box">
+      <div class="cv-grid">
+        <div class="col-photo">
+          <div class="cv-top">
+            <a class="cv-close" href="/index.html" aria-label="Cerrar">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="7.21 7.21 17.59 17.59">
+                <path fill="currentColor" d="M 8.51 7.21 L 7.21 8.51 L 14.72 16.00 L 7.21 23.52 L 8.48 24.80 L 15.99 17.30 L 23.48 24.80 L 24.77 23.50 L 17.27 16.00 L 24.80 8.48 L 23.52 7.21 L 15.99 14.72 L 8.51 7.21 Z"/>
+              </svg>
+            </a>
+          </div>
+          <img class="cv-photo" src="/img/CV.jpg" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="/js/nav5.js"></script>
-</body></html>
+</body>
+</html>

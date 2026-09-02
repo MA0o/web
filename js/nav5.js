@@ -15,7 +15,7 @@
       position: static !important;
       left: auto !important; top: auto !important;
       transform: none !important;
-      height: 4.5rem !important;
+      height: 4.275rem !important;
       width: auto !important;
       flex-shrink: 0;
       cursor: none;
@@ -34,13 +34,8 @@
     .n5btn:hover { opacity: 0.5; }
 
     @media (max-width: 900px) {
-      nav {
-        justify-content: space-evenly !important;
-        top: auto !important;
-        bottom: 0 !important;
-      }
+      nav { justify-content: space-evenly !important; }
       .n5btn { margin: 0 !important; }
-      #n5-lang-box { top: auto !important; bottom: 4.5rem !important; }
     }
     @media (min-width: 901px) {
       nav { justify-content: center !important; }
@@ -71,67 +66,45 @@
       mix-blend-mode: difference;
     }
 
-    /* ── popup de idioma ──────────────────────────────────────────────── */
-    #n5-lang-overlay {
+    /* ── dropdown de idioma ───────────────────────────────────────────── */
+    #n5-lang-dd {
       position: fixed;
-      inset: 0;
-      z-index: 10001;
-      display: none;
-    }
-    #n5-lang-overlay.open { display: block; }
-
-    #n5-lang-box {
-      /* ancho = X del CV (5.2em @ 0.9rem), alto = X × 2 */
-      font-size: 0.9rem;
-      position: absolute;
-      top: 4.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      width:  5.2em;
-      height: 10.4em;
-      background: #0000ff;
-      color: #fff;
+      z-index: 9999;
+      background: #000;
       font-family: 'IBM Plex Mono', 'Courier New', monospace;
+      font-size: 0.9rem;
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
+      padding: 0.35em 0.7em 0.45em;
+      gap: 0.25em;
+      border-radius: 0 0 12px 12px;
+      transform-origin: top center;
+      transform: translateX(-50%) scaleY(0);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.18s ease, opacity 0.12s ease;
     }
-
-    #n5-lang-close {
-      width: 5.2em;
-      height: 5.2em;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: none;
-      border: none;
-      color: #fff;
-      cursor: none;
-      padding: 0;
-    }
-    #n5-lang-close svg { width: 5.2em; height: 5.2em; display: block; }
-
-    #n5-lang-options {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4em;
+    #n5-lang-dd.open {
+      transform: translateX(-50%) scaleY(1);
+      opacity: 1;
+      pointer-events: auto;
     }
     .n5-lang-opt {
       background: none;
       border: none;
       color: #fff;
+      white-space: nowrap;
       font-family: 'IBM Plex Mono', 'Courier New', monospace;
       font-size: 1em;
       cursor: none;
       padding: 0;
-      line-height: 1.2;
+      line-height: 1.3;
+      opacity: 0.45;
       transition: opacity 0.15s;
     }
-    .n5-lang-opt:hover { opacity: 0.6; }
-    .n5-lang-opt.active { font-weight: 700; }
+    .n5-lang-opt:hover { opacity: 0.75; }
+    .n5-lang-opt.active { opacity: 1; font-weight: 700; }
   `;
   document.head.appendChild(style);
 
@@ -148,52 +121,54 @@
     labelEl.style.top  = (e.clientY - 10) + 'px';
   });
 
-  /* ── popup idioma ─────────────────────────────────────────────────────── */
-  const langOverlay = document.createElement('div');
-  langOverlay.id = 'n5-lang-overlay';
-  langOverlay.innerHTML = `
-    <div id="n5-lang-box">
-      <button id="n5-lang-close" aria-label="Cerrar">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="7.21 7.21 17.59 17.59">
-          <path fill="currentColor" d="M 8.51 7.21 L 7.21 8.51 L 14.72 16.00 L 7.21 23.52 L 8.48 24.80 L 15.99 17.30 L 23.48 24.80 L 24.77 23.50 L 17.27 16.00 L 24.80 8.48 L 23.52 7.21 L 15.99 14.72 L 8.51 7.21 Z"/>
-        </svg>
-      </button>
-      <div id="n5-lang-options">
-        <button class="n5-lang-opt" data-lang="ca">CAT</button>
-        <button class="n5-lang-opt" data-lang="es">ESP</button>
-        <button class="n5-lang-opt" data-lang="en">ENG</button>
-      </div>
-    </div>
+  /* ── dropdown idioma ─────────────────────────────────────────────────── */
+  const langDD = document.createElement('div');
+  langDD.id = 'n5-lang-dd';
+  langDD.innerHTML = `
+    <button class="n5-lang-opt" data-lang="ca">CAT</button>
+    <button class="n5-lang-opt" data-lang="es">ESP</button>
+    <button class="n5-lang-opt" data-lang="en">ENG</button>
   `;
-  document.body.appendChild(langOverlay);
+  document.body.appendChild(langDD);
 
-  function openLang()  { langOverlay.classList.add('open');    updateLangActive(); }
-  function closeLang() { langOverlay.classList.remove('open'); }
+  function openLang() {
+    const btn3 = document.getElementById('n5-btn-3');
+    if (btn3) {
+      const r = btn3.getBoundingClientRect();
+      langDD.style.left = (r.left + r.width / 2) + 'px';
+      langDD.style.top  = navEl.getBoundingClientRect().bottom + 'px';
+    }
+    updateLangActive();
+    hideLabel();
+    langDD.classList.add('open');
+  }
+  function closeLang() { langDD.classList.remove('open'); }
 
   function updateLangActive() {
     const cur = localStorage.getItem('lang') || 'es';
-    langOverlay.querySelectorAll('.n5-lang-opt').forEach(btn => {
+    langDD.querySelectorAll('.n5-lang-opt').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.lang === cur);
     });
   }
 
-  langOverlay.querySelector('#n5-lang-close').addEventListener('click', closeLang);
-
-  langOverlay.querySelectorAll('.n5-lang-opt').forEach(btn => {
-    btn.addEventListener('click', () => {
+  langDD.querySelectorAll('.n5-lang-opt').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
       const lang = btn.dataset.lang;
-      if (typeof applyLang === 'function') applyLang(lang);
-      else {
+      localStorage.setItem('lang', lang);
+      if (typeof window.applyLang === 'function') {
+        window.applyLang(lang);
+      } else {
         const link = document.querySelector(`.lang-link[data-lang="${lang}"]`);
-        if (link) link.click(); else localStorage.setItem('lang', lang);
+        if (link) link.click();
       }
       updateLangActive();
       closeLang();
     });
   });
 
-  langOverlay.addEventListener('click', e => {
-    if (e.target === langOverlay) closeLang();
+  document.addEventListener('click', e => {
+    if (!langDD.contains(e.target) && e.target.id !== 'n5-btn-3' && !e.target.closest('#n5-btn-3')) closeLang();
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLang(); });
 
@@ -228,7 +203,10 @@
     img.src = def.src; img.alt = '';
     el.appendChild(img);
 
-    el.addEventListener('mouseenter', () => { setCursor(def.cursor); showLabel(def.text); });
+    el.addEventListener('mouseenter', () => {
+      setCursor(def.cursor);
+      if (!(i === 3 && langDD.classList.contains('open'))) showLabel(def.text);
+    });
     el.addEventListener('mouseleave', () => { setCursor(null); hideLabel(); });
     if (def.onclick) el.addEventListener('click', def.onclick);
     return el;
