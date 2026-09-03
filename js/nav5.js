@@ -51,60 +51,37 @@
       clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
     }
 
-    #n5-label {
+    #n5-lang-indicator {
       position: fixed;
-      pointer-events: none;
-      z-index: 10003;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 110;
       font-family: 'IBM Plex Mono', 'Courier New', monospace;
       font-size: 1rem;
       line-height: 1.1;
-      background: #000;
-      color: #fff;
-      padding: 0.1em 0.4em;
-      white-space: nowrap;
-      display: none;
+      color: #ffffff;
       mix-blend-mode: difference;
+      white-space: nowrap;
+      padding: 0.12rem 0.5rem;
+      pointer-events: none;
     }
 
-    /* ── dropdown de idioma ───────────────────────────────────────────── */
-    #n5-lang-dd {
+    #n5-tap-label {
       position: fixed;
-      z-index: 9999;
-      background: #000;
+      z-index: 10010;
       font-family: 'IBM Plex Mono', 'Courier New', monospace;
-      font-size: 0.9rem;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 0.35em 0.7em 0.45em;
-      gap: 0.25em;
-      border-radius: 0 0 12px 12px;
-      transform-origin: top center;
-      transform: translateX(-50%) scaleY(0);
-      opacity: 0;
-      pointer-events: none;
-      transition: transform 0.18s ease, opacity 0.12s ease;
-    }
-    #n5-lang-dd.open {
-      transform: translateX(-50%) scaleY(1);
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .n5-lang-opt {
-      background: none;
-      border: none;
+      font-size: 1rem;
+      background: #000;
       color: #fff;
       white-space: nowrap;
-      font-family: 'IBM Plex Mono', 'Courier New', monospace;
-      font-size: 1em;
-      cursor: none;
-      padding: 0;
-      line-height: 1.3;
-      opacity: 0.45;
-      transition: opacity 0.15s;
+      padding: 0.12rem 0.5rem;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.18s;
+      transform: translateX(-50%);
     }
-    .n5-lang-opt:hover { opacity: 0.75; }
-    .n5-lang-opt.active { opacity: 1; font-weight: 700; }
+    #n5-tap-label.visible { opacity: 1; }
   `;
   document.head.appendChild(style);
 
@@ -112,65 +89,50 @@
   const logo  = document.querySelector('.nav-logo');
   if (!navEl || !logo) return;
 
-  /* ── label de cursor ─────────────────────────────────────────────────── */
-  const labelEl = document.createElement('div');
-  labelEl.id = 'n5-label';
-  document.body.appendChild(labelEl);
-  document.addEventListener('mousemove', e => {
-    labelEl.style.left = (e.clientX + 20) + 'px';
-    labelEl.style.top  = (e.clientY - 10) + 'px';
-  });
+  /* ── indicador de idioma (centro pie de página) ─────────────────────── */
+  const langIndicator = document.createElement('div');
+  langIndicator.id = 'n5-lang-indicator';
+  document.body.appendChild(langIndicator);
 
-  /* ── dropdown idioma ─────────────────────────────────────────────────── */
-  const langDD = document.createElement('div');
-  langDD.id = 'n5-lang-dd';
-  langDD.innerHTML = `
-    <button class="n5-lang-opt" data-lang="ca">CAT</button>
-    <button class="n5-lang-opt" data-lang="es">ESP</button>
-    <button class="n5-lang-opt" data-lang="en">ENG</button>
-  `;
-  document.body.appendChild(langDD);
+  const LANG_ORDER = ['es', 'ca', 'en'];
+  const LANG_LABEL = { es: 'ESP', ca: 'CAT', en: 'ENG' };
 
-  function openLang() {
-    const btn3 = document.getElementById('n5-btn-3');
-    if (btn3) {
-      const r = btn3.getBoundingClientRect();
-      langDD.style.left = (r.left + r.width / 2) + 'px';
-      langDD.style.top  = navEl.getBoundingClientRect().bottom + 'px';
-    }
-    updateLangActive();
-    hideLabel();
-    langDD.classList.add('open');
-  }
-  function closeLang() { langDD.classList.remove('open'); }
-
-  function updateLangActive() {
+  function updateLangIndicator() {
     const cur = localStorage.getItem('lang') || 'es';
-    langDD.querySelectorAll('.n5-lang-opt').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.lang === cur);
-    });
+    langIndicator.textContent = LANG_LABEL[cur] || cur.toUpperCase();
   }
 
-  langDD.querySelectorAll('.n5-lang-opt').forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      const lang = btn.dataset.lang;
-      localStorage.setItem('lang', lang);
-      if (typeof window.applyLang === 'function') {
-        window.applyLang(lang);
-      } else {
-        const link = document.querySelector(`.lang-link[data-lang="${lang}"]`);
-        if (link) link.click();
-      }
-      updateLangActive();
-      closeLang();
-    });
-  });
+  function cycleLang() {
+    const cur = localStorage.getItem('lang') || 'es';
+    const next = LANG_ORDER[(LANG_ORDER.indexOf(cur) + 1) % LANG_ORDER.length];
+    localStorage.setItem('lang', next);
+    if (typeof window.applyLang === 'function') {
+      window.applyLang(next);
+    } else {
+      const link = document.querySelector(`.lang-link[data-lang="${next}"]`);
+      if (link) link.click();
+    }
+    updateLangIndicator();
+  }
 
-  document.addEventListener('click', e => {
-    if (!langDD.contains(e.target) && e.target.id !== 'n5-btn-3' && !e.target.closest('#n5-btn-3')) closeLang();
-  });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLang(); });
+  updateLangIndicator();
+
+  /* ── tap label (móvil) ───────────────────────────────────────────────── */
+  const tapLabel = document.createElement('div');
+  tapLabel.id = 'n5-tap-label';
+  document.body.appendChild(tapLabel);
+  let _tapTimer = null;
+
+  function showTapLabel(text, btnEl, action) {
+    tapLabel.textContent = text;
+    const rect = btnEl.getBoundingClientRect();
+    tapLabel.style.left = (rect.left + rect.width / 2) + 'px';
+    tapLabel.style.top  = (rect.bottom + 14) + 'px';
+    tapLabel.classList.add('visible');
+    if (_tapTimer) clearTimeout(_tapTimer);
+    _tapTimer = setTimeout(() => tapLabel.classList.remove('visible'), 500);
+    setTimeout(action, 300);
+  }
 
   /* ── cursor helpers ───────────────────────────────────────────────────── */
   const CUR_ALL = ['triangle-right','triangle-left','cross','magnify','plus','square','n5-triangle'];
@@ -180,17 +142,15 @@
     CUR_ALL.forEach(c => dot.classList.remove(c));
     if (cls) dot.classList.add(cls);
   }
-  function showLabel(text) { labelEl.textContent = text; labelEl.style.display = 'block'; }
-  function hideLabel()     { labelEl.style.display = 'none'; }
 
   /* ── botones ──────────────────────────────────────────────────────────── */
   const DEFS = [
-    { href: '/index.html',   src: '/icons/menu/cuadrado.png',  cursor: 'square',      text: 'proyectos' },
-    { href: null,            src: '/icons/menu/cruz.png',      cursor: 'cross',       text: 'sobre mí',
+    { href: '/index.html',   src: '/icons/menu/cuadrado.png',  cursor: 'square',      text: 'PROYECTOS' },
+    { href: null,            src: '/icons/menu/cruz.png',      cursor: 'cross',       text: 'SOBRE MÍ',
       onclick: () => { if (typeof openCV === 'function') openCV(); else window.location.href = '/index.html#cv'; } },
-    { href: '/archivo.html', src: '/icons/menu/triangulo.png', cursor: 'n5-triangle', text: 'archivo'   },
-    { href: null,            src: '/icons/menu/circulo.png',   cursor: null,          text: 'idioma',
-      onclick: openLang },
+    { href: '/archivo.html', src: '/icons/menu/triangulo.png', cursor: 'n5-triangle', text: 'ARCHIVO'   },
+    { href: null,            src: '/icons/menu/circulo.png',   cursor: null,          text: 'IDIOMA',
+      onclick: cycleLang },
   ];
 
   const btns = DEFS.map((def, i) => {
@@ -203,12 +163,19 @@
     img.src = def.src; img.alt = '';
     el.appendChild(img);
 
-    el.addEventListener('mouseenter', () => {
-      setCursor(def.cursor);
-      if (!(i === 3 && langDD.classList.contains('open'))) showLabel(def.text);
+    el.addEventListener('mouseenter', () => { setCursor(def.cursor); });
+    el.addEventListener('mouseleave', () => { setCursor(null); });
+    el.addEventListener('click', e => {
+      if (window.innerWidth <= 900) {
+        e.preventDefault();
+        showTapLabel(def.text, el, () => {
+          if (def.onclick) def.onclick();
+          else if (def.href) window.location.href = def.href;
+        });
+      } else if (def.onclick) {
+        def.onclick();
+      }
     });
-    el.addEventListener('mouseleave', () => { setCursor(null); hideLabel(); });
-    if (def.onclick) el.addEventListener('click', def.onclick);
     return el;
   });
 
@@ -220,7 +187,16 @@
   /* ── logo → home ─────────────────────────────────────────────────────── */
   logo.addEventListener('click', () => { window.location.href = '/index.html'; });
   logo.addEventListener('mouseenter', () => setCursor('square'));
-  logo.addEventListener('mouseleave', () => { setCursor(null); hideLabel(); });
+  logo.addEventListener('mouseleave', () => { setCursor(null); });
+
+  /* ── sincronizar indicador cuando la página cambia idioma externamente ── */
+  const _origApplyLang = window.applyLang;
+  if (typeof _origApplyLang === 'function') {
+    window.applyLang = function(lang) {
+      _origApplyLang(lang);
+      updateLangIndicator();
+    };
+  }
 
   /* ── imagen y parpadeo ────────────────────────────────────────────────── */
   const srcOpen   = '/icons/menu/perfil_abierto.png';

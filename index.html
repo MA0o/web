@@ -113,9 +113,10 @@
     /* RESPONSIVE */
     @media (max-width: 1100px) { .grid { columns: 4; } }
     @media (max-width: 800px) {
-      .grid { columns: 3; margin-right: 0; }
-      main { padding-left: 0; padding-right: 0; padding-top: 5rem; }
+      .grid { columns: 3; margin-right: 0; column-gap: 0; }
+      main { padding-left: 0; padding-right: 0; padding-top: 4.5rem; }
       nav { font-size: 1rem; }
+      figure.project { margin-bottom: 0; }
     }
     @media (max-width: 500px) { .grid { columns: 1; } }
 
@@ -173,6 +174,13 @@
       transform: translate(-50%, -50%) rotate(45deg);
     }
 
+    #cursor-dot.plus {
+      border-radius: 0;
+      -webkit-mask: none;
+      mask: none;
+      clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100%, 35% 100%, 35% 65%, 0% 65%, 0% 35%, 35% 35%);
+    }
+
     #cursor-label {
       position: fixed;
       pointer-events: none;
@@ -215,29 +223,10 @@
       --text: rgba(0, 0, 0, 0.85);
       color: var(--text);
       font-family: var(--font-mono);
-      overflow: auto;
-    }
-
-    .cv-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 0.5rem;
-      padding: 0;
-      height: 100%;
-      align-items: start;
-      font-size: 0.9rem;
-    }
-
-    .col-photo {
-      grid-column: span 5;
-      height: 100%;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
     }
-    .col-exp-a, .col-exp-b, .col-software { padding-top: 1.5em; }
-    .col-exp-a { grid-column: span 2; }
-    .col-exp-b { grid-column: span 2; }
-    .col-software { grid-column: span 3; }
 
     .cv-top {
       display: flex;
@@ -279,55 +268,36 @@
       display: block;
     }
 
+    .cv-contact {
+      display: flex;
+      flex-direction: column;
+      padding: 0.35em 0.5rem 0.4em;
+      flex: 0 0 auto;
+    }
+
+    .cv-contact-item {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--text);
+      text-decoration: none;
+      line-height: 1.4;
+      cursor: none;
+    }
+
     .cv-photo {
       width: 100%;
       flex: 1;
       min-height: 0;
       object-fit: cover;
+      object-position: top;
       display: block;
     }
 
-    .cv-heading {
-      font-family: var(--font-mono);
-      font-size: 2.2em;
-      font-weight: 600;
-      text-transform: uppercase;
-      line-height: 1.2;
-      margin: 0 0 0.5em;
-    }
-
-    .cv-section + .cv-section { margin-top: 1em; }
-
-    .cv-entry {
-      margin-bottom: 0.6em;
-      break-inside: avoid;
-      line-height: 1.2;
-    }
-
-    .cv-entry b { font-weight: 700; }
-
-    .exp-spacer { height: 22em; }
-
-    .software-list, .idiomas-list {
-      line-height: 1.2;
-    }
-
-    .cv-easter {
-      margin-top: 1.5em;
-      font-size: 0.85em;
-      opacity: 0.6;
-    }
-
     @media (max-width: 900px) {
-      .cv-box { top: 0; left: 0; right: 0; bottom: 0; }
-      .cv-grid { grid-template-columns: 1fr; gap: 0; padding: 0; font-size: 1rem; height: auto; min-height: 100%; }
-      .col-photo, .col-exp-a, .col-exp-b, .col-software { grid-column: 1 / -1; height: auto; }
-      .col-photo { display: block; }
-      .cv-top { margin-bottom: 0; padding: 0.2em 0.3rem; }
-      .cv-photo { height: auto; object-fit: initial; width: 100%; margin: 0; display: block; }
-      .col-exp-a, .col-exp-b, .col-software { padding: 1.5em 0.8rem 0; }
-      .exp-spacer { display: none; }
+      .cv-box { top: 0; left: 0; right: 0; bottom: 0; overflow-y: auto; }
+      .cv-top { padding: 0.2em 0.3rem; }
       .cv-title { font-size: 16vw; }
+      .cv-photo { flex: none; height: auto; object-fit: initial; }
     }
       nav a[data-i18n="nav-cv"] { display: none; }
 
@@ -353,12 +323,6 @@
 
   <main>
     <div class="grid">
-
-      <figure class="project" data-title="Toni Sosa">
-        <a href="proyectos/toni-sosa.html">
-          <img class="thumb" src="img/proyectos/thumbs/toni-sosa.webp" alt="">
-        </a>
-      </figure>
 
       <figure class="project" data-title="USM Haller-T">
         <a href="proyectos/haller-t.html">
@@ -393,6 +357,12 @@
       <figure class="project" data-title="1x1">
         <a href="proyectos/1x1.html">
           <img class="thumb" src="img/proyectos/thumbs/1x1.webp" alt="">
+        </a>
+      </figure>
+
+      <figure class="project" data-title="Toni Sosa">
+        <a href="proyectos/toni-sosa.html">
+          <img class="thumb" src="img/proyectos/thumbs/toni-sosa.webp" alt="">
         </a>
       </figure>
 
@@ -465,81 +435,19 @@
 
   <div id="cv-overlay" class="cv-overlay">
     <div class="cv-box">
-      <div class="cv-grid">
-
-        <div class="col-photo">
-          <div class="cv-top">
-            <span class="cv-title">CV</span>
-            <a class="cv-close" href="index.html" aria-label="Cerrar">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="7.21 7.21 17.59 17.59">
-                <path fill="currentColor" d="M 8.51 7.21 L 7.21 8.51 L 14.72 16.00 L 7.21 23.52 L 8.48 24.80 L 15.99 17.30 L 23.48 24.80 L 24.77 23.50 L 17.27 16.00 L 24.80 8.48 L 23.52 7.21 L 15.99 14.72 L 8.51 7.21 Z"></path>
-              </svg>
-            </a>
-          </div>
-          <img class="cv-photo" src="img/CV.jpg" alt="Taller de Mateo">
-        </div>
-
-        <div class="col-exp-a">
-          <div class="cv-section">
-            <h2 class="cv-heading" data-i18n="cv-heading-estudios">Estudios</h2>
-            <div class="cv-entry">
-              <b>2022 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>2026<br><span data-i18n="edu1-title">DISEÑO, ELISAVA</span></b><br>
-              <span data-i18n="loc-barcelona">Barcelona, España</span>
-            </div>
-            <div class="cv-entry">
-              <b>2017 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>2021<br><span data-i18n="edu2-title">ARQUITECTURA, ETSAB</span></b><br>
-              <span data-i18n="loc-barcelona">Barcelona, España</span>
-            </div>
-          </div>
-
-          <div class="cv-section">
-            <h2 class="cv-heading" data-i18n="cv-heading-experiencia">Experiencia</h2>
-            <div class="cv-entry">
-              <b>2025 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>2026<br><a href="https://www.luiseslava.com/" target="_blank" rel="noopener">Luis Eslava Studio</a></b><br>
-              <span data-i18n="exp-eslava-desc">Diseño y producción de espacios, iluminación y mobiliario para proyectos de restauración.</span>
-            </div>
-            <div class="cv-entry">
-              <b>2020 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>2025<br><a href="https://www.santimoix.com/" target="_blank" rel="noopener">Santi Moix Studio</a></b><br>
-              <span data-i18n="exp2-desc">Diseño y producción de estructuras de exhibición, y transporte, montaje y desmontaje de obra de alto valor (Barcelona, Miami, Milán, Nueva York).</span>
-            </div>
-            <div class="cv-entry">
-              <b>2019 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span>2024<br><a href="https://www.marlboroughgallery.com/" target="_blank" rel="noopener"><span data-i18n="gallery-marlborough">Galería Marlborough</span></a></b>, Barcelona<br>
-              <span data-i18n="exp3-desc">Diseño y producción de embalajes a medida e instalación de obra de arte de alto valor.</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-exp-b">
-          <div class="exp-spacer"></div>
-          <div class="cv-entry">
-            <b>2017 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span><span data-i18n="word-presente">presente</span><br>taller de oquis</b><br>
-            <span data-i18n="exp4-desc">Diseño y producción de objetos para clientes como Moët, Filmin y Jura.</span>
-          </div>
-          <div class="cv-entry">
-            <b>2025 <span class="cv-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"><path fill="currentColor" d="M 3.96 17.12 L 3.96 14.88 L 21.25 14.88 L 24.17 15.01 L 21.81 12.99 L 17.45 8.70 L 18.98 7.16 L 28.04 15.99 L 18.98 24.84 L 17.45 23.28 L 21.84 19.00 L 24.18 16.97 L 21.25 17.12 L 3.96 17.12 Z"></path></svg></span><span data-i18n="word-presente">presente</span><br><a href="https://200cent.org/" target="_blank" rel="noopener">Galería 200CENT</a></b><br>
-            <span data-i18n="exp1-role">Miembro de la junta</span>
-          </div>
-        </div>
-
-        <div class="col-software">
-          <div class="cv-section">
-            <h2 class="cv-heading">Software</h2>
-            <div class="software-list">
-              Photoshop<br>Indesign<br>Illustrator<br>PremierePro<br>AfterEffects<br><br>
-              AutoCad<br>Fusion360<br>Rhino3D<br>Sketchup
-            </div>
-          </div>
-
-          <div class="cv-section">
-            <h2 class="cv-heading" data-i18n="cv-heading-idiomas">Idiomas</h2>
-            <div class="idiomas-list" data-i18n="idiomas-list">
-              Castellano → Nativo<br>Catalán → Nativo<br>Inglés → Profesional
-            </div>
-          </div>
-
-          <div class="cv-easter">#FFD400</div>
-        </div>
-
+      <div class="cv-top">
+        <span class="cv-title" data-i18n="cv-title">SOBRE MÍ</span>
+        <a class="cv-close" href="index.html" aria-label="Cerrar">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="7.21 7.21 17.59 17.59">
+            <path fill="currentColor" d="M 8.51 7.21 L 7.21 8.51 L 14.72 16.00 L 7.21 23.52 L 8.48 24.80 L 15.99 17.30 L 23.48 24.80 L 24.77 23.50 L 17.27 16.00 L 24.80 8.48 L 23.52 7.21 L 15.99 14.72 L 8.51 7.21 Z"></path>
+          </svg>
+        </a>
+      </div>
+      <img class="cv-photo" src="img/CV.jpg" alt="">
+      <div class="cv-contact">
+        <a class="cv-contact-item" href="https://www.instagram.com/mateoprado/" target="_blank" rel="noopener">@mateoprado</a>
+        <span class="cv-contact-item" data-copy="mateucho.04@gmail.com">mateucho.04@gmail.com</span>
+        <span class="cv-contact-item" data-copy="+34 650165341">+34 650165341</span>
       </div>
     </div>
   </div>
@@ -584,6 +492,24 @@
       el.addEventListener('mouseleave', () => dot.classList.remove('cross'));
     });
 
+    const cvInsta = document.querySelector('.cv-contact a');
+    if (cvInsta) {
+      cvInsta.addEventListener('mouseenter', () => dot.classList.add('plus'));
+      cvInsta.addEventListener('mouseleave', () => dot.classList.remove('plus'));
+    }
+
+    document.querySelectorAll('.cv-contact [data-copy]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        dot.classList.add('square');
+        label.textContent = 'copiar';
+        label.classList.add('active');
+      });
+      el.addEventListener('mouseleave', () => {
+        dot.classList.remove('square');
+        label.classList.remove('active');
+      });
+    });
+
     document.querySelectorAll('figure.project[data-wip]').forEach(fig => {
       fig.addEventListener('mouseenter', () => {
         dot.classList.add('cross');
@@ -605,6 +531,7 @@
         'nav-about': '2. Sobre mí',
         'nav-cv': '3. CV',
         'nav-contact': '4. Contacto',
+        'cv-title': 'SOBRE MÍ',
         'cv-heading-estudios': 'Estudios',
         'cv-heading-experiencia': 'Experiencia',
         'cv-heading-idiomas': 'Idiomas',
@@ -625,6 +552,7 @@
         'nav-about': '2. About',
         'nav-cv': '3. CV',
         'nav-contact': '4. Contact',
+        'cv-title': 'ABOUT',
         'cv-heading-estudios': 'Education',
         'cv-heading-experiencia': 'Experience',
         'cv-heading-idiomas': 'Languages',
@@ -645,6 +573,7 @@
         'nav-about': '2. Sobre mi',
         'nav-cv': '3. CV',
         'nav-contact': '4. Contacte',
+        'cv-title': 'SOBRE MI',
         'cv-heading-estudios': 'Estudis',
         'cv-heading-experiencia': 'Experiència',
         'cv-heading-idiomas': 'Idiomes',
@@ -702,7 +631,7 @@
       if (push) history.pushState({}, '', 'index.html');
     }
 
-    cvLink.addEventListener('click', e => {
+    if (cvLink) cvLink.addEventListener('click', e => {
       e.preventDefault();
       openCV();
     });
@@ -722,6 +651,15 @@
     });
 
     if (location.hash === '#cv') openCV(false);
+
+    document.querySelectorAll('.cv-contact [data-copy]').forEach(el => {
+      const original = el.dataset.copy;
+      el.addEventListener('click', () => {
+        navigator.clipboard.writeText(original).catch(() => {});
+        el.textContent = 'copiado';
+        setTimeout(() => { el.textContent = original; }, 1500);
+      });
+    });
   </script>
 
   <script>
