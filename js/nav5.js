@@ -19,7 +19,6 @@
       width: auto !important;
       flex-shrink: 0;
       cursor: none;
-      filter: invert(1);
     }
 
     .n5btn {
@@ -199,13 +198,13 @@
   }
 
   /* ── imagen y parpadeo ────────────────────────────────────────────────── */
-  const srcOpen   = '/icons/menu/perfil_abierto.png';
-  const srcClosed = '/icons/menu/perfil_cerrado.png';
+  const srcOpen   = '/icons/menu/perfil_abierto2.png';
+  const srcClosed = '/icons/menu/perfil_cerrado2.png';
   logo.src = srcOpen;
   new Image().src = srcClosed;
   setInterval(() => {
     logo.src = srcClosed;
     setTimeout(() => { logo.src = srcOpen; }, 200);
-  }, 5000);
+  }, 3000);
 
 })();
