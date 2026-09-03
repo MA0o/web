@@ -107,7 +107,7 @@
     .text-box {
       position: absolute;
       left: 8.33%;
-      bottom: 15%;
+      bottom: 30%;
       z-index: 50;
       background: #fff;
       padding: 0.7em 0.9em;
@@ -118,6 +118,31 @@
 
     .text-box p + p {
       margin-top: 0.8em;
+    }
+
+    @media (max-width: 900px) {
+      .text-box {
+        position: static;
+        width: calc(100% - 2rem);
+        margin: 0 1rem 0;
+        left: auto; bottom: auto;
+      }
+
+      .gallery {
+        overflow-x: hidden;
+      }
+
+      /* Rotación 90° + escala para llenar 100vw */
+      /* img landscape 4945×3497 → tras rotate+scale: visual 100vw × 141.4vw */
+      /* overflow top/bottom: 35.35vw → margin compensa para que imágenes queden adyacentes */
+      .gallery img,
+      .first-img-wrap > img {
+        transform: rotate(90deg) scale(1.4142);
+        margin-top: 35vw;
+        margin-bottom: 35vw;
+      }
+
+      /* Primera imagen: el margen-top hace que el visual empiece justo al acabar el texto */
     }
 
     nav a[data-i18n="nav-cv"] { display: none; }
@@ -151,11 +176,11 @@
 
   <div class="gallery">
     <div class="first-img-wrap">
-      <img src="../img/proyectos/toni%20sosa/thumbs/1.jpg"  data-full="../img/proyectos/toni%20sosa/1.jpg"  alt="">
       <div class="text-box">
-        <p>Una publicación en forma de visión fragmentada de una memoria que se pierde: un periódico gigante para unos ojos que ya no ven, una caligrafía de unas manos que ya no hacen caso.</p>
-        <p>Este es un relato visual de las conclusiones y anécdotas que Toni Sosa nos regaló y nosotros desciframos. ¿Qué tabaco fuma? ¿Qué pasaría si lloviera vino? ¿Cuál es su libro favorito? ¿Cómo son las suelas de sus zapatos? Esta publicación es un desliz onírico que se vale de la metáfora, el simbolismo y la hipérbole visual para enmarcar la cotidianidad de una persona tan extraordinaria como cualquier otra.</p>
+        <p data-i18n="p1">Una publicación en forma de visión fragmentada de una memoria que se pierde: un periódico gigante para unos ojos que ya no ven, una caligrafía de unas manos que ya no hacen caso.</p>
+        <p data-i18n="p2">Este es un relato visual de las conclusiones y anécdotas que Toni Sosa nos regaló y nosotros desciframos. ¿Qué tabaco fuma? ¿Qué pasaría si lloviera vino? ¿Cuál es su libro favorito? ¿Cómo son las suelas de sus zapatos? Esta publicación es un desliz onírico que se vale de la metáfora, el simbolismo y la hipérbole visual para enmarcar la cotidianidad de una persona tan extraordinaria como cualquier otra.</p>
       </div>
+      <img src="../img/proyectos/toni%20sosa/thumbs/1.jpg"  data-full="../img/proyectos/toni%20sosa/1.jpg"  alt="">
     </div>
     <img src="../img/proyectos/toni%20sosa/thumbs/2.jpg"  data-full="../img/proyectos/toni%20sosa/2.jpg"  alt="">
     <img src="../img/proyectos/toni%20sosa/thumbs/3.jpg"  data-full="../img/proyectos/toni%20sosa/3.jpg"  alt="">
@@ -200,9 +225,21 @@
 
   <script>
     const translations = {
-      es: { 'nav-projects': '1. Proyectos', 'nav-archivo': '3. Archivo', 'nav-about': '2. Sobre mí', 'nav-cv': '3. CV', 'nav-contact': '4. Contacto' },
-      en: { 'nav-projects': '1. Projects',  'nav-archivo': '3. Archive', 'nav-about': '2. About',    'nav-cv': '3. CV', 'nav-contact': '4. Contact' },
-      ca: { 'nav-projects': '1. Projectes', 'nav-archivo': '3. Arxiu',   'nav-about': '2. Sobre mi', 'nav-cv': '3. CV', 'nav-contact': '4. Contacte' },
+      es: {
+        'nav-projects': '1. Proyectos', 'nav-archivo': '3. Archivo', 'nav-about': '2. Sobre mí', 'nav-cv': '3. CV', 'nav-contact': '4. Contacto',
+        'p1': 'Una publicación en forma de visión fragmentada de una memoria que se pierde: un periódico gigante para unos ojos que ya no ven, una caligrafía de unas manos que ya no hacen caso.',
+        'p2': 'Este es un relato visual de las conclusiones y anécdotas que Toni Sosa nos regaló y nosotros desciframos. ¿Qué tabaco fuma? ¿Qué pasaría si lloviera vino? ¿Cuál es su libro favorito? ¿Cómo son las suelas de sus zapatos? Esta publicación es un desliz onírico que se vale de la metáfora, el simbolismo y la hipérbole visual para enmarcar la cotidianidad de una persona tan extraordinaria como cualquier otra.',
+      },
+      en: {
+        'nav-projects': '1. Projects', 'nav-archivo': '3. Archive', 'nav-about': '2. About', 'nav-cv': '3. CV', 'nav-contact': '4. Contact',
+        'p1': 'A publication in the form of a fragmented vision of a fading memory: a giant newspaper for eyes that no longer see, calligraphy written by hands that no longer obey.',
+        'p2': 'This is a visual account of the conclusions and anecdotes that Toni Sosa gave us and we deciphered. What tobacco does he smoke? What would happen if it rained wine? What is his favourite book? What do the soles of his shoes look like? This publication is an oneiric slip that draws on metaphor, symbolism and visual hyperbole to frame the everyday life of a person as extraordinary as any other.',
+      },
+      ca: {
+        'nav-projects': '1. Projectes', 'nav-archivo': '3. Arxiu', 'nav-about': '2. Sobre mi', 'nav-cv': '3. CV', 'nav-contact': '4. Contacte',
+        'p1': 'Una publicació en forma de visió fragmentada d\'una memòria que es perd: un diari gegant per a uns ulls que ja no veuen, una cal·ligrafia d\'unes mans que ja no fan cas.',
+        'p2': 'Aquest és un relat visual de les conclusions i anècdotes que Toni Sosa ens va regalar i nosaltres vam desxifrar. Quin tabac fuma? Què passaria si plogués vi? Quin és el seu llibre favorit? Com són les soles de les seves sabates? Aquesta publicació és un lliscament oníric que es val de la metàfora, el simbolisme i la hipèrbole visual per emmarcar la quotidianitat d\'una persona tan extraordinària com qualsevol altra.',
+      },
     };
     function applyLang(lang) {
       document.documentElement.lang = lang;
