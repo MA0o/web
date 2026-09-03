@@ -501,7 +501,7 @@
     document.querySelectorAll('.cv-contact [data-copy]').forEach(el => {
       el.addEventListener('mouseenter', () => {
         dot.classList.add('square');
-        label.textContent = 'copiar';
+        label.textContent = (translations[localStorage.getItem('lang') || 'es'] || translations.es)['copy'];
         label.classList.add('active');
       });
       el.addEventListener('mouseleave', () => {
@@ -531,7 +531,7 @@
         'nav-about': '2. Sobre mí',
         'nav-cv': '3. CV',
         'nav-contact': '4. Contacto',
-        'cv-title': 'SOBRE MÍ',
+        'cv-title': 'SOBRE MÍ', 'copy': 'copiar', 'copied': 'copiado',
         'cv-heading-estudios': 'Estudios',
         'cv-heading-experiencia': 'Experiencia',
         'cv-heading-idiomas': 'Idiomas',
@@ -552,7 +552,7 @@
         'nav-about': '2. About',
         'nav-cv': '3. CV',
         'nav-contact': '4. Contact',
-        'cv-title': 'ABOUT',
+        'cv-title': 'ABOUT', 'copy': 'copy', 'copied': 'copied',
         'cv-heading-estudios': 'Education',
         'cv-heading-experiencia': 'Experience',
         'cv-heading-idiomas': 'Languages',
@@ -573,7 +573,7 @@
         'nav-about': '2. Sobre mi',
         'nav-cv': '3. CV',
         'nav-contact': '4. Contacte',
-        'cv-title': 'SOBRE MI',
+        'cv-title': 'SOBRE MI', 'copy': 'copiar', 'copied': 'copiat',
         'cv-heading-estudios': 'Estudis',
         'cv-heading-experiencia': 'Experiència',
         'cv-heading-idiomas': 'Idiomes',
@@ -656,7 +656,7 @@
       const original = el.dataset.copy;
       el.addEventListener('click', () => {
         navigator.clipboard.writeText(original).catch(() => {});
-        el.textContent = 'copiado';
+        el.textContent = (translations[localStorage.getItem('lang') || 'es'] || translations.es)['copied'];
         setTimeout(() => { el.textContent = original; }, 1500);
       });
     });

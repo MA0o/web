@@ -144,12 +144,22 @@
   }
 
   /* ── botones ──────────────────────────────────────────────────────────── */
+  const TAP_LABELS = {
+    es: ['PROYECTOS', 'SOBRE MÍ', 'ARCHIVO', 'IDIOMA'],
+    en: ['PROJECTS',  'ABOUT',    'ARCHIVE', 'LANGUAGE'],
+    ca: ['PROJECTES', 'SOBRE MI', 'ARXIU',   'IDIOMA'],
+  };
+  function getTapLabel(i) {
+    const lang = localStorage.getItem('lang') || 'es';
+    return (TAP_LABELS[lang] || TAP_LABELS.es)[i];
+  }
+
   const DEFS = [
-    { href: '/index.html',   src: '/icons/menu/cuadrado.png',  cursor: 'square',      text: 'PROYECTOS' },
-    { href: null,            src: '/icons/menu/cruz.png',      cursor: 'cross',       text: 'SOBRE MÍ',
+    { href: '/index.html',   src: '/icons/menu/cuadrado.png',  cursor: 'square',      idx: 0 },
+    { href: null,            src: '/icons/menu/cruz.png',      cursor: 'cross',       idx: 1,
       onclick: () => { if (typeof openCV === 'function') openCV(); else window.location.href = '/index.html#cv'; } },
-    { href: '/archivo.html', src: '/icons/menu/triangulo.png', cursor: 'n5-triangle', text: 'ARCHIVO'   },
-    { href: null,            src: '/icons/menu/circulo.png',   cursor: null,          text: 'IDIOMA',
+    { href: '/archivo.html', src: '/icons/menu/triangulo.png', cursor: 'n5-triangle', idx: 2 },
+    { href: null,            src: '/icons/menu/circulo.png',   cursor: null,          idx: 3,
       onclick: cycleLang },
   ];
 
@@ -168,7 +178,7 @@
     el.addEventListener('click', e => {
       if (window.innerWidth <= 900) {
         e.preventDefault();
-        showTapLabel(def.text, el, () => {
+        showTapLabel(getTapLabel(def.idx), el, () => {
           if (def.onclick) def.onclick();
           else if (def.href) window.location.href = def.href;
         });
