@@ -29,8 +29,7 @@
       flex-shrink: 0;
       transition: opacity 0.15s;
     }
-    .n5btn img { width: 100%; height: 100%; display: block; object-fit: contain; }
-    .n5btn:hover { opacity: 0.5; }
+    .n5btn img { width: 100%; height: 100%; display: block; object-fit: contain; transition: filter 0.12s; }
 
     @media (max-width: 900px) {
       nav { justify-content: space-evenly !important; }
@@ -87,6 +86,41 @@
   const navEl = document.querySelector('nav');
   const logo  = document.querySelector('.nav-logo');
   if (!navEl || !logo) return;
+
+  /* ── highlight rojo (fuera del nav, sin difference) ─────────────────── */
+  const btnHighlight = document.createElement('div');
+  btnHighlight.style.cssText = [
+    'position:fixed', 'pointer-events:none', 'z-index:200',
+    'background-size:100% 100%', 'background-repeat:no-repeat',
+    'opacity:0', 'transition:opacity 0.12s',
+  ].join(';');
+  document.body.appendChild(btnHighlight);
+
+  const _redCache = {};
+  function redIcon(src) {
+    if (_redCache[src]) return Promise.resolve(_redCache[src]);
+    return new Promise(resolve => {
+      const img = new Image();
+      img.onload = () => {
+        const c = document.createElement('canvas');
+        c.width = img.naturalWidth; c.height = img.naturalHeight;
+        const ctx = c.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        const d = ctx.getImageData(0, 0, c.width, c.height);
+        for (let i = 0; i < d.data.length; i += 4) {
+          if ((d.data[i] + d.data[i+1] + d.data[i+2]) / 3 < 128) {
+            d.data[i] = 255; d.data[i+1] = 0; d.data[i+2] = 0; d.data[i+3] = 255;
+          } else {
+            d.data[i+3] = 0;
+          }
+        }
+        ctx.putImageData(d, 0, 0);
+        _redCache[src] = c.toDataURL();
+        resolve(_redCache[src]);
+      };
+      img.src = src;
+    });
+  }
 
   /* ── indicador de idioma (centro pie de página) ─────────────────────── */
   const langIndicator = document.createElement('div');
@@ -162,8 +196,25 @@
     img.src = def.src; img.alt = '';
     el.appendChild(img);
 
-    el.addEventListener('mouseenter', () => { setCursor(def.cursor); });
-    el.addEventListener('mouseleave', () => { setCursor(null); });
+    redIcon(def.src); // precarga
+    el.addEventListener('mouseenter', () => {
+      const dot = document.getElementById('cursor-dot');
+      if (dot) dot.style.opacity = '0';
+      redIcon(def.src).then(url => {
+        const rect = el.getBoundingClientRect();
+        btnHighlight.style.left            = rect.left   + 'px';
+        btnHighlight.style.top             = rect.top    + 'px';
+        btnHighlight.style.width           = rect.width  + 'px';
+        btnHighlight.style.height          = rect.height + 'px';
+        btnHighlight.style.backgroundImage = `url(${url})`;
+        btnHighlight.style.opacity         = '1';
+      });
+    });
+    el.addEventListener('mouseleave', () => {
+      const dot = document.getElementById('cursor-dot');
+      if (dot) dot.style.opacity = '1';
+      btnHighlight.style.opacity = '0';
+    });
     el.addEventListener('click', e => {
       if (window.innerWidth <= 900) {
         e.preventDefault();
@@ -185,8 +236,14 @@
 
   /* ── logo → home ─────────────────────────────────────────────────────── */
   logo.addEventListener('click', () => { window.location.href = '/index.html'; });
-  logo.addEventListener('mouseenter', () => setCursor('square'));
-  logo.addEventListener('mouseleave', () => { setCursor(null); });
+  logo.addEventListener('mouseenter', () => {
+    const dot = document.getElementById('cursor-dot');
+    if (dot) dot.style.opacity = '0';
+  });
+  logo.addEventListener('mouseleave', () => {
+    const dot = document.getElementById('cursor-dot');
+    if (dot) dot.style.opacity = '1';
+  });
 
   /* ── sincronizar indicador cuando la página cambia idioma externamente ── */
   const _origApplyLang = window.applyLang;
