@@ -123,11 +123,15 @@
   document.body.appendChild(tapLabel);
   let _tapTimer = null;
 
-  function showTapLabel(text, btnEl, action) {
-    tapLabel.textContent = text;
+  function positionLabel(btnEl) {
     const rect = btnEl.getBoundingClientRect();
     tapLabel.style.left = (rect.left + rect.width / 2) + 'px';
     tapLabel.style.top  = (rect.bottom + 14) + 'px';
+  }
+
+  function showTapLabel(text, btnEl, action) {
+    tapLabel.textContent = text;
+    positionLabel(btnEl);
     tapLabel.classList.add('visible');
     if (_tapTimer) clearTimeout(_tapTimer);
     _tapTimer = setTimeout(() => tapLabel.classList.remove('visible'), 500);
@@ -173,8 +177,18 @@
     img.src = def.src; img.alt = '';
     el.appendChild(img);
 
-    el.addEventListener('mouseenter', () => { setCursor(def.cursor); });
-    el.addEventListener('mouseleave', () => { setCursor(null); });
+    el.addEventListener('mouseenter', () => {
+      setCursor(def.cursor);
+      if (window.innerWidth > 900) {
+        tapLabel.textContent = getTapLabel(def.idx);
+        positionLabel(el);
+        tapLabel.classList.add('visible');
+      }
+    });
+    el.addEventListener('mouseleave', () => {
+      setCursor(null);
+      if (window.innerWidth > 900) tapLabel.classList.remove('visible');
+    });
     el.addEventListener('click', e => {
       if (window.innerWidth <= 900) {
         e.preventDefault();
@@ -183,6 +197,7 @@
           else if (def.href) window.location.href = def.href;
         });
       } else if (def.onclick) {
+        e.preventDefault();
         def.onclick();
       }
     });
