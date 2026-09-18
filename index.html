@@ -348,16 +348,12 @@
         </a>
       </figure>
 
-      <figure class="project" data-title="innotable">
-        <a href="proyectos/innotable.html">
-          <img class="thumb" src="img/proyectos/thumbs/innotable.webp" alt="">
-        </a>
+      <figure class="project" data-title="innotable" data-wip>
+        <img class="thumb" src="img/proyectos/thumbs/innotable.webp" alt="">
       </figure>
 
-      <figure class="project" data-title="1x1">
-        <a href="proyectos/1x1.html">
-          <img class="thumb" src="img/proyectos/thumbs/1x1.webp" alt="">
-        </a>
+      <figure class="project" data-title="1x1" data-wip>
+        <img class="thumb" src="img/proyectos/thumbs/1x1.webp" alt="">
       </figure>
 
       <figure class="project" data-title="Toni Sosa">
@@ -378,10 +374,8 @@
         </a>
       </figure>
 
-      <figure class="project" data-title="ASE D'OR">
-        <a href="proyectos/ase-dor.html">
-          <img class="thumb" src="img/proyectos/thumbs/ase-dor.webp" alt="">
-        </a>
+      <figure class="project" data-title="ASE D'OR" data-wip>
+        <img class="thumb" src="img/proyectos/thumbs/ase-dor.webp" alt="">
       </figure>
 
       <figure class="project" data-title="caramelo" data-wip>
@@ -400,34 +394,24 @@
         </a>
       </figure>
 
-      <figure class="project" data-title="POLLO AL LIMÓN">
-        <a href="proyectos/pollo.html">
-          <img class="thumb" src="img/proyectos/thumbs/pollo.webp" alt="">
-        </a>
+      <figure class="project" data-title="POLLO AL LIMÓN" data-wip>
+        <img class="thumb" src="img/proyectos/thumbs/pollo.webp" alt="">
       </figure>
 
-      <figure class="project" data-title="TRABA">
-        <a href="proyectos/traba.html">
-          <img class="thumb" src="img/proyectos/thumbs/traba.webp" alt="">
-        </a>
+      <figure class="project" data-title="TRABA" data-wip>
+        <img class="thumb" src="img/proyectos/thumbs/traba.webp" alt="">
       </figure>
 
-      <figure class="project" data-title="STINA">
-        <a href="proyectos/stina.html">
-          <img class="thumb" src="img/proyectos/thumbs/stina.webp" alt="">
-        </a>
+      <figure class="project" data-title="STINA" data-wip>
+        <img class="thumb" src="img/proyectos/thumbs/stina.webp" alt="">
       </figure>
 
-      <figure class="project" data-title="LA PLANÈTE SAUVAGE">
-        <a href="proyectos/sauvage.html">
-          <img class="thumb" src="img/proyectos/thumbs/sauvage.webp" alt="">
-        </a>
+      <figure class="project" data-title="LA PLANÈTE SAUVAGE" data-wip>
+        <img class="thumb" src="img/proyectos/thumbs/sauvage.webp" alt="">
       </figure>
 
-      <figure class="project" data-title="FLAIX">
-        <a href="proyectos/flaix.html">
-          <img class="thumb" src="img/proyectos/thumbs/flaix.webp" alt="">
-        </a>
+      <figure class="project" data-title="FLAIX" data-wip>
+        <img class="thumb" src="img/proyectos/thumbs/flaix.webp" alt="">
       </figure>
 
     </div>
@@ -513,7 +497,7 @@
     document.querySelectorAll('figure.project[data-wip]').forEach(fig => {
       fig.addEventListener('mouseenter', () => {
         dot.classList.add('cross');
-        label.textContent = fig.dataset.title;
+        label.textContent = fig.dataset.title + ' // WIP';
         label.classList.add('active');
       });
       fig.addEventListener('mouseleave', () => {

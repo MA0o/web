@@ -66,6 +66,30 @@
       pointer-events: none;
     }
 
+    #n5-lang-flash {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 109;
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
+      font-size: 1rem;
+      line-height: 1.1;
+      white-space: nowrap;
+      padding: 0.12rem 0.5rem;
+      background: #000;
+      pointer-events: none;
+      opacity: 0;
+    }
+    @keyframes n5-lang-flash {
+      0%   { opacity: 1; }
+      40%  { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    #n5-lang-flash.active {
+      animation: n5-lang-flash 0.5s ease-out forwards;
+    }
+
     #n5-tap-label {
       position: fixed;
       z-index: 10010;
@@ -94,12 +118,23 @@
   langIndicator.id = 'n5-lang-indicator';
   document.body.appendChild(langIndicator);
 
+  const langFlash = document.createElement('div');
+  langFlash.id = 'n5-lang-flash';
+  document.body.appendChild(langFlash);
+
   const LANG_ORDER = ['es', 'ca', 'en'];
   const LANG_LABEL = { es: 'ESP', ca: 'CAT', en: 'ENG' };
 
   function updateLangIndicator() {
     const cur = localStorage.getItem('lang') || 'es';
     langIndicator.textContent = LANG_LABEL[cur] || cur.toUpperCase();
+  }
+
+  function flashLangIndicator() {
+    langFlash.textContent = langIndicator.textContent;
+    langFlash.classList.remove('active');
+    void langFlash.offsetWidth;
+    langFlash.classList.add('active');
   }
 
   function cycleLang() {
@@ -113,6 +148,7 @@
       if (link) link.click();
     }
     updateLangIndicator();
+    flashLangIndicator();
   }
 
   updateLangIndicator();
