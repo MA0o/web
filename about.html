@@ -91,9 +91,7 @@
 
     .cv-photo {
       width: 100%;
-      flex: 1;
-      min-height: 0;
-      object-fit: cover;
+      height: auto;
       display: block;
     }
 
@@ -129,5 +127,9 @@
   </div>
 
   <script src="/js/nav5.js"></script>
+  <script>
+    if (document.referrer) history.back();
+    else window.location.replace('/index.html');
+  </script>
 </body>
 </html>

@@ -62,8 +62,9 @@
       position: fixed; bottom: 1rem; left: 0.5rem;
       z-index: 10001; color: #fff;
       font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
-      font-size: 0.75rem; opacity: 0.5; pointer-events: none; user-select: none;
-      max-width: 60vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      font-size: 0.75rem; pointer-events: none; user-select: none;
+      max-width: 60vw;
+      background: #fff; color: #000; padding: 0.15em 0.4em;
     }
 
     img.vwr-zoomable { cursor: none !important; }
@@ -212,7 +213,7 @@
   function updateCounter() {
     const i = currentIndex();
     counter.textContent = `${i + 1} / ${total}`;
-    if (caption) caption.textContent = captions[i] || '';
+    if (caption) caption.textContent = captions[i] ? '* ' + captions[i] : '';
   }
   function applyZoom(img, s, px, py) {
     img.style.transform = `translate(${px}px,${py}px) scale(${s})`;
@@ -375,9 +376,9 @@
   }, { passive: true });
 
   // ── Open / Close ──────────────────────────────────────────────────────────
-  function open(srcs, idx) {
+  function open(srcs, idx, caps) {
     total = srcs.length;
-    captions = srcs.map(parseCaption);
+    captions = caps || srcs.map(parseCaption);
     track.innerHTML = '';
     srcs.forEach(src => {
       const img = document.createElement('img');
@@ -454,9 +455,10 @@
       img => !img.closest('nav') && !img.closest('#vwr-overlay')
     );
     const srcs = imgs.map(i => i.dataset.full || i.src);
+    const caps = imgs.map(i => i.dataset.caption || '');
     imgs.forEach((img, idx) => {
       img.classList.add('vwr-zoomable');
-      img.addEventListener('click', () => open(srcs, idx));
+      img.addEventListener('click', () => open(srcs, idx, caps));
     });
   }
 

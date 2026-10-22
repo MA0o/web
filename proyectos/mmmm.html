@@ -80,45 +80,79 @@
 
     @media (max-width: 900px) { #cursor-dot { display: none; } }
 
+    /* MMMM TOP: 4 animaciones en fila */
+    .mmmm-top {
+      padding-top: 4.5rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .mmmm-intro {
+      width: 25%;
+      padding: 1rem 0.75rem;
+      font-size: 0.7rem;
+      line-height: 1.5;
+    }
+    .mmmm-intro p { margin-bottom: 1em; }
+    .mmmm-intro p:last-child { margin-bottom: 0; }
+    .rgbo-cell {
+      aspect-ratio: 2 / 3;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .rgbo-cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* MMMM EMES: cada eme en su fila y columna de color */
+    .mmmm-emes {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .eme-item { display: flex; flex-direction: column; }
+    .eme-item img { width: 100%; display: block; }
+    .eme-item p { padding: 1rem 0.75rem; font-size: 0.7rem; line-height: 1.5; }
+    .eme-item:nth-child(1) { grid-column: 3; grid-row: 1; }
+    .eme-item:nth-child(2) { grid-column: 2; grid-row: 2; }
+    .eme-item:nth-child(3) { grid-column: 1; grid-row: 3; }
+    .eme-item:nth-child(4) { grid-column: 4; grid-row: 4; }
+
+    .eme-icon { display: flex; padding: 0.75rem; align-items: flex-start; }
+    .eme-icon img { width: 44%; height: auto; display: block; }
+
+    .mmmm-outro {
+      padding: 1rem 0.75rem;
+      font-size: 0.7rem;
+      line-height: 1.5;
+      margin-left: 25%;
+      width: 25%;
+    }
+    .mmmm-outro p { margin-bottom: 0; }
+
     /* GALLERY */
     .gallery {
-      padding-top: 3.6rem;
+      padding-top: 0;
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 0;
     }
 
     @media (max-width: 900px) {
-      .gallery { grid-template-columns: repeat(3, 1fr); }
+      .gallery { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .mmmm-top { grid-template-columns: repeat(2, 1fr); }
+      .mmmm-intro { width: 100%; }
+      .mmmm-emes { grid-template-columns: repeat(2, 1fr); }
+      .eme-item:nth-child(1) { grid-column: 1; grid-row: 1; }
+      .eme-item:nth-child(2) { grid-column: 2; grid-row: 2; }
+      .eme-item:nth-child(3) { grid-column: 1; grid-row: 3; }
+      .eme-item:nth-child(4) { grid-column: 2; grid-row: 4; }
+      .mmmm-outro { margin-left: 0; width: 100%; }
     }
 
     .gallery img {
       width: 100%;
-      display: block;
-    }
-
-    /* RGBO ANIMATIONS */
-    .rgbo-section {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      width: 100%;
-      padding-top: 5rem;
-      pointer-events: none;
-    }
-
-    @media (max-width: 900px) {
-      .rgbo-section { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    .rgbo-cell {
-      aspect-ratio: 2 / 3;
-      overflow: hidden;
-    }
-
-    .rgbo-cell img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
       display: block;
     }
 
@@ -152,6 +186,22 @@
       width: auto;
       display: block;
     }
+
+    .year-corner {
+      position: fixed;
+      top: 4.5rem;
+      z-index: 110;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      white-space: nowrap;
+      padding: 0.12rem 0.5rem;
+      pointer-events: none;
+      line-height: 1.1;
+    }
+    .year-corner-left  { left: 0; }
+    .year-corner-right { right: 0; }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="484c804e-9f54-4df9-b48e-1540f3366b36"></script>
 </head>
@@ -172,12 +222,45 @@
     </div>
   </nav>
 
-  <section class="rgbo-section">
+  <div class="mmmm-top">
     <div class="rgbo-cell" id="rgbo-r"></div>
     <div class="rgbo-cell" id="rgbo-g"></div>
     <div class="rgbo-cell" id="rgbo-b"></div>
     <div class="rgbo-cell" id="rgbo-o"></div>
-  </section>
+  </div>
+  <div class="mmmm-intro">
+    <p data-i18n="p1">MMMM nació en la universidad, en 2024, como una investigación sobre el mortero. Al rastrearlo me di cuenta de que moler, molar, molino, machacar, majar o metate no solo comparten una misma raíz fonética, sino una universalidad geográfica, antropológica e histórica: el mortero aparece, con sus propias variantes, en culturas de todo el mundo y a lo largo de toda la historia.</p>
+    <p data-i18n="p2">Ninguno de los objetos que hice es en concreto un mortero, un molcajete o un metate, ni en uso ni en forma, así que los llamo Emes. Cada Eme conserva el potencial de moler, majar o machacar, y se mueve entre el coleccionable y el objeto funcional. En cada una, el material dirige.</p>
+    <p data-i18n="p3">La investigación se desarrolló en cuatro Emes, cuatro maneras de preguntarme qué es un elemento para moler.</p>
+  </div>
+
+  <div class="mmmm-emes">
+    <div class="eme-item">
+      <img src="../img/proyectos/mmmm/B/_MP_3697.jpg" alt="">
+      <p data-i18n="eme1">La primera trata de la textura. Tomé prestadas la piedra volcánica y la forma de tres patas con cuenco cóncavo de un molcajete tradicional. El artesano trabaja con lo que tiene a mano, y yo, viviendo en Barcelona, no tenía piedra volcánica. Esculpí el molcajete en poliestireno expandido, que en mi cabeza hacía de piedra, y lo vacié en aluminio.</p>
+    </div>
+    <div class="eme-item">
+      <img src="../img/proyectos/mmmm/G/_MP_3559.jpg" alt="">
+      <p data-i18n="eme2">La segunda trata de la forma. Cualquier cosa puede ser una M: el primer mortero fue el propio cuerpo, las muelas, y luego la piedra y el suelo. Es un cubo de barro rojo con un hueco, cubierto de trozos de chamota de un ladrillo roto, que el propio esmalte adhirió a la superficie para crear la textura, y una maza de forma elemental, esférica, parecida a una piedra.</p>
+    </div>
+    <div class="eme-item">
+      <img src="../img/proyectos/mmmm/R/_MP_3520.jpg" alt="">
+      <p data-i18n="eme3">La tercera trata de la técnica: una pieza de tensiones, de diálogo entre lo artesanal y lo industrial, entre lo natural y lo artificial. Esa dicotomía no está solo en la geometría, tan compleja que solo la alcanzan un artesano experto o un robot, sino también en el material: el contrachapado es madera, pero ya fabricada.</p>
+    </div>
+    <div class="eme-item">
+      <img src="../img/proyectos/mmmm/O/_MP_3628.jpg" alt="">
+      <p data-i18n="eme4">La cuarta trata del uso. Un cuenco de porcelana blanca sobre una cruceta de acero inoxidable, casi un diente con su ortodoncia, condensa en un solo objeto todo el recorrido: desde lo primitivo y animal, el cuerpo como primer mortero, hasta lo científico, lo farmacéutico, lo clínico y lo industrial.</p>
+    </div>
+    <div class="eme-icon" data-row="1" data-cols="1,2,4" data-cols-mobile="2"><img src="../img/proyectos/mmmm/iconos/ETIQUETASALUMINIO.jpg" alt=""></div>
+    <div class="eme-icon" data-row="2" data-cols="1,3,4" data-cols-mobile="1"><img src="../img/proyectos/mmmm/iconos/ETIQUETASBARRO.jpg" alt=""></div>
+    <div class="eme-icon" data-row="3" data-cols="2,3,4" data-cols-mobile="2"><img src="../img/proyectos/mmmm/iconos/ETIQUETASMADERA.jpg" alt=""></div>
+    <div class="eme-icon" data-row="4" data-cols="1,2,3" data-cols-mobile="1"><img src="../img/proyectos/mmmm/iconos/ETIQUETASINOX.jpg" alt=""></div>
+  </div>
+
+  <div class="mmmm-outro">
+    <p data-i18n="outro1">Todo se recogió en un fanzine de investigación visual que, a través de la metáfora, la alegoría y las conexiones, reinterpreta el objeto de moler.</p>
+    <p data-i18n="outro2">En él la investigación se resume sin utilizar palabras. Una imagen se apoya en otra, se parece a ella o la contradice, y la metáfora, la comparación y la yuxtaposición permiten así enlazar ideas y conceptos que, de otro modo, habría que explicar uno a uno.</p>
+  </div>
 
   <div class="gallery">
     <img src="../img/proyectos/mmmm/escaners/thumbs/pagina_01.jpg" data-full="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_01.png" alt="">
@@ -211,6 +294,8 @@
     <img src="../img/proyectos/mmmm/escaners/thumbs/pagina_29.jpg" data-full="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_29.png" alt="">
     <img src="../img/proyectos/mmmm/escaners/thumbs/pagina_30.jpg" data-full="../img/proyectos/mmmm/escaners/VISUAL REMAQUETADO_Página_30.png" alt="">
   </div>
+  <div class="year-corner year-corner-left">2024</div>
+  <div class="year-corner year-corner-right">2024</div>
 
   <div class="title-corner title-corner-left">MMMM</div>
   <div class="title-corner title-corner-right">MMMM</div>
@@ -233,9 +318,42 @@
 
   <script>
     const translations = {
-      es: { 'nav-projects': '1. Proyectos', 'nav-archivo': '3. Archivo', 'nav-about': '2. Sobre mí', 'nav-cv': '3. CV', 'nav-contact': '4. Contacto' },
-      en: { 'nav-projects': '1. Projects', 'nav-archivo': '3. Archive', 'nav-about': '2. About', 'nav-cv': '3. CV', 'nav-contact': '4. Contact' },
-      ca: { 'nav-projects': '1. Projectes', 'nav-archivo': '3. Arxiu', 'nav-about': '2. Sobre mi', 'nav-cv': '3. CV', 'nav-contact': '4. Contacte' },
+      es: {
+        'nav-projects': '1. Proyectos', 'nav-archivo': '3. Archivo', 'nav-about': '2. Sobre mí', 'nav-cv': '3. CV', 'nav-contact': '4. Contacto',
+        'p1': 'MMMM nació en la universidad, en 2024, como una investigación sobre el mortero. Al rastrearlo me di cuenta de que moler, molar, molino, machacar, majar o metate no solo comparten una misma raíz fonética, sino una universalidad geográfica, antropológica e histórica: el mortero aparece, con sus propias variantes, en culturas de todo el mundo y a lo largo de toda la historia.',
+        'p2': 'Ninguno de los objetos que hice es en concreto un mortero, un molcajete o un metate, ni en uso ni en forma, así que los llamo Emes. Cada Eme conserva el potencial de moler, majar o machacar, y se mueve entre el coleccionable y el objeto funcional. En cada una, el material dirige.',
+        'p3': 'La investigación se desarrolló en cuatro Emes, cuatro maneras de preguntarme qué es un elemento para moler.',
+        'eme1': 'La primera trata de la textura. Tomé prestadas la piedra volcánica y la forma de tres patas con cuenco cóncavo de un molcajete tradicional. El artesano trabaja con lo que tiene a mano, y yo, viviendo en Barcelona, no tenía piedra volcánica. Esculpí el molcajete en poliestireno expandido, que en mi cabeza hacía de piedra, y lo vacié en aluminio.',
+        'eme2': 'La segunda trata de la forma. Cualquier cosa puede ser una M: el primer mortero fue el propio cuerpo, las muelas, y luego la piedra y el suelo. Es un cubo de barro rojo con un hueco, cubierto de trozos de chamota de un ladrillo roto, que el propio esmalte adhirió a la superficie para crear la textura, y una maza de forma elemental, esférica, parecida a una piedra.',
+        'eme3': 'La tercera trata de la técnica: una pieza de tensiones, de diálogo entre lo artesanal y lo industrial, entre lo natural y lo artificial. Esa dicotomía no está solo en la geometría, tan compleja que solo la alcanzan un artesano experto o un robot, sino también en el material: el contrachapado es madera, pero ya fabricada.',
+        'eme4': 'La cuarta trata del uso. Un cuenco de porcelana blanca sobre una cruceta de acero inoxidable, casi un diente con su ortodoncia, condensa en un solo objeto todo el recorrido: desde lo primitivo y animal, el cuerpo como primer mortero, hasta lo científico, lo farmacéutico, lo clínico y lo industrial.',
+        'outro1': 'Todo se recogió en un fanzine de investigación visual que, a través de la metáfora, la alegoría y las conexiones, reinterpreta el objeto de moler.',
+        'outro2': 'En él la investigación se resume sin utilizar palabras. Una imagen se apoya en otra, se parece a ella o la contradice, y la metáfora, la comparación y la yuxtaposición permiten así enlazar ideas y conceptos que, de otro modo, habría que explicar uno a uno.',
+      },
+      en: {
+        'nav-projects': '1. Projects', 'nav-archivo': '3. Archive', 'nav-about': '2. About', 'nav-cv': '3. CV', 'nav-contact': '4. Contact',
+        'p1': 'MMMM began at university, in 2024, as a research project on the mortar. Tracing it back, I realised that grind, mill, mortar, crush, mash and metate not only share the same phonetic root, but a geographical, anthropological and historical universality: the mortar appears, in its own variants, in cultures across the world and throughout all of history.',
+        'p2': 'None of the objects I made is specifically a mortar, a molcajete or a metate — not in use, not in form — so I call them Emes. Each Eme retains the potential to grind, crush or pound, and moves between the collectable and the functional object. In each one, the material leads.',
+        'p3': 'The research developed into four Emes, four ways of asking myself what a grinding element is.',
+        'eme1': 'The first is about texture. I borrowed the volcanic stone and the three-legged form with a concave bowl from a traditional molcajete. The craftsman works with what is at hand, and I, living in Barcelona, had no volcanic stone. I sculpted the molcajete in expanded polystyrene — which in my mind stood in for stone — and cast it in aluminium.',
+        'eme2': 'The second is about form. Anything can be an M: the first mortar was the body itself, the teeth, then stone and ground. It is a cube of red clay with a hollow, covered in fragments of chamotte from a broken brick, which the glaze itself bonded to the surface to create the texture, and a mallet of elemental, spherical form, resembling a stone.',
+        'eme3': 'The third is about technique: a piece of tensions, a dialogue between the handmade and the industrial, between the natural and the artificial. That dichotomy lies not only in the geometry — so complex that only a skilled craftsman or a robot can achieve it — but also in the material: plywood is wood, but already manufactured.',
+        'eme4': 'The fourth is about use. A white porcelain bowl on a stainless steel crosspiece — almost a tooth with its orthodontics — condenses the entire journey into a single object: from the primitive and animal, the body as the first mortar, to the scientific, the pharmaceutical, the clinical and the industrial.',
+        'outro1': 'It was all gathered in a visual research fanzine that, through metaphor, allegory and connections, reinterprets the object of grinding.',
+        'outro2': 'In it the research is summarised without using words. One image leans on another, resembles it or contradicts it, and metaphor, comparison and juxtaposition allow ideas and concepts to be linked that would otherwise have to be explained one by one.',
+      },
+      ca: {
+        'nav-projects': '1. Projectes', 'nav-archivo': '3. Arxiu', 'nav-about': '2. Sobre mi', 'nav-cv': '3. CV', 'nav-contact': '4. Contacte',
+        'p1': 'MMMM va néixer a la universitat, el 2024, com una investigació sobre el morter. En rastrejar-lo em vaig adonar que moldre, molar, molí, machacar, majar o metate no només comparteixen una mateixa arrel fonètica, sinó una universalitat geogràfica, antropològica i històrica: el morter apareix, amb les seves pròpies variants, en cultures de tot el món i al llarg de tota la història.',
+        'p2': 'Cap dels objectes que vaig fer és concretament un morter, un molcajete o un metate, ni en ús ni en forma, de manera que els anomeno Emes. Cada Eme conserva el potencial de moldre, majar o machacar, i es mou entre el col·leccionable i l\'objecte funcional. En cadascuna, el material dirigeix.',
+        'p3': 'La investigació es va desenvolupar en quatre Emes, quatre maneres de preguntar-me què és un element per moldre.',
+        'eme1': 'La primera tracta de la textura. Vaig prendre prestades la pedra volcànica i la forma de tres potes amb bol còncau d\'un molcajete tradicional. L\'artesà treballa amb el que té a mà, i jo, vivint a Barcelona, no tenia pedra volcànica. Vaig esculpir el molcajete en poliestirè expandit, que en el meu cap feia de pedra, i el vaig buidar en alumini.',
+        'eme2': 'La segona tracta de la forma. Qualsevol cosa pot ser una M: el primer morter va ser el propi cos, les molars, i després la pedra i el terra. És un cub de fang vermell amb un buit, cobert de trossos de chamota d\'un maó trencat, que el propi esmalt va adherir a la superfície per crear la textura, i una maça de forma elemental, esfèrica, semblant a una pedra.',
+        'eme3': 'La tercera tracta de la tècnica: una peça de tensions, de diàleg entre l\'artesanal i l\'industrial, entre el natural i l\'artificial. Aquesta dicotomia no és només en la geometria, tan complexa que només l\'assoleixen un artesà expert o un robot, sinó també en el material: el contraxapat és fusta, però ja fabricada.',
+        'eme4': 'La quarta tracta de l\'ús. Un bol de porcellana blanca sobre una creueta d\'acer inoxidable, quasi una dent amb la seva ortodòncia, condensa en un sol objecte tot el recorregut: des del primitiu i animal, el cos com a primer morter, fins al científic, el farmacèutic, el clínic i l\'industrial.',
+        'outro1': 'Tot es va recollir en un fanzine d\'investigació visual que, a través de la metàfora, l\'al·legoria i les connexions, reinterpreta l\'objecte de moldre.',
+        'outro2': 'En ell la investigació es resumeix sense utilitzar paraules. Una imatge es recolza en una altra, s\'hi assembla o la contradiu, i la metàfora, la comparació i la juxtaposició permeten així enllaçar idees i conceptes que, d\'una altra manera, caldria explicar un per un.',
+      },
     };
     function applyLang(lang) {
       document.documentElement.lang = lang;
@@ -283,6 +401,16 @@
         }, 200);
       });
     })();
+  </script>
+  <script>
+    document.querySelectorAll('.eme-icon').forEach(el => {
+      const row = +el.dataset.row;
+      const isMobile = window.innerWidth <= 768;
+      const cols = (isMobile ? el.dataset.colsMobile : el.dataset.cols).split(',').map(Number);
+      const col = cols[Math.floor(Math.random() * cols.length)];
+      el.style.gridColumn = col;
+      el.style.gridRow = row;
+    });
   </script>
   <script src="../js/viewer.js"></script>
   <script src="/js/nav5.js"></script>

@@ -10,18 +10,21 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
       --bg: #ffffff;
       --text: #000000;
       --font-mono: 'IBM Plex Mono', 'Courier New', Courier, monospace;
       --nav-size: 1rem;
     }
+
     html, body {
       background-color: var(--bg);
       color: var(--text);
       font-family: var(--font-mono);
       min-height: 100vh;
     }
+
     nav {
       position: fixed;
       top: 0; left: 0;
@@ -38,21 +41,27 @@
       justify-content: space-between;
       align-items: flex-start;
     }
+
     nav a {
       display: block;
       width: fit-content;
       color: #000000;
       text-decoration: none;
     }
+
     .nav-lang {
       display: flex;
       flex-direction: column;
       align-items: flex-end;
     }
+
     .lang-link { opacity: 0.4; }
     .lang-link.active { opacity: 1; }
+
     @media (max-width: 800px) { nav { font-size: 1rem; } }
+
     * { cursor: none; }
+
     #cursor-dot {
       position: fixed;
       pointer-events: none;
@@ -64,18 +73,53 @@
       transform: translate(-50%, -50%);
       transition: border-radius 0.15s ease;
     }
+
     #cursor-dot.square { border-radius: 0; -webkit-mask: none; mask: none; }
+
     @media (max-width: 900px) { #cursor-dot { display: none; } }
-    .placeholder {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+
+    /* GALERÍA */
+    .stina-gallery {
+      padding-top: 4.5rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
     }
-      .title-corner {
+
+    .stina-gallery img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      aspect-ratio: 2/3;
+    }
+
+    .stina-gallery img.l {
+      grid-column: span 2;
+      aspect-ratio: 4/3;
+    }
+
+    .stina-gallery img.fw {
+      grid-column: span 4;
+      height: auto;
+      aspect-ratio: auto;
+      object-fit: initial;
+      align-self: start;
+    }
+
+    @media (max-width: 768px) {
+      .stina-gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .stina-gallery img     { aspect-ratio: 1/1; }
+      .stina-gallery img.l   { grid-column: span 1; aspect-ratio: 1/1; }
+      .stina-gallery img.fw  { grid-column: span 2; aspect-ratio: 3/2; height: 100%; object-fit: cover; align-self: stretch; }
+    }
+
+    .title-corner {
       position: fixed;
       bottom: 0;
-      z-index: 100;
+      z-index: 110;
       font-family: var(--font-mono);
       font-size: 1rem;
       color: #ffffff;
@@ -87,8 +131,8 @@
     }
     .title-corner-left  { left: 0; }
     .title-corner-right { right: 0; }
-      nav a[data-i18n="nav-cv"] { display: none; }
 
+    nav a[data-i18n="nav-cv"] { display: none; }
     .nav-links { align-self: flex-end; }
 
     .nav-logo {
@@ -100,10 +144,27 @@
       width: auto;
       display: block;
     }
+
+    .year-corner {
+      position: fixed;
+      top: 4.5rem;
+      z-index: 110;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      white-space: nowrap;
+      padding: 0.12rem 0.5rem;
+      pointer-events: none;
+      line-height: 1.1;
+    }
+    .year-corner-left  { left: 0; }
+    .year-corner-right { right: 0; }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="484c804e-9f54-4df9-b48e-1540f3366b36"></script>
 </head>
 <body>
+
   <nav>
     <div class="nav-links">
       <a href="../index.html" data-i18n="nav-projects">1. Proyectos</a>
@@ -118,19 +179,66 @@
       <a href="#" class="lang-link" data-lang="ca">CAT</a>
     </div>
   </nav>
-  <div class="placeholder">
-    <span>STINA</span>
+
+  <div class="stina-gallery">
+    <img class="fw" src="../img/proyectos/stina/IMG_8737.jpg" alt="">
+    <img class="l"  src="../img/proyectos/stina/IMG_8736.jpg" alt="">
+    <img           src="../img/proyectos/stina/_MP_7876.jpg" alt="">
+    <img class="l"  src="../img/proyectos/stina/IMG_8750.jpg" alt="">
+    <img           src="../img/proyectos/stina/_MP_7882.jpg" alt="">
+    <img class="l"  src="../img/proyectos/stina/_MP_7883.jpg" alt="">
+    <img class="l"  src="../img/proyectos/stina/IMG_8752.jpg" alt="">
+    <img class="fw" src="../img/proyectos/stina/_MP_7879.jpg" alt="">
+    <img           src="../img/proyectos/stina/_MP_7901.jpg" alt="">
+    <img class="l"  src="../img/proyectos/stina/IMG_8754.jpg" alt="">
+    <img           src="../img/proyectos/stina/_MP_7910.jpg" alt="">
+    <img class="l"  src="../img/proyectos/stina/IMG_8756.jpg" alt="">
+    <img class="l"  src="../img/proyectos/stina/IMG_8757.jpg" alt="">
+    <img           src="../img/proyectos/stina/IMG_8761.jpg" alt="">
+    <img class="l"  src="../img/proyectos/stina/IMG_8758.jpg" alt="">
+    <img class="l"  src="../img/proyectos/stina/IMG_8764.jpg" alt="">
+    <img class="fw" src="../img/proyectos/stina/_MP_7880.jpg" alt="">
+    <img class="fw" src="../img/proyectos/stina/IMG_8763.jpg" alt="">
   </div>
+
+  <div class="year-corner year-corner-left">2024</div>
+  <div class="year-corner year-corner-right">2024</div>
+
   <div class="title-corner title-corner-left">STINA</div>
   <div class="title-corner title-corner-right">STINA</div>
 
   <div id="cursor-dot"></div>
+
+  <script>
+    const dot = document.getElementById('cursor-dot');
+    document.addEventListener('mousemove', e => {
+      dot.style.left = e.clientX + 'px';
+      dot.style.top  = e.clientY + 'px';
+    });
+    document.addEventListener('mouseover', e => {
+      if (e.target.closest('a, .nav-logo')) dot.classList.add('square');
+    });
+    document.addEventListener('mouseout', e => {
+      if (e.target.closest('a, .nav-logo')) dot.classList.remove('square');
+    });
+  </script>
+
   <script>
     const translations = {
-      es: { 'nav-projects': '1. Proyectos', 'nav-archivo': '3. Archivo', 'nav-about': '2. Sobre mí', 'nav-cv': '3. CV', 'nav-contact': '4. Contacto' },
-      en: { 'nav-projects': '1. Projects', 'nav-archivo': '3. Archive', 'nav-about': '2. About', 'nav-cv': '3. CV', 'nav-contact': '4. Contact' },
-      ca: { 'nav-projects': '1. Projectes', 'nav-archivo': '3. Arxiu', 'nav-about': '2. Sobre mi', 'nav-cv': '3. CV', 'nav-contact': '4. Contacte' },
+      es: {
+        'nav-projects': '1. Proyectos', 'nav-archivo': '3. Archivo',
+        'nav-about': '2. Sobre mí', 'nav-cv': '3. CV', 'nav-contact': '4. Contacto',
+      },
+      en: {
+        'nav-projects': '1. Projects', 'nav-archivo': '3. Archive',
+        'nav-about': '2. About', 'nav-cv': '3. CV', 'nav-contact': '4. Contact',
+      },
+      ca: {
+        'nav-projects': '1. Projectes', 'nav-archivo': '3. Arxiu',
+        'nav-about': '2. Sobre mi', 'nav-cv': '3. CV', 'nav-contact': '4. Contacte',
+      },
     };
+
     function applyLang(lang) {
       document.documentElement.lang = lang;
       document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -142,22 +250,14 @@
       });
       localStorage.setItem('lang', lang);
     }
+
     document.querySelectorAll('.lang-link').forEach(a => {
       a.addEventListener('click', e => { e.preventDefault(); applyLang(a.dataset.lang); });
     });
+
     applyLang(localStorage.getItem('lang') || 'es');
   </script>
-  <script>
-    const dot = document.getElementById('cursor-dot');
-    document.addEventListener('mousemove', e => {
-      dot.style.left = e.clientX + 'px';
-      dot.style.top = e.clientY + 'px';
-    });
-    document.querySelectorAll('nav a').forEach(a => {
-      a.addEventListener('mouseenter', () => dot.classList.add('square'));
-      a.addEventListener('mouseleave', () => dot.classList.remove('square'));
-    });
-  </script>
+  <script src="../js/viewer.js"></script>
   <script src="/js/nav5.js"></script>
 </body>
 </html>

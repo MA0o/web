@@ -175,6 +175,22 @@
       width: auto;
       display: block;
     }
+
+    .year-corner {
+      position: fixed;
+      top: 4.5rem;
+      z-index: 110;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      white-space: nowrap;
+      padding: 0.12rem 0.5rem;
+      pointer-events: none;
+      line-height: 1.1;
+    }
+    .year-corner-left  { left: 0; }
+    .year-corner-right { right: 0; }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="484c804e-9f54-4df9-b48e-1540f3366b36"></script>
 </head>
@@ -226,6 +242,8 @@
       </div>
     </div>
   </div>
+  <div class="year-corner year-corner-left">2024</div>
+  <div class="year-corner year-corner-right">2024</div>
 
   <div class="title-corner title-corner-left">conquista</div>
   <div class="title-corner title-corner-right">conquista</div>

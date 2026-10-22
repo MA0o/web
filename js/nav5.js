@@ -259,6 +259,163 @@
     };
   }
 
+  /* ── about / CV popup ───────────────────────────────────────────────── */
+  const aboutStyle = document.createElement('style');
+  aboutStyle.textContent = `
+    #n5-about-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+    }
+    #n5-about-overlay.open { display: flex; align-items: center; justify-content: center; padding-top: 4.5rem; }
+    #n5-about-box {
+      background: #05ff00;
+      width: 36vw;
+      max-height: 90vh;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    }
+    #n5-about-top {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-shrink: 0;
+    }
+    #n5-about-close {
+      background: none; border: none;
+      cursor: none;
+      color: rgba(0,0,0,0.85);
+      padding: 0;
+      display: block;
+    }
+    #n5-about-close svg { width: 5.2em; height: 5.2em; display: block; font-size: 0.9rem; }
+    #n5-about-box img { width: 100%; height: auto; display: block; }
+    #n5-about-contact {
+      padding: 0.5rem;
+      font-size: 0.75rem;
+      line-height: 1.4;
+    }
+    #n5-about-contact a {
+      color: #000 !important;
+      text-decoration: none;
+      display: block;
+    }
+    #n5-about-contact a:visited { color: #000 !important; }
+    #n5-about-contact a:hover   { color: #000 !important; }
+    #n5-about-contact a:active  { color: #000 !important; }
+    #n5-copy-label {
+      position: fixed;
+      pointer-events: none;
+      z-index: 10010;
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
+      font-size: 0.75rem;
+      line-height: 1.5;
+      background: #000;
+      color: #fff;
+      padding: 0.3em 0.5em;
+      white-space: nowrap;
+      display: none;
+    }
+    #n5-copy-label.active { display: block; }
+    @media (max-width: 900px) {
+      #n5-about-box { width: 90vw; }
+      #n5-copy-label { display: none !important; }
+    }
+  `;
+  document.head.appendChild(aboutStyle);
+
+  const copyLabel = document.createElement('div');
+  copyLabel.id = 'n5-copy-label';
+  document.body.appendChild(copyLabel);
+
+  const aboutOverlay = document.createElement('div');
+  aboutOverlay.id = 'n5-about-overlay';
+  aboutOverlay.innerHTML = `
+    <div id="n5-about-box">
+      <div id="n5-about-top">
+        <button id="n5-about-close" aria-label="Cerrar">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="7.21 7.21 17.59 17.59">
+            <path fill="currentColor" d="M 8.51 7.21 L 7.21 8.51 L 14.72 16.00 L 7.21 23.52 L 8.48 24.80 L 15.99 17.30 L 23.48 24.80 L 24.77 23.50 L 17.27 16.00 L 24.80 8.48 L 23.52 7.21 L 15.99 14.72 L 8.51 7.21 Z"/>
+          </svg>
+        </button>
+      </div>
+      <img src="/img/CV.jpg" alt="">
+      <div id="n5-about-contact">
+        <a href="mailto:mateucho.04@gmail.com" data-copy="mateucho.04@gmail.com">mateucho.04@gmail.com</a>
+        <a href="https://www.instagram.com/mateoprado" target="_blank">@mateoprado</a>
+        <a href="tel:+34650165341" data-copy="+34650165341">+34 650 165 341</a>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(aboutOverlay);
+
+  document.getElementById('n5-about-close').addEventListener('click', () => {
+    aboutOverlay.classList.remove('open');
+  });
+
+  aboutOverlay.addEventListener('click', e => {
+    if (e.target === aboutOverlay) aboutOverlay.classList.remove('open');
+  });
+
+  aboutOverlay.addEventListener('mousemove', e => {
+    const dot = document.getElementById('cursor-dot');
+    if (dot) { dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px'; }
+    copyLabel.style.left = (e.clientX + 14) + 'px';
+    copyLabel.style.top  = (e.clientY - 10) + 'px';
+  });
+
+  const aboutBox = document.getElementById('n5-about-box');
+  const aboutClose = document.getElementById('n5-about-close');
+  aboutOverlay.addEventListener('mouseenter', () => setCursor('cross'));
+  aboutOverlay.addEventListener('mouseleave', () => setCursor(null));
+  aboutBox.addEventListener('mouseenter', () => setCursor(null));
+  aboutBox.addEventListener('mouseleave', () => setCursor('cross'));
+  aboutClose.addEventListener('mouseenter', () => setCursor('cross'));
+  aboutClose.addEventListener('mouseleave', () => setCursor(null));
+
+  const COPY_WORDS = {
+    es: { copy: 'copiar',  copied: 'copiado' },
+    en: { copy: 'copy',    copied: 'copied'  },
+    ca: { copy: 'copiar',  copied: 'copiat'  },
+  };
+  function getCopyWord(key) {
+    const lang = localStorage.getItem('lang') || 'es';
+    return (COPY_WORDS[lang] || COPY_WORDS.es)[key];
+  }
+
+  const instaLink = aboutOverlay.querySelector('#n5-about-contact a:not([data-copy])');
+  if (instaLink) {
+    instaLink.addEventListener('mouseenter', () => setCursor('plus'));
+    instaLink.addEventListener('mouseleave', () => setCursor(null));
+  }
+
+  aboutOverlay.querySelectorAll('#n5-about-contact [data-copy]').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      setCursor('square');
+      copyLabel.textContent = getCopyWord('copy');
+      copyLabel.classList.add('active');
+    });
+    el.addEventListener('mouseleave', () => {
+      setCursor(null);
+      copyLabel.classList.remove('active');
+    });
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      const original = el.dataset.copy;
+      navigator.clipboard.writeText(original).catch(() => {});
+      el.textContent = getCopyWord('copied');
+      setTimeout(() => { el.textContent = original; }, 1500);
+    });
+  });
+
+  window.openCV = function () {
+    aboutOverlay.classList.add('open');
+    aboutOverlay.scrollTop = 0;
+  };
+
   /* ── imagen y parpadeo ────────────────────────────────────────────────── */
   const srcOpen   = '/icons/menu/perfil_abierto2.png';
   const srcClosed = '/icons/menu/perfil_cerrado2.png';

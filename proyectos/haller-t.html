@@ -24,8 +24,6 @@
       background-color: var(--bg);
       color: var(--text);
       font-family: var(--font-mono);
-      height: 100%;
-      overflow: hidden;
     }
 
     /* ── NAV ─────────────────────────────────────────────────────────────── */
@@ -103,7 +101,7 @@
     .layout-b {
       display: flex;
       height: 100vh;
-      padding-top: var(--nav-h);
+      padding-top: 0;
     }
 
     /* Left panel — text, 30% */
@@ -128,45 +126,84 @@
       margin-bottom: 1em;
     }
 
-    /* Right panel — images, scrolls independently */
+    .lb-text a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+
+    /* Right panel — solo imagen hero */
     .lb-gallery {
       flex: 1;
-      overflow-y: scroll;
-      overflow-x: hidden;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
       background: var(--bg);
-      align-content: start;
-      scrollbar-width: none;
+      padding-top: 4.5rem;
     }
-    .lb-gallery::-webkit-scrollbar { display: none; }
 
-    .lb-gallery img {
+    /* wrapper imagen rotada dentro del panel */
+    .ht-rot-wrap {
       width: 100%;
-      height: auto;
-      display: block;
-      background: var(--bg);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
-
-    /* Horizontales y sola — ancho completo */
-    .lb-gallery img:nth-child(1),   /* hero.gif H */
-    .lb-gallery img:nth-child(2),   /* 08.jpg V sola */
-    .lb-gallery img:nth-child(3),   /* 04.jpg H */
-    .lb-gallery img:nth-child(4),   /* 05.jpg H */
-    .lb-gallery img:nth-child(7) {  /* 03.jpg H */
-      grid-column: 1 / -1;
-    }
-
-    /* Vertical sola a ancho completo: recorte mínimo cuadrado */
-    .lb-gallery img:nth-child(2) {
-      aspect-ratio: 1 / 1;
+    /* 08.jpg: 1413×2000 portrait → rotada CCW → visual 2000×1413, ratio ≈ 1.415 */
+    .ht-rot-img { height: 49.5vw; }
+    .ht-rot-img img {
+      width: 49.5vw;
+      height: 70vw;
+      transform: rotate(-90deg);
       object-fit: cover;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    /* secciones full-width debajo del layout */
+    /* vídeo 864×1080 portrait → rotado CCW → visual 1080×864, ratio 1.25 → 100vw × 0.8 = 80vw alto */
+    .ht-full-vid {
+      width: 100%;
+      height: 80vw;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ht-full-vid video {
+      width: 80vw;
+      height: 100vw;
+      transform: rotate(-90deg);
+      flex-shrink: 0;
+    }
+
+    /* fotos: una por fila alternando izq/der */
+    .ht-grid { display: block; }
+    .ht-grid > * {
+      display: block;
+      width: 50%;
+      height: auto;
+      background: var(--bg);
+      margin-bottom: 1px;
+    }
+    .ht-grid > *:nth-child(even) { margin-left: 50%; }
+
+    /* hero.gif rotado 90°CCW: 1895×1066 → visual 1066×1895 */
+    .ht-hero-rot {
+      height: 88.9vw;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ht-hero-rot img {
+      width: 88.9vw;
+      height: 50vw;
+      transform: rotate(-90deg);
+      flex-shrink: 0;
+      display: block;
     }
 
     /* ── RESPONSIVE ────────────────────────────────────────────────────────── */
     @media (max-width: 800px) {
-      html, body { overflow: auto; }
       nav { font-size: 1rem; }
       .layout-b {
         flex-direction: column;
@@ -178,15 +215,13 @@
         overflow-y: visible;
         border-bottom: 1px solid rgba(0,0,0,0.15);
       }
-      .lb-gallery {
-        overflow-y: visible;
-        columns: 2;
-        padding: var(--gutter);
-      }
+      .lb-gallery { padding-top: 0; }
+      .ht-rot-img { height: 70.7vw; }
+      .ht-rot-img img { width: 70.7vw; height: 100vw; }
     }
 
     @media (max-width: 500px) {
-      .lb-gallery { columns: 1; }
+      .ht-grid > * { width: 100%; margin-left: 0 !important; }
     }
       nav a[data-i18n="nav-cv"] { display: none; }
 
@@ -201,6 +236,22 @@
       width: auto;
       display: block;
     }
+
+    .year-corner {
+      position: fixed;
+      top: 4.5rem;
+      z-index: 110;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      white-space: nowrap;
+      padding: 0.12rem 0.5rem;
+      pointer-events: none;
+      line-height: 1.1;
+    }
+    .year-corner-left  { left: 0; }
+    .year-corner-right { right: 0; }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="484c804e-9f54-4df9-b48e-1540f3366b36"></script>
 </head>
@@ -224,22 +275,47 @@
   <div class="layout-b">
 
     <aside class="lb-text">
+      <p data-i18n="p0">Haller-T es mi trabajo de fin de grado, desarrollado en colaboración con USM. USM Haller es un sistema de mobiliario modular de tubos de acero y rótulas cromadas, diseñado por el arquitecto suizo Fritz Haller y fabricado desde 1963. Todo en él se sostiene a compresión: cada pieza empuja contra la siguiente.</p>
       <p data-i18n="p1">Haller-T propone una capa adicional. No una corrección, ni una muleta: una extensión del lenguaje. A través de un sistema de cables y tensores, el proyecto introduce la tensión como una fuerza que complementa la compresión que define a USM. La misma lógica estructural, pero en sentido opuesto. El resultado son configuraciones que no eran posibles dentro del sistema: voladizos, elementos suspendidos, grandes luces, o una conexión explícita entre el mobiliario y su entorno. Haller-T no inventa un sistema nuevo. Demuestra que el sistema existente contenía, dentro de su propia lógica, el espacio exacto donde podía introducirse la tensión.</p>
+      <p data-i18n="p2">Renders por <a href="https://forma.engineering/" target="_blank" rel="noopener">Forma Engineering</a>.<br>Diseño editorial por <a href="https://www.sintitulo1.com/" target="_blank" rel="noopener">Sin-Título1</a>.</p>
     </aside>
 
     <div class="lb-gallery">
-      <img src="../img/proyectos/haller-t/hero.gif" alt="">
-      <img src="../img/proyectos/haller-t/thumbs/08.jpg" data-full="../img/proyectos/haller-t/08.jpg" alt="">
-      <img src="../img/proyectos/haller-t/thumbs/04.jpg" data-full="../img/proyectos/haller-t/04.jpg" alt="">
-      <img src="../img/proyectos/haller-t/thumbs/05.jpg" data-full="../img/proyectos/haller-t/05.jpg" alt="">
-      <img src="../img/proyectos/haller-t/thumbs/06.jpg" data-full="../img/proyectos/haller-t/06.jpg" alt="">
-      <img src="../img/proyectos/haller-t/thumbs/07.jpg" data-full="../img/proyectos/haller-t/07.jpg" alt="">
-      <img src="../img/proyectos/haller-t/thumbs/03.jpg" data-full="../img/proyectos/haller-t/03.jpg" alt="">
-      <img src="../img/proyectos/haller-t/thumbs/01.jpg" data-full="../img/proyectos/haller-t/01.jpg" alt="">
-      <img src="../img/proyectos/haller-t/thumbs/02.jpg" data-full="../img/proyectos/haller-t/02.jpg" alt="">
+      <div class="ht-rot-wrap ht-rot-img">
+        <img src="../img/proyectos/haller-t/thumbs/08.jpg" data-full="../img/proyectos/haller-t/08.jpg" alt="">
+      </div>
     </div>
 
   </div>
+
+  <div class="ht-full-vid">
+    <video autoplay muted loop playsinline>
+      <source src="../img/proyectos/haller-t/02_1.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <img src="../img/proyectos/haller-t/1Artboard%206.png" alt="" style="width:100%;display:block;">
+
+  <div class="ht-grid">
+    <img src="../img/proyectos/haller-t/thumbs/07.jpg" data-full="../img/proyectos/haller-t/07.jpg" alt="">
+    <video autoplay muted loop playsinline>
+      <source src="../img/proyectos/haller-t/configs.mp4" type="video/mp4">
+    </video>
+    <img src="../img/proyectos/haller-t/thumbs/04.jpg" data-full="../img/proyectos/haller-t/04.jpg" alt="">
+    <img src="../img/proyectos/haller-t/thumbs/03.jpg" data-full="../img/proyectos/haller-t/03.jpg" alt="">
+  </div>
+
+  <img src="../img/proyectos/haller-t/gramatica2.jpg" alt="" style="width:100%;display:block;">
+
+  <div class="ht-grid">
+    <div class="ht-hero-rot">
+      <img src="../img/proyectos/haller-t/hero.gif" alt="">
+    </div>
+    <img src="../img/proyectos/haller-t/thumbs/06.jpg" data-full="../img/proyectos/haller-t/06.jpg" alt="">
+    <img src="../img/proyectos/haller-t/thumbs/05.jpg" data-full="../img/proyectos/haller-t/05.jpg" alt="">
+  </div>
+  <div class="year-corner year-corner-left">2026</div>
+  <div class="year-corner year-corner-right">2026</div>
 
   <div class="title-corner title-corner-left">Haller-T</div>
   <div class="title-corner title-corner-right">Haller-T</div>
@@ -267,21 +343,27 @@
         'nav-about': '2. Sobre mí',
         'nav-cv': '3. CV',
         'nav-contact': '4. Contacto',
+        'p0': 'Haller-T es mi trabajo de fin de grado, desarrollado en colaboración con USM. USM Haller es un sistema de mobiliario modular de tubos de acero y rótulas cromadas, diseñado por el arquitecto suizo Fritz Haller y fabricado desde 1963. Todo en él se sostiene a compresión: cada pieza empuja contra la siguiente.',
         'p1': 'Haller-T propone una capa adicional. No una corrección, ni una muleta: una extensión del lenguaje. A través de un sistema de cables y tensores, el proyecto introduce la tensión como una fuerza que complementa la compresión que define a USM. La misma lógica estructural, pero en sentido opuesto. El resultado son configuraciones que no eran posibles dentro del sistema: voladizos, elementos suspendidos, grandes luces, o una conexión explícita entre el mobiliario y su entorno. Haller-T no inventa un sistema nuevo. Demuestra que el sistema existente contenía, dentro de su propia lógica, el espacio exacto donde podía introducirse la tensión.',
+        'p2': 'Renders por <a href="https://forma.engineering/" target="_blank" rel="noopener">Forma Engineering</a>.<br>Diseño editorial por <a href="https://www.sintitulo1.com/" target="_blank" rel="noopener">Sin-Título1</a>.',
       },
       en: {
         'nav-projects': '1. Projects', 'nav-archivo': '3. Archive',
         'nav-about': '2. About',
         'nav-cv': '3. CV',
         'nav-contact': '4. Contact',
+        'p0': 'Haller-T is my final degree project, developed in collaboration with USM. USM Haller is a modular furniture system of steel tubes and chrome spherical connectors, designed by Swiss architect Fritz Haller and manufactured since 1963. Everything in it is held in compression: each piece pushes against the next.',
         'p1': 'Haller-T proposes an additional layer. Not a correction, not a crutch: an extension of the language. Through a system of cables and tensioners, the project introduces tension as a force that complements the compression that defines USM. The same structural logic, but in the opposite direction. The result is configurations that were not possible within the system: cantilevers, suspended elements, long spans, or an explicit connection between the furniture and its surroundings. Haller-T does not invent a new system. It demonstrates that the existing system contained, within its own logic, the exact space where tension could be introduced.',
+        'p2': 'Renders by <a href="https://forma.engineering/" target="_blank" rel="noopener">Forma Engineering</a>.<br>Editorial design by <a href="https://www.sintitulo1.com/" target="_blank" rel="noopener">Sin-Título1</a>.',
       },
       ca: {
         'nav-projects': '1. Projectes', 'nav-archivo': '3. Arxiu',
         'nav-about': '2. Sobre mi',
         'nav-cv': '3. CV',
         'nav-contact': '4. Contacte',
+        'p0': "Haller-T és el meu treball de fi de grau, desenvolupat en col·laboració amb USM. USM Haller és un sistema de mobiliari modular de tubs d'acer i ròtules cromades, dissenyat per l'arquitecte suís Fritz Haller i fabricat des de 1963. Tot en ell es sosté a compressió: cada peça empeny contra la següent.",
         'p1': "Haller-T proposa una capa addicional. No és una correcció, ni una crossa: és una extensió del llenguatge. A través d'un sistema de cables i tensors, el projecte introdueix la tensió com una força que complementa la compressió que defineix l'USM. La mateixa lògica estructural, però en sentit oposat. El resultat són configuracions que no eren possibles dins del sistema: voladissos, elements suspesos, grans llums, o una connexió explícita entre el mobiliari i el seu entorn. Haller-T no inventa un sistema nou. Demostra que el sistema existent contenia, dins de la seva pròpia lògica, l'espai exacte on es podia introduir la tensió.",
+        'p2': 'Renders per <a href="https://forma.engineering/" target="_blank" rel="noopener">Forma Engineering</a>.<br>Disseny editorial per <a href="https://www.sintitulo1.com/" target="_blank" rel="noopener">Sin-Título1</a>.',
       },
     };
 

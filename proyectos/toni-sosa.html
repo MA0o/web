@@ -68,6 +68,8 @@
       transition: border-radius 0.15s ease;
     }
     #cursor-dot.square { border-radius: 0; -webkit-mask: none; mask: none; }
+    #cursor-dot.plus { border-radius: 0; -webkit-mask: none; mask: none; clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100%, 35% 100%, 35% 65%, 0% 65%, 0% 35%, 35% 35%); }
+
     @media (max-width: 900px) { #cursor-dot { display: none; } }
 
     /* TITLE CORNERS */
@@ -93,12 +95,6 @@
       padding-bottom: 4rem;
     }
 
-    .gallery img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
     /* TEXT BOX */
     .first-img-wrap {
       position: relative;
@@ -120,6 +116,56 @@
       margin-top: 0.8em;
     }
 
+    /* CAPTION WRAPPER */
+    .img-cap-wrap {
+      position: relative;
+      display: block;
+      width: 100%;
+    }
+
+    .img-cap-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .img-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      line-height: 1.4;
+      padding: 0.3em 0.5em;
+      color: #000;
+      pointer-events: none;
+    }
+
+    .img-caption { display: none; }
+
+    #img-hover-caption {
+      position: fixed;
+      pointer-events: none;
+      z-index: 200;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      line-height: 1.4;
+      background: #fff;
+      color: #000;
+      padding: 0.25em 0.5em;
+      max-width: 28ch;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    #img-hover-caption.visible { opacity: 1; }
+    #img-hover-caption::before { content: '* '; }
+
+    @media (max-width: 900px) {
+      #img-hover-caption { display: none; }
+    }
+
     @media (max-width: 900px) {
       .text-box {
         position: static;
@@ -132,17 +178,13 @@
         overflow-x: hidden;
       }
 
-      /* Rotación 90° + escala para llenar 100vw */
-      /* img landscape 4945×3497 → tras rotate+scale: visual 100vw × 141.4vw */
-      /* overflow top/bottom: 35.35vw → margin compensa para que imágenes queden adyacentes */
       .gallery img,
-      .first-img-wrap > img {
+      .first-img-wrap .img-cap-wrap img {
         transform: rotate(90deg) scale(1.4142);
         margin-top: 35vw;
         margin-bottom: 35vw;
       }
 
-      /* Primera imagen: el margen-top hace que el visual empiece justo al acabar el texto */
     }
 
     nav a[data-i18n="nav-cv"] { display: none; }
@@ -155,6 +197,22 @@
       height: 100%; width: auto;
       display: block;
     }
+
+    .year-corner {
+      position: fixed;
+      top: 4.5rem;
+      z-index: 110;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      white-space: nowrap;
+      padding: 0.12rem 0.5rem;
+      pointer-events: none;
+      line-height: 1.1;
+    }
+    .year-corner-left  { left: 0; }
+    .year-corner-right { right: 0; }
   </style>
 </head>
 <body>
@@ -180,29 +238,33 @@
         <p data-i18n="p1">Una publicación en forma de visión fragmentada de una memoria que se pierde: un periódico gigante para unos ojos que ya no ven, una caligrafía de unas manos que ya no hacen caso.</p>
         <p data-i18n="p2">Este es un relato visual de las conclusiones y anécdotas que Toni Sosa nos regaló y nosotros desciframos. ¿Qué tabaco fuma? ¿Qué pasaría si lloviera vino? ¿Cuál es su libro favorito? ¿Cómo son las suelas de sus zapatos? Esta publicación es un desliz onírico que se vale de la metáfora, el simbolismo y la hipérbole visual para enmarcar la cotidianidad de una persona tan extraordinaria como cualquier otra.</p>
       </div>
-      <img src="../img/proyectos/toni%20sosa/thumbs/1.jpg"  data-full="../img/proyectos/toni%20sosa/1.jpg"  alt="">
+      <div class="img-cap-wrap">
+        <img src="../img/proyectos/toni%20sosa/thumbs/1.jpg" data-full="../img/proyectos/toni%20sosa/1.jpg" data-cap="cap1" alt="">
+      </div>
     </div>
-    <img src="../img/proyectos/toni%20sosa/thumbs/2.jpg"  data-full="../img/proyectos/toni%20sosa/2.jpg"  alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/3.jpg"  data-full="../img/proyectos/toni%20sosa/3.jpg"  alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/4.jpg"  data-full="../img/proyectos/toni%20sosa/4.jpg"  alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/5.jpg"  data-full="../img/proyectos/toni%20sosa/5.jpg"  alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/6.jpg"  data-full="../img/proyectos/toni%20sosa/6.jpg"  alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/7.jpg"  data-full="../img/proyectos/toni%20sosa/7.jpg"  alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/8.jpg"  data-full="../img/proyectos/toni%20sosa/8.jpg"  alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/9.jpg"  data-full="../img/proyectos/toni%20sosa/9.jpg"  alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/10.jpg" data-full="../img/proyectos/toni%20sosa/10.jpg" alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/11.jpg" data-full="../img/proyectos/toni%20sosa/11.jpg" alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/12.jpg" data-full="../img/proyectos/toni%20sosa/12.jpg" alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/13.jpg" data-full="../img/proyectos/toni%20sosa/13.jpg" alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/14.jpg" data-full="../img/proyectos/toni%20sosa/14.jpg" alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/15.jpg" data-full="../img/proyectos/toni%20sosa/15.jpg" alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/16.jpg" data-full="../img/proyectos/toni%20sosa/16.jpg" alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/17.jpg" data-full="../img/proyectos/toni%20sosa/17.jpg" alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/18.jpg" data-full="../img/proyectos/toni%20sosa/18.jpg" alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/19.jpg" data-full="../img/proyectos/toni%20sosa/19.jpg" alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/20.jpg" data-full="../img/proyectos/toni%20sosa/20.jpg" alt="">
-    <img src="../img/proyectos/toni%20sosa/thumbs/21.jpg" data-full="../img/proyectos/toni%20sosa/21.jpg" alt="">
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/2.jpg" data-full="../img/proyectos/toni%20sosa/2.jpg" data-cap="cap2" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/3.jpg" data-full="../img/proyectos/toni%20sosa/3.jpg" data-cap="cap3" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/4.jpg" data-full="../img/proyectos/toni%20sosa/4.jpg" data-cap="cap4" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/5.jpg" data-full="../img/proyectos/toni%20sosa/5.jpg" data-cap="cap5" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/6.jpg" data-full="../img/proyectos/toni%20sosa/6.jpg" data-cap="cap6" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/7.jpg" data-full="../img/proyectos/toni%20sosa/7.jpg" data-cap="cap7" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/8.jpg" data-full="../img/proyectos/toni%20sosa/8.jpg" data-cap="cap8" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/9.jpg" data-full="../img/proyectos/toni%20sosa/9.jpg" data-cap="cap9" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/10.jpg" data-full="../img/proyectos/toni%20sosa/10.jpg" data-cap="cap10" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/11.jpg" data-full="../img/proyectos/toni%20sosa/11.jpg" data-cap="cap11" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/12.jpg" data-full="../img/proyectos/toni%20sosa/12.jpg" data-cap="cap12" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/13.jpg" data-full="../img/proyectos/toni%20sosa/13.jpg" data-cap="cap13" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/14.jpg" data-full="../img/proyectos/toni%20sosa/14.jpg" data-cap="cap14" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/15.jpg" data-full="../img/proyectos/toni%20sosa/15.jpg" data-cap="cap15" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/16.jpg" data-full="../img/proyectos/toni%20sosa/16.jpg" data-cap="cap16" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/17.jpg" data-full="../img/proyectos/toni%20sosa/17.jpg" data-cap="cap17" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/18.jpg" data-full="../img/proyectos/toni%20sosa/18.jpg" data-cap="cap18" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/19.jpg" data-full="../img/proyectos/toni%20sosa/19.jpg" data-cap="cap19" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/20.jpg" data-full="../img/proyectos/toni%20sosa/20.jpg" data-cap="cap20" alt=""></div>
+    <div class="img-cap-wrap"><img src="../img/proyectos/toni%20sosa/thumbs/21.jpg" data-full="../img/proyectos/toni%20sosa/21.jpg" data-cap="cap21" alt=""></div>
   </div>
+  <div class="year-corner year-corner-left">2024</div>
+  <div class="year-corner year-corner-right">2024</div>
 
   <div class="title-corner title-corner-left">TONI SOSA</div>
   <div class="title-corner title-corner-right">TONI SOSA</div>
@@ -224,24 +286,71 @@
   </script>
 
   <script>
+    let currentLang = localStorage.getItem('lang') || 'es';
     const translations = {
       es: {
         'nav-projects': '1. Proyectos', 'nav-archivo': '3. Archivo', 'nav-about': '2. Sobre mí', 'nav-cv': '3. CV', 'nav-contact': '4. Contacto',
         'p1': 'Una publicación en forma de visión fragmentada de una memoria que se pierde: un periódico gigante para unos ojos que ya no ven, una caligrafía de unas manos que ya no hacen caso.',
         'p2': 'Este es un relato visual de las conclusiones y anécdotas que Toni Sosa nos regaló y nosotros desciframos. ¿Qué tabaco fuma? ¿Qué pasaría si lloviera vino? ¿Cuál es su libro favorito? ¿Cómo son las suelas de sus zapatos? Esta publicación es un desliz onírico que se vale de la metáfora, el simbolismo y la hipérbole visual para enmarcar la cotidianidad de una persona tan extraordinaria como cualquier otra.',
+        'cap1': 'Toni acabó siendo un amigo, pero empezó siendo un objeto de estudio, un ser al que diseccionar y estudiar cada una de sus partes:',
+        'cap2': 'Cabeza, tripas, manos...', 'cap3': 'Contorno, piernas...', 'cap4': '—', 'cap5': '—',
+        'cap6': 'Lo primero fue saber de qué estaba hecho: de una muestra desvelamos su ADN...',
+        'cap7': '... la secuencia que define a Toni, lo que lo hace único. No su vida, sus historias, sus risas, sus lágrimas. No, su serie de letras única.',
+        'cap8': '¿Puedes verlo en ella?',
+        'cap9': 'Con sus manos dibujó lo que imaginaba: lo que escuchaba, lo que se imaginaba diciendo.',
+        'cap10': '—', 'cap11': 'Escribió con sus manos...', 'cap12': '... en grande, que era como podía.',
+        'cap13': 'Capturó su memoria con una cámara que le dimos...',
+        'cap14': '... con la condición de que nos enseñara cómo ve',
+        'cap15': 'Y lo que nos enseñó fue un escaneo robótico de su entorno y contorno:',
+        'cap16': '... su baño, sus juegos, su gente, su comida. Generó una visión multidimensional de lo que para Toni Sosa era un día.',
+        'cap17': '—', 'cap18': '¿Cómo es Toni Sosa por debajo?',
+        'cap19': 'Si Calígula fuera tu libro favorito lo podrías leer entero en estas dos páginas...',
+        'cap20': '... pero en un libro tan grande y con la letra tan pequeña te pasará como a Toni y no podrás.',
+        'cap21': 'Toni Sosa',
       },
       en: {
         'nav-projects': '1. Projects', 'nav-archivo': '3. Archive', 'nav-about': '2. About', 'nav-cv': '3. CV', 'nav-contact': '4. Contact',
         'p1': 'A publication in the form of a fragmented vision of a fading memory: a giant newspaper for eyes that no longer see, calligraphy written by hands that no longer obey.',
         'p2': 'This is a visual account of the conclusions and anecdotes that Toni Sosa gave us and we deciphered. What tobacco does he smoke? What would happen if it rained wine? What is his favourite book? What do the soles of his shoes look like? This publication is an oneiric slip that draws on metaphor, symbolism and visual hyperbole to frame the everyday life of a person as extraordinary as any other.',
+        'cap1': 'Toni ended up being a friend, but started out as a subject of study, a being to dissect and examine part by part:',
+        'cap2': 'Head, guts, hands...', 'cap3': 'Outline, legs...', 'cap4': '—', 'cap5': '—',
+        'cap6': 'The first thing was to know what he was made of: from a sample we revealed his DNA...',
+        'cap7': '... the sequence that defines Toni, what makes him unique. Not his life, his stories, his laughter, his tears. No, his unique string of letters.',
+        'cap8': 'Can you see it in it?',
+        'cap9': 'With his hands he drew what he imagined: what he heard, what he imagined saying.',
+        'cap10': '—', 'cap11': 'He wrote with his hands...', 'cap12': '... in large, because that was how he could.',
+        'cap13': 'He captured his memory with a camera we gave him...',
+        'cap14': '... on the condition that he showed us how he sees',
+        'cap15': 'And what he showed us was a robotic scan of his surroundings and outline:',
+        'cap16': '... his bathroom, his games, his people, his food. He generated a multidimensional vision of what a day was for Toni Sosa.',
+        'cap17': '—', 'cap18': 'What is Toni Sosa like underneath?',
+        'cap19': 'If Caligula were your favourite book you could read it all in these two pages...',
+        'cap20': '... but in a book so large with such small print it will happen to you as it did to Toni and you won\'t be able to.',
+        'cap21': 'Toni Sosa',
       },
       ca: {
         'nav-projects': '1. Projectes', 'nav-archivo': '3. Arxiu', 'nav-about': '2. Sobre mi', 'nav-cv': '3. CV', 'nav-contact': '4. Contacte',
         'p1': 'Una publicació en forma de visió fragmentada d\'una memòria que es perd: un diari gegant per a uns ulls que ja no veuen, una cal·ligrafia d\'unes mans que ja no fan cas.',
         'p2': 'Aquest és un relat visual de les conclusions i anècdotes que Toni Sosa ens va regalar i nosaltres vam desxifrar. Quin tabac fuma? Què passaria si plogués vi? Quin és el seu llibre favorit? Com són les soles de les seves sabates? Aquesta publicació és un lliscament oníric que es val de la metàfora, el simbolisme i la hipèrbole visual per emmarcar la quotidianitat d\'una persona tan extraordinària com qualsevol altra.',
+        'cap1': 'Toni va acabar sent un amic, però va començar sent un objecte d\'estudi, un ésser al qual diseccionar i estudiar cadascuna de les seves parts:',
+        'cap2': 'Cap, budells, mans...', 'cap3': 'Contorn, cames...', 'cap4': '—', 'cap5': '—',
+        'cap6': 'El primer va ser saber de què estava fet: d\'una mostra vam desvelar el seu ADN...',
+        'cap7': '... la seqüència que defineix Toni, el que el fa únic. No la seva vida, les seves històries, les seves rialles, les seves llàgrimes. No, la seva sèrie de lletres única.',
+        'cap8': 'Pots veure\'l en ella?',
+        'cap9': 'Amb les seves mans va dibuixar el que imaginava: el que escoltava, el que s\'imaginava dient.',
+        'cap10': '—', 'cap11': 'Va escriure amb les seves mans...', 'cap12': '... en gran, que era com podia.',
+        'cap13': 'Va capturar la seva memòria amb una càmera que li vam donar...',
+        'cap14': '... amb la condició que ens ensenyés com veu',
+        'cap15': 'I el que ens va ensenyar va ser un escaneig robòtic del seu entorn i contorn:',
+        'cap16': '... el seu bany, els seus jocs, la seva gent, el seu menjar. Va generar una visió multidimensional del que per a Toni Sosa era un dia.',
+        'cap17': '—', 'cap18': 'Com és Toni Sosa per sota?',
+        'cap19': 'Si Calígula fos el teu llibre favorit el podries llegir sencer en aquestes dues pàgines...',
+        'cap20': '... però en un llibre tan gran i amb la lletra tan petita et passarà com a Toni i no podràs.',
+        'cap21': 'Toni Sosa',
       },
     };
     function applyLang(lang) {
+      currentLang = lang;
       document.documentElement.lang = lang;
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const val = translations[lang] && translations[lang][el.dataset.i18n];
@@ -260,5 +369,28 @@
 
   <script src="../js/viewer.js"></script>
   <script src="/js/nav5.js"></script>
+  <script>
+    const hoverCap = document.createElement('div');
+    hoverCap.id = 'img-hover-caption';
+    document.body.appendChild(hoverCap);
+
+    document.querySelectorAll('.img-cap-wrap').forEach(wrap => {
+      if (!wrap.querySelector('img')?.dataset.cap) return;
+      wrap.addEventListener('mouseenter', () => {
+        const key = wrap.querySelector('img')?.dataset.cap;
+        hoverCap.textContent = (translations[currentLang] && translations[currentLang][key]) || '';
+        hoverCap.classList.add('visible');
+        dot.classList.add('plus');
+      });
+      wrap.addEventListener('mouseleave', () => {
+        hoverCap.classList.remove('visible');
+        dot.classList.remove('plus');
+      });
+      wrap.addEventListener('mousemove', e => {
+        hoverCap.style.left = (e.clientX + 20) + 'px';
+        hoverCap.style.top  = e.clientY + 'px';
+      });
+    });
+  </script>
 </body>
 </html>

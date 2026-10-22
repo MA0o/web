@@ -150,6 +150,8 @@
       margin-top: 3em;
       color: rgba(255, 255, 255, 0.7);
     }
+    .credits a { color: inherit; text-decoration: none; }
+    .credits a:hover { background-color: var(--text); color: var(--bg); }
 
     @media (max-width: 800px) {
       .project-text { grid-column: 1 / -1; }
@@ -182,6 +184,22 @@
       width: auto;
       display: block;
     }
+
+    .year-corner {
+      position: fixed;
+      top: 4.5rem;
+      z-index: 110;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      white-space: nowrap;
+      padding: 0.12rem 0.5rem;
+      pointer-events: none;
+      line-height: 1.1;
+    }
+    .year-corner-left  { left: 0; }
+    .year-corner-right { right: 0; }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="484c804e-9f54-4df9-b48e-1540f3366b36"></script>
 </head>
@@ -210,17 +228,19 @@
 
   <div class="content">
     <div class="project-text">
-      <p data-i18n="p1">Napbuf es un dispositivo tecnológico diseñado para brindar autonomía y seguridad a los niños con asma, permitiéndoles desenvolverse con mayor confianza en su día a día. Son niños y quieren correr, gritar, jugar, respirar.</p>
+      <p data-i18n=”p1”>Napbuf es un dispositivo para niños con asma. Son niños y quieren correr, gritar, jugar, respirar, pero el asma suele venir acompañada de la preocupación de los adultos, a veces demasiada.</p>
 
-      <p data-i18n="p2">El asma es una condición que puede afectar la independencia de los niños, generando preocupación desmedida por parte de los adultos.</p>
+      <p data-i18n=”p2”>Unos micrófonos miden parámetros biométricos del niño y los guardan, sin enviárselos a nadie. Si tiene un ataque y lo controla, pulsa un botón y les dice a los adultos: “he tenido un ataque, pero lo he controlado”.</p>
 
-      <p data-i18n="p3">A través de unos micrófonos el dispositivo mide parámetros biométricos del niño pero solo se almacenan, no se comparten con los padres. Funciona como un refuerzo hacia los adultos, donde al pulsar el botón el niño dice “he tenido un ataque pero lo he controlado”. Este no es un dispositivo de control, sino de emancipación. Apostamos por la normalización del asma y eliminando barreras innecesarias en su desarrollo.</p>
+      <p data-i18n=”p3”>No es un dispositivo de control, sino de emancipación. Apostamos por normalizar el asma y quitar las barreras que sobran.</p>
 
-      <p data-i18n="p4">El desarrollo de Napbuf forma parte del proyecto CAP, una iniciativa enfocada en el diseño de tecnologías con un enfoque humano para mejorar la prevención, el diagnóstico y el control de problemas de salud.</p>
+      <p data-i18n=”p4”>Napbuf forma parte del proyecto CAP, una iniciativa de tecnologías con enfoque humano para la salud.</p>
 
       <p class="credits" data-i18n="credits">Junto con <a href="https://www.instagram.com/jordina.cascante/" target="_blank">Jordina Cascante</a> y <a href="https://www.instagram.com/ariadna.barceloo/" target="_blank">Ariadna Barceló</a></p>
     </div>
   </div>
+  <div class="year-corner year-corner-left">2023</div>
+  <div class="year-corner year-corner-right">2023</div>
 
   <div class="title-corner title-corner-left">napbuf</div>
   <div class="title-corner title-corner-right">napbuf</div>
@@ -235,10 +255,10 @@
         'nav-about': '2. Sobre mí',
         'nav-cv': '3. CV',
         'nav-contact': '4. Contacto',
-        'p1': 'Napbuf es un dispositivo tecnológico diseñado para brindar autonomía y seguridad a los niños con asma, permitiéndoles desenvolverse con mayor confianza en su día a día. Son niños y quieren correr, gritar, jugar, respirar.',
-        'p2': 'El asma es una condición que puede afectar la independencia de los niños, generando preocupación desmedida por parte de los adultos.',
-        'p3': 'A través de unos micrófonos el dispositivo mide parámetros biométricos del niño pero solo se almacenan, no se comparten con los padres. Funciona como un refuerzo hacia los adultos, donde al pulsar el botón el niño dice “he tenido un ataque pero lo he controlado”. Este no es un dispositivo de control, sino de emancipación. Apostamos por la normalización del asma y eliminando barreras innecesarias en su desarrollo.',
-        'p4': 'El desarrollo de Napbuf forma parte del proyecto CAP, una iniciativa enfocada en el diseño de tecnologías con un enfoque humano para mejorar la prevención, el diagnóstico y el control de problemas de salud.',
+        'p1': 'Napbuf es un dispositivo para niños con asma. Son niños y quieren correr, gritar, jugar, respirar, pero el asma suele venir acompañada de la preocupación de los adultos, a veces demasiada.',
+        'p2': 'Unos micrófonos miden parámetros biométricos del niño y los guardan, sin enviárselos a nadie. Si tiene un ataque y lo controla, pulsa un botón y les dice a los adultos: “he tenido un ataque, pero lo he controlado”.',
+        'p3': 'No es un dispositivo de control, sino de emancipación. Apostamos por normalizar el asma y quitar las barreras que sobran.',
+        'p4': 'Napbuf forma parte del proyecto CAP, una iniciativa de tecnologías con enfoque humano para la salud.',
         'credits': 'Junto con <a href="https://www.instagram.com/jordina.cascante/" target="_blank">Jordina Cascante</a> y <a href="https://www.instagram.com/ariadna.barceloo/" target="_blank">Ariadna Barceló</a>',
       },
       en: {
@@ -246,10 +266,10 @@
         'nav-about': '2. About',
         'nav-cv': '3. CV',
         'nav-contact': '4. Contact',
-        'p1': 'Napbuf is a technological device designed to provide autonomy and safety to children with asthma, allowing them to go about their daily lives with greater confidence. They are children, and they want to run, shout, play, breathe.',
-        'p2': 'Asthma is a condition that can affect children’s independence, generating excessive worry among adults.',
-        'p3': 'Through microphones, the device measures the child’s biometric parameters, but these are only stored, never shared with parents. It acts as reassurance for adults: by pressing the button, the child says “I’ve had an attack but I’ve got it under control”. This is not a device for control, but for emancipation. We believe in normalizing asthma and removing unnecessary barriers in children’s development.',
-        'p4': 'The development of Napbuf is part of the CAP project, an initiative focused on designing technologies with a human-centred approach to improve the prevention, diagnosis and management of health problems.',
+        ‘p1’: ‘Napbuf is a device for children with asthma. They are children and they want to run, shout, play, breathe — but asthma tends to come with the worry of the adults around them, sometimes too much.’,
+        ‘p2’: ‘Microphones measure the child\’s biometric parameters and store them, without sending them to anyone. If they have an attack and manage it, they press a button and tell the adults: “I\’ve had an attack, but I controlled it”.’,
+        ‘p3’: ‘It is not a device for control, but for emancipation. We believe in normalising asthma and removing the barriers that are in the way.’,
+        ‘p4’: ‘Napbuf is part of the CAP project, an initiative of human-centred technologies for health.’,
         'credits': 'Together with <a href="https://www.instagram.com/jordina.cascante/" target="_blank">Jordina Cascante</a> and <a href="https://www.instagram.com/ariadna.barceloo/" target="_blank">Ariadna Barceló</a>',
       },
       ca: {
@@ -257,10 +277,10 @@
         'nav-about': '2. Sobre mi',
         'nav-cv': '3. CV',
         'nav-contact': '4. Contacte',
-        'p1': 'Napbuf és un dispositiu tecnològic dissenyat per oferir autonomia i seguretat als infants amb asma, permetent-los desenvolupar-se amb més confiança en el seu dia a dia. Són infants i volen córrer, cridar, jugar, respirar.',
-        'p2': 'L’asma és una condició que pot afectar la independència dels infants, generant una preocupació desmesurada per part dels adults.',
-        'p3': 'Mitjançant uns micròfons, el dispositiu mesura paràmetres biomètrics de l’infant, però només es desen, no es comparteixen amb els pares. Funciona com un reforç cap als adults, on en prémer el botó l’infant diu “he tingut un atac però l’he controlat”. Aquest no és un dispositiu de control, sinó d’emancipació. Apostem per la normalització de l’asma i per eliminar barreres innecessàries en el seu desenvolupament.',
-        'p4': 'El desenvolupament de Napbuf forma part del projecte CAP, una iniciativa centrada en el disseny de tecnologies amb un enfocament humà per millorar la prevenció, el diagnòstic i la gestió de problemes de salut.',
+        ‘p1’: ‘Napbuf és un dispositiu per a infants amb asma. Són infants i volen córrer, cridar, jugar, respirar, però l\’asma sol venir acompanyada de la preocupació dels adults, de vegades massa.’,
+        ‘p2’: ‘Uns micròfons mesuren paràmetres biomètrics de l\’infant i els guarden, sense enviar-los a ningú. Si té un atac i el controla, prem un botó i els diu als adults: “he tingut un atac, però l\’he controlat”.’,
+        ‘p3’: ‘No és un dispositiu de control, sinó d\’emancipació. Apostem per normalitzar l\’asma i treure les barreres que sobren.’,
+        ‘p4’: ‘Napbuf forma part del projecte CAP, una iniciativa de tecnologies amb enfocament humà per a la salut.’,
         'credits': 'Juntament amb <a href="https://www.instagram.com/jordina.cascante/" target="_blank">Jordina Cascante</a> i <a href="https://www.instagram.com/ariadna.barceloo/" target="_blank">Ariadna Barceló</a>',
       },
     };
@@ -298,6 +318,10 @@
     document.querySelectorAll('nav a').forEach(a => {
       a.addEventListener('mouseenter', () => dot.classList.add('square'));
       a.addEventListener('mouseleave', () => dot.classList.remove('square'));
+    });
+    document.querySelectorAll('.credits a').forEach(a => {
+      a.addEventListener('mouseenter', () => { dot.classList.remove('square', 'n5-triangle'); dot.classList.add('cross'); });
+      a.addEventListener('mouseleave', () => dot.classList.remove('cross'));
     });
   </script>
 

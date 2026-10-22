@@ -146,6 +146,22 @@
       width: auto;
       display: block;
     }
+
+    .year-corner {
+      position: fixed;
+      top: 4.5rem;
+      z-index: 110;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      white-space: nowrap;
+      padding: 0.12rem 0.5rem;
+      pointer-events: none;
+      line-height: 1.1;
+    }
+    .year-corner-left  { left: 0; }
+    .year-corner-right { right: 0; }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="484c804e-9f54-4df9-b48e-1540f3366b36"></script>
 </head>
@@ -172,7 +188,7 @@
     <div class="gap"></div>
     <div class="gap"></div>
     <div class="project-text">
-      <p>Miguelito es un objeto multiusos (con resultados discutibles). Puede aguantar el móvil, pero se le cae, puede marcar un libro pero se le va, puede pisar papeles, pero se levanta. Miguelito aguanta botellas, espanta pájaros, sostiene fruta, pisa papeles, guarda llaves, sirve de gancho, de cenicero, de flor, de colgador. Hace de todo pero no muy bien.</p>
+      <p>Miguelito es un objeto pluriempleado (con resultados discutibles). Puede aguantar el móvil, pero se le cae, puede marcar un libro pero se le va, puede pisar papeles, pero se levanta. Miguelito aguanta botellas, espanta pájaros, sostiene fruta, pisa papeles, guarda llaves, sirve de gancho, de cenicero, de flor, de colgador. Hace de todo pero no muy bien.</p>
       <p>"</p>
       <p>Todos somos un poco Miguelito.</p>
     </div>
@@ -208,6 +224,8 @@
     <video autoplay muted loop playsinline><source src="../img/proyectos/miguelito/playa-loop.mp4" type="video/mp4"></video>
     <div class="gap"></div>
   </div>
+  <div class="year-corner year-corner-left">2025</div>
+  <div class="year-corner year-corner-right">2025</div>
 
   <div class="title-corner title-corner-left">MIGUELITO</div>
   <div class="title-corner title-corner-right">MIGUELITO</div>

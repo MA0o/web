@@ -139,7 +139,7 @@
     /* ── TEXT OVERLAY ─────────────────────────────────────────────────────── */
     .lc-text {
       position: fixed;
-      bottom: 0;
+      bottom: 1.4rem;
       left: 0;
       right: 0;
       z-index: 50;
@@ -167,6 +167,22 @@
       width: auto;
       display: block;
     }
+
+    .year-corner {
+      position: fixed;
+      top: 4.5rem;
+      z-index: 110;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      white-space: nowrap;
+      padding: 0.12rem 0.5rem;
+      pointer-events: none;
+      line-height: 1.1;
+    }
+    .year-corner-left  { left: 0; }
+    .year-corner-right { right: 0; }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="484c804e-9f54-4df9-b48e-1540f3366b36"></script>
 </head>
@@ -206,6 +222,8 @@
   <div class="lc-text">
     <p data-i18n="p1">Con <a href="https://www.neo2.com/pol-gilbert-muestra-sus-coleccion-de-estrellas-en-200cent/" target="_blank">Pol Gilbert</a> un día encontramos dos estrellas que habían caído del cielo. Una parecía una silla, la otra una lámpara. Ninguna funcionaba muy bien como tal: ni era cómoda, ni iluminaba, ni era ligera, ni cuidadosa, ni se podía apagar... Pero nada de eso importa porque son nuestras estrellas caídas del cielo.</p>
   </div>
+  <div class="year-corner year-corner-left">2023</div>
+  <div class="year-corner year-corner-right">2023</div>
 
   <div class="title-corner title-corner-left">FeNi</div>
   <div class="title-corner title-corner-right">FeNi</div>

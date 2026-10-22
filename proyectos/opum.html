@@ -120,6 +120,7 @@
     }
 
     #cursor-dot.square { border-radius: 0; -webkit-mask: none; mask: none; }
+    #cursor-dot.plus { border-radius: 0; -webkit-mask: none; mask: none; clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100%, 35% 100%, 35% 65%, 0% 65%, 0% 35%, 35% 35%); }
 
     #cursor-dot.cross {
       border-radius: 0;
@@ -250,6 +251,47 @@ clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100
       width: auto;
       display: block;
     }
+
+    .year-corner {
+      position: fixed;
+      top: 4.5rem;
+      z-index: 110;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      white-space: nowrap;
+      padding: 0.12rem 0.5rem;
+      pointer-events: none;
+      line-height: 1.1;
+    }
+    .year-corner-left  { left: 0; }
+    .year-corner-right { right: 0; }
+
+    /* EXPO + TEXT */
+    .expo-hero { width: 100%; display: block; }
+
+    .expo-bottom {
+      display: flex;
+      align-items: flex-start;
+    }
+    .opum-text {
+      width: 30%;
+      flex-shrink: 0;
+      padding: 4rem 1.5rem 6rem;
+      font-size: 0.75rem;
+      line-height: 1.5;
+    }
+    .opum-text p { margin-bottom: 1em; }
+    .opum-text p:last-child { margin-bottom: 0; }
+    .opum-text a { background-color: #000; color: #fff; text-decoration: none; padding: 0 1px; }
+    .expo-rest {
+      flex: 1;
+    }
+    .expo-rest img {
+      width: 100%;
+      display: block;
+    }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="484c804e-9f54-4df9-b48e-1540f3366b36"></script>
 </head>
@@ -315,6 +357,26 @@ clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100
       <span class="def-num">3. f. Todo es una eme mientras parezca una eme, funcione como una eme y se llame eme.</span>
     </div>
   </div>
+  <img class="expo-hero" src="../img/proyectos/opum/expo/thumbs/IMG_4017.jpg" data-full="../img/proyectos/opum/expo/IMG_4017.jpg" alt="">
+
+  <div class="expo-bottom">
+    <div class="opum-text">
+      <p>Opum parte de otro proyecto, <a href="mmmm.html" target="_blank" rel="noopener">MMMM</a>, una investigación sobre el mortero que hice en 2024 en la universidad. Aquel trabajo llegó demasiado rápido a un objeto final, y se quedó entre la escultura y el diseño sin ser del todo ninguna de las dos cosas.</p>
+      <p>Con Opum quise dar un paso atrás. En vez de cerrar, abrir. Durante tres meses fui cada día al taller a imaginar una nueva manera de moler, de majar, de machacar. Me impuse unas limitaciones y usé el proceso como herramienta, en una práctica de experimentación diaria y acumulación cercana a "Cien sillas en cien días" de Martino Gamper. Fueron saliendo objetos que llamo Emes, todos con la misma estructura de tres partes: superficie, maza y base, y con el mismo potencial funcional que un mortero tradicional. Lo que se muestra es solo una fracción mínima del universo de Emes que imaginé.</p>
+      <p>A cada pieza le di un código en lugar de un nombre. Son nueve normas que clasifican el material, la forma y la textura, y que además permiten generar nuevas variaciones. El código vuelve concreto lo que de otro modo sería un universo discreto de objetos.</p>
+      <p>Estos esbozos tridimensionales de Emes son el ejercicio de investigación en sí. Yo tenía un uso en mente al hacerlos, pero me interesaba que cada persona imaginara el suyo: el gesto de la mano, lo que se muele o se machaca dentro, una forma que parece enorme o diminuta según cómo se mire. Lo mismo ocurre con el nombre: Opum, "objeto parecido a un M", nace de la idea de que nombrar un objeto ya determina cómo lo miramos y para qué lo usamos. Uno puede sentarse en un cubo de basura y llamarlo silla, y clavar un clavo con un libro y llamarlo martillo.</p>
+      <p>La exhibición se inauguró el 24 de septiembre de 2025 en la galería 200 Cent, en Consejo de Ciento. La obra no eran las piezas sueltas, sino el conjunto, así que las colgué en bandejas finas de madera, entrelazadas a distintas alturas, sin jerarquías entre ellas. En el fondo, toda la exhibición es basura ordenada: el valor no está en cada pieza, sino en la continuidad, la obsesión, en el gesto de buscarle un sentido y un orden a esa basura. Por eso el precio sigue esa misma lógica: en vez de decidir yo cuánto vale cada pieza, a cada una le asigné un número aleatorio entre uno y el total de Emes.</p>
+    </div>
+    <div class="expo-rest">
+      <img src="../img/proyectos/opum/expo/thumbs/IMG_4008.jpg" data-full="../img/proyectos/opum/expo/IMG_4008.jpg" alt="">
+      <img src="../img/proyectos/opum/expo/thumbs/IMG_4025.jpg" data-full="../img/proyectos/opum/expo/IMG_4025.jpg" alt="">
+      <img src="../img/proyectos/opum/expo/thumbs/IMG_4027.jpg" data-full="../img/proyectos/opum/expo/IMG_4027.jpg" alt="">
+      <img src="../img/proyectos/opum/expo/thumbs/IMG_4031.jpg" data-full="../img/proyectos/opum/expo/IMG_4031.jpg" alt="">
+    </div>
+  </div>
+
+  <div class="year-corner year-corner-left">2025</div>
+  <div class="year-corner year-corner-right">2025</div>
 
   <div class="title-corner title-corner-left">OPUM</div>
   <div class="title-corner title-corner-right">OPUM</div>
@@ -333,11 +395,9 @@ clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100
       cursorInfo.style.left = e.clientX + 'px';
       cursorInfo.style.top  = e.clientY + 'px';
     });
-    document.addEventListener('mouseover', e => {
-      if (e.target.closest('a, .nav-logo')) dot.classList.add('square');
-    });
-    document.addEventListener('mouseout', e => {
-      if (e.target.closest('a, .nav-logo')) dot.classList.remove('square');
+    document.querySelectorAll('.opum-text a').forEach(a => {
+      a.addEventListener('mouseenter', () => { dot.classList.remove('square', 'n5-triangle', 'cross'); dot.classList.add('plus'); });
+      a.addEventListener('mouseleave', () => dot.classList.remove('plus'));
     });
   </script>
 

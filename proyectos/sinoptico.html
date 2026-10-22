@@ -24,8 +24,6 @@
       font-family: var(--font-mono);
     }
 
-    body { height: 300vh; }
-
     /* NAV */
     nav {
       position: fixed;
@@ -43,116 +41,55 @@
       justify-content: space-between;
       align-items: flex-start;
     }
-
     nav a {
       display: block;
       width: fit-content;
       color: #000000;
       text-decoration: none;
     }
-
-    .nav-lang {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-    }
-
+    .nav-lang { display: flex; flex-direction: column; align-items: flex-end; }
     .lang-link { opacity: 0.4; }
     .lang-link.active { opacity: 1; }
 
     /* CURSOR */
     * { cursor: none; }
-
     #cursor-dot {
       position: fixed;
       pointer-events: none;
       z-index: 10002;
-      width: 24px;
-      height: 24px;
+      width: 24px; height: 24px;
       background: red;
       border-radius: 50%;
       transform: translate(-50%, -50%);
       transition: border-radius 0.15s ease;
     }
-
     #cursor-dot.square { border-radius: 0; -webkit-mask: none; mask: none; }
-
     @media (max-width: 900px) { #cursor-dot { display: none; } }
 
-    /* VIDEO BACKGROUND */
-    #bg-video {
-      position: fixed;
-      inset: 0;
+    /* SLIDESHOW */
+    #slideshow {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #slideshow img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* SECTION 1 — TEXT */
-    #section-text {
-      position: fixed;
-      inset: 0;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 5rem 2rem;
-      pointer-events: none;
-      will-change: transform, opacity;
-    }
-
-    .page-text {
-      max-width: 38ch;
-      font-size: 0.75rem;
-      line-height: 1.5;
-      background: #ffffff;
-      color: #000000;
-      mix-blend-mode: difference;
-      padding: 0.05em 0.2em;
-    }
-
-    .page-text p { margin-bottom: 1em; }
-    .page-text p:last-child { margin-bottom: 0; }
-
-    /* SECTION 2 — AXO */
-    #section-axo {
-      position: fixed;
-      inset: 0;
-      z-index: 5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      padding: 5rem 1rem 1rem;
-      opacity: 0;
-      pointer-events: none;
-      will-change: transform, opacity;
-    }
-
-    #section-axo img {
-      max-height: 85vh;
-      max-width: 48%;
-      object-fit: contain;
       display: block;
     }
 
-    /* SECTION 3 — VISTAS */
-    #section-vistas {
-      position: fixed;
-      inset: 0;
-      z-index: 6;
-      background: #000;
-      opacity: 0;
-      pointer-events: none;
-      will-change: transform, opacity;
+    /* TEXT + VIDEO */
+    .sn-text {
+      padding: 4rem 1.5rem 2rem;
+      max-width: 50ch;
+      font-size: 0.75rem;
+      line-height: 1.5;
     }
-
-    #section-vistas img {
-      position: absolute;
-      object-fit: contain;
-    }
+    .sn-text p { margin-bottom: 1em; }
+    .sn-text p:last-child { margin-bottom: 0; }
+    .sn-video { width: 100%; }
+    .sn-video video { width: 100%; display: block; }
 
     /* TITLE CORNERS */
     .title-corner {
@@ -164,57 +101,61 @@
       color: #ffffff;
       mix-blend-mode: difference;
       white-space: nowrap;
-      padding: 0 0.5rem;
+      padding: 0.12rem 0.5rem;
       pointer-events: none;
-      line-height: 1;
+      line-height: 1.1;
     }
     .title-corner-left  { left: 0; }
     .title-corner-right { right: 0; }
 
+    nav a[data-i18n="nav-cv"] { display: none; }
+    .nav-links { align-self: flex-end; }
+    .nav-logo {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      height: 100%; width: auto;
+      display: block;
+    }
 
     @media (max-width: 800px) {
       nav { font-size: 1rem; }
-      .page-text { max-width: 90vw; }
-      #section-axo { flex-direction: column; gap: 0.5rem; padding: 5rem 0.5rem 0.5rem; }
-      #section-axo img { max-height: 42vh; max-width: 90%; }
+      .sn-text { max-width: 90vw; }
     }
 
-    nav a[data-i18n="nav-cv"] { display: none; }
-
-    .nav-links { align-self: flex-end; }
-
-    .nav-logo {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      height: 100%;
-      width: auto;
-      display: block;
+    .year-corner {
+      position: fixed;
+      top: 4.5rem;
+      z-index: 110;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      white-space: nowrap;
+      padding: 0.12rem 0.5rem;
+      pointer-events: none;
+      line-height: 1.1;
     }
+    .year-corner-left  { left: 0; }
+    .year-corner-right { right: 0; }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="484c804e-9f54-4df9-b48e-1540f3366b36"></script>
 </head>
 <body>
 
-  <video id="bg-video" autoplay muted loop playsinline
-         poster="../img/proyectos/sinóptico/portada.jpg">
-    <source src="../img/proyectos/sinóptico/loop.mp4" type="video/mp4">
-  </video>
-
-  <div id="section-text">
-    <div class="page-text">
-      <p data-i18n="p1">El proyecto plantea un punto de observación en El Prat de Llobregat, entendido como un territorio híbrido donde conviven, sin jerarquías claras, fauna, vegetación, industria e infraestructuras. La propuesta asume esa condición de fricción y superposición como material de proyecto y concibe la arquitectura como un dispositivo de lectura: una pieza que orienta la mirada y convierte la complejidad del lugar en experiencia espacial.</p>
-      <p data-i18n="p2">El observatorio se estructura en torno a una escalera central de hierro contenida por una cáscara de hormigón. A lo largo del ascenso, una serie de catalejos encuadran vistas parciales del entorno hasta culminar en un mirador panorámico. Su altura se define para emerger por encima de las cañas, mientras que el acceso subterráneo actúa como umbral sensorial. El conjunto, del color de la vegetación, busca disolverse en el ecosistema y operar como un habitante más del paisaje.</p>
-    </div>
+  <div id="slideshow">
+    <img id="slide-img" src="../img/proyectos/sin%C3%B3ptico/vistas/_MP_3356.jpg" alt="">
   </div>
 
-  <div id="section-axo">
-    <img src="../img/proyectos/sinóptico/axo.png" alt="">
-    <img src="../img/proyectos/sinóptico/axo seccion.png" alt="">
+  <div class="sn-text">
+    <p data-i18n="p1">El proyecto plantea un punto de observación en El Prat de Llobregat, entendido como un territorio híbrido donde conviven, sin jerarquías claras, fauna, vegetación, industria e infraestructuras. La propuesta asume esa condición de fricción y superposición como material de proyecto y concibe la arquitectura como un dispositivo de lectura: una pieza que orienta la mirada y convierte la complejidad del lugar en experiencia espacial.</p>
+    <p data-i18n="p2">El observatorio se estructura en torno a una escalera central de hierro contenida por una cáscara de hormigón. A lo largo del ascenso, una serie de catalejos encuadran vistas parciales del entorno hasta culminar en un mirador panorámico. Su altura se define para emerger por encima de las cañas, mientras que el acceso subterráneo actúa como umbral sensorial. El conjunto, del color de la vegetación, busca disolverse en el ecosistema y operar como un habitante más del paisaje.</p>
   </div>
-
-  <div id="section-vistas"></div>
+  <div class="sn-video">
+    <video autoplay muted loop playsinline>
+      <source src="../img/proyectos/sinóptico/loop.mp4" type="video/mp4">
+    </video>
+  </div>
 
   <nav>
     <div class="nav-links">
@@ -230,6 +171,8 @@
       <a href="#" class="lang-link" data-lang="ca">CAT</a>
     </div>
   </nav>
+  <div class="year-corner year-corner-left">2025</div>
+  <div class="year-corner year-corner-right">2025</div>
 
   <div class="title-corner title-corner-left">sinóptico</div>
   <div class="title-corner title-corner-right">sinóptico</div>
@@ -237,85 +180,39 @@
   <div id="cursor-dot"></div>
 
   <script>
-    // Cursor
     const dot = document.getElementById('cursor-dot');
     document.addEventListener('mousemove', e => {
       dot.style.left = e.clientX + 'px';
       dot.style.top  = e.clientY + 'px';
     });
-    document.addEventListener('mouseover', e => {
-      if (e.target.closest('a, .nav-logo')) dot.classList.add('square');
-    });
-    document.addEventListener('mouseout', e => {
-      if (e.target.closest('a, .nav-logo')) dot.classList.remove('square');
-    });
-    document.querySelector('.nav-logo').addEventListener('click', () => {
-      const o = document.getElementById('ct-overlay');
-      if (o) o.classList.add('open');
+    document.querySelectorAll('nav a').forEach(a => {
+      a.addEventListener('mouseenter', () => dot.classList.add('square'));
+      a.addEventListener('mouseleave', () => dot.classList.remove('square'));
     });
   </script>
 
   <script>
-    // Scatter vistas images in a 4×3 grid with random jitter
-    (function () {
-      const srcs = [
-        '_MP_3356.jpg', '_MP_3357.jpg', '_MP_3360-2.jpg', '_MP_3362.jpg',
-        '_MP_3366.jpg', '_MP_3367.jpg', '_MP_3368.jpg',  '_MP_3382b.png',
-        '_MP_3384.jpg', '_MP_3385.jpg', '_MP_3387.jpg',  '_MP_3389.jpg',
-      ];
-      const container = document.getElementById('section-vistas');
-      srcs.forEach((file, i) => {
-        const col = i % 4;
-        const row = Math.floor(i / 4);
-        const jx = (Math.random() - 0.5) * 12;
-        const jy = (Math.random() - 0.5) * 18;
-        const w  = 13 + Math.random() * 7;
-        const x  = Math.max(1, Math.min((col + 0.5) / 4 * 100 - w / 2 + jx, 99 - w));
-        const y  = Math.max(3, Math.min((row + 0.5) / 3 * 100 + jy, 85));
-        const img = document.createElement('img');
-        img.src = `../img/proyectos/sinóptico/vistas/thumbs/${file.replace(/\.[^.]+$/, '.jpg')}`;
-        img.alt = '';
-        img.style.cssText = `width:${w}%;left:${x}%;top:${y}%;`;
-        container.appendChild(img);
-      });
-    })();
-  </script>
-
-  <script>
-    // Scroll animation
-    (function () {
-      const sText   = document.getElementById('section-text');
-      const sAxo    = document.getElementById('section-axo');
-      const sVistas = document.getElementById('section-vistas');
-
-      function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
-      function progress(s, a, b) { return clamp((s - a) / (b - a), 0, 1); }
-
-      function onScroll() {
-        const s  = window.scrollY;
-        const vh = window.innerHeight;
-
-        // Text slides up and fades: 0 → 0.4vh
-        const tP = progress(s, 0, vh * 0.4);
-        sText.style.transform = `translateY(${-110 * tP}vh)`;
-        sText.style.opacity   = (1 - tP * 1.6).toFixed(3);
-
-        // Axo: slides in from below 0.35–0.6vh, stays until vistas take over
-        const axoIn  = progress(s, vh * 0.35, vh * 0.6);
-        const axoOut = progress(s, vh * 1.0,  vh * 1.25);
-        const axoY   = (1 - axoIn) * 80 + axoOut * -80;
-        sAxo.style.transform = `translateY(${axoY.toFixed(1)}vh)`;
-        sAxo.style.opacity   = (axoIn > 0 ? (1 - axoOut) : 0).toFixed(3);
-
-        // Vistas: slide in from below, same range as axo exit — user decides when
-        const vitP = progress(s, vh * 1.0, vh * 1.25);
-        sVistas.style.transform = `translateY(${((1 - vitP) * 80).toFixed(1)}vh)`;
-        sVistas.style.opacity   = (vitP > 0 ? 1 : 0).toFixed(3);
-      }
-
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-    })();
+    const IMGS = [
+      '../img/proyectos/sinóptico/vistas/_MP_3356.jpg',
+      '../img/proyectos/sinóptico/vistas/_MP_3357.jpg',
+      '../img/proyectos/sinóptico/vistas/_MP_3360-2.jpg',
+      '../img/proyectos/sinóptico/vistas/_MP_3362.jpg',
+      '../img/proyectos/sinóptico/vistas/_MP_3366.jpg',
+      '../img/proyectos/sinóptico/vistas/_MP_3367.jpg',
+      '../img/proyectos/sinóptico/vistas/_MP_3368.jpg',
+      '../img/proyectos/sinóptico/vistas/_MP_3382b.png',
+      '../img/proyectos/sinóptico/vistas/_MP_3384.jpg',
+      '../img/proyectos/sinóptico/vistas/_MP_3385.jpg',
+      '../img/proyectos/sinóptico/vistas/_MP_3387.jpg',
+      '../img/proyectos/sinóptico/vistas/_MP_3389.jpg',
+    ];
+    IMGS.forEach(s => { const i = new Image(); i.src = s; });
+    const el = document.getElementById('slide-img');
+    let idx = 0;
+    setInterval(() => {
+      idx = (idx + 1) % IMGS.length;
+      el.src = IMGS[idx];
+    }, 1000);
   </script>
 
   <script>
